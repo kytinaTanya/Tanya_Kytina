@@ -18,6 +18,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            buildConfigField "String", "URL_GITHUB_REPO", "\"https://github.com/kytinaTanya/Tanya_Kytina.git\""
+            buildConfigField "String", "APP_VERSION", "\"1.0.0\""
+            buildConfigField "String", "BIULD_TIME", "\"${releaseTime()}\""
+            debuggable true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -30,6 +37,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+}
+
+static def releaseTime() {
+    return new Date().format("dd.MM.yyyy", TimeZone.getDefault())
 }
 
 dependencies {
