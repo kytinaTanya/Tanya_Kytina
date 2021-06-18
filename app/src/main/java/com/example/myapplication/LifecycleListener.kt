@@ -6,37 +6,38 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 
 class LifecycleListener : LifecycleObserver {
+
     fun registerLifecycle(lifecycle : Lifecycle){
         lifecycle.addObserver(this)
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun create(){
-        Log.d("OnCreate","Activity is ON_CREATE")
+        Log.d("OnCreate","ON_CREATE")
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun start(){
-        Log.d("OnStart","Activity is ON_START")
+        Log.d("OnStart","ON_START")
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun resume() {
-        Log.d("OnResume","Activity is ON_RESUME")
+        Log.d("OnResume","ON_RESUME")
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun pause() {
-        Log.d("onPause","Activity is ON_PAUSE")
+        Log.d("OnPause","ON_PAUSE")
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun stop(){
-        Log.d("OnStop","Activity is ON_STOP")
+        Log.d("OnStop","ON_STOP")
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun destroy(){
-        Log.d("OnDestroy","Activity is ON_DESTROY")
+        Log.d("OnDestroy","ON_DESTROY")
     }
 }
