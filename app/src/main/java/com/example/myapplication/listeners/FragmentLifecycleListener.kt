@@ -8,10 +8,6 @@ import androidx.fragment.app.FragmentManager
 
 class FragmentLifecycleListener : FragmentManager.FragmentLifecycleCallbacks() {
 
-    fun init(fragmentManager: FragmentManager){
-        fragmentManager.registerFragmentLifecycleCallbacks(FragmentLifecycleListener(), false)
-    }
-
     override fun onFragmentAttached(fm: FragmentManager, f: Fragment, context: Context) {
         super.onFragmentAttached(fm, f, context)
         Log.d(f.javaClass.simpleName,"is OnAttach")

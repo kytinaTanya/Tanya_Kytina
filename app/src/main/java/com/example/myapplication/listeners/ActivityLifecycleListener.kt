@@ -8,14 +8,10 @@ import androidx.fragment.app.FragmentActivity
 
 class ActivityLifecycleListener : Application.ActivityLifecycleCallbacks {
 
-    fun init(application: Application){
-        application.registerActivityLifecycleCallbacks(ActivityLifecycleListener())
-    }
-
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-        if(activity is FragmentActivity){
-            FragmentLifecycleListener().init(activity.supportFragmentManager)
-        }
+        (activity as? FragmentActivity)
+            ?.supportFragmentManager
+            ?.registerFragmentLifecycleCallbacks(FragmentLifecycleListener(), true)
         Log.d(activity.javaClass.simpleName,"is OnCreate")
     }
 
