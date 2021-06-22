@@ -23,6 +23,5 @@ class MainActivity : AppCompatActivity() {
                 add<ExampleFragment>(R.id.fragment_container_view)
             }
         }
-        LifecycleListener().registerLifecycle(lifecycle)
     }
 }

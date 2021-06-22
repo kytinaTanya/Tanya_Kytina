@@ -1,11 +1,12 @@
 package com.example.myapplication
 
+import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 
-class LifecycleListener : LifecycleObserver {
+class LifecycleListener(private val activity: Activity) : LifecycleObserver {
 
     fun registerLifecycle(lifecycle : Lifecycle){
         lifecycle.addObserver(this)
@@ -13,31 +14,31 @@ class LifecycleListener : LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun create(){
-        Log.d("OnCreate","ON_CREATE")
+        Log.d("OnCreate","${activity.javaClass.simpleName} is ON_CREATE")
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun start(){
-        Log.d("OnStart","ON_START")
+        Log.d("OnStart","${activity.javaClass.simpleName} is ON_START")
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun resume() {
-        Log.d("OnResume","ON_RESUME")
+        Log.d("OnResume","${activity.javaClass.simpleName} is ON_RESUME")
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun pause() {
-        Log.d("OnPause","ON_PAUSE")
+        Log.d("OnPause","${activity.javaClass.simpleName} is ON_PAUSE")
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun stop(){
-        Log.d("OnStop","ON_STOP")
+        Log.d("OnStop","${activity.javaClass.simpleName} is ON_STOP")
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun destroy(){
-        Log.d("OnDestroy","ON_DESTROY")
+        Log.d("OnDestroy","${activity.javaClass.simpleName} is ON_DESTROY")
     }
 }

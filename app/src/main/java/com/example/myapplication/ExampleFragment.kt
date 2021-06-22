@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,6 @@ class ExampleFragment : Fragment(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LifecycleListener().registerLifecycle(lifecycle)
     }
 
     override fun onCreateView(
@@ -23,6 +23,14 @@ class ExampleFragment : Fragment(){
     ): View {
         _binding = FragmentExampleBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.tvFragment.setOnClickListener {
+            val i = Intent(context, SecondActivity::class.java)
+            startActivity(i)
+        }
     }
 
     override fun onDestroyView() {
