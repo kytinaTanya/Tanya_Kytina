@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gray"
+    android:elevation="5dp"
+    android:layout_marginBottom="16dp"
+    tools:targetApi="lollipop">
+
+    <ImageView
+        android:id="@+id/movieImage"
+        android:layout_width="75dp"
+        android:layout_height="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginStart="48dp"
+        android:src="@color/black"/>
+
+    <TextView
+        android:id="@+id/movieTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/movieImage"
+        app:layout_constraintTop_toTopOf="@+id/movieImage"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp" />
+
+    <TextView
+        android:id="@+id/yearOfMovie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/movieTitle"
+        app:layout_constraintTop_toBottomOf="@+id/movieTitle"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/movieAnnotation"
+        android:layout_width="238dp"
+        android:layout_height="wrap_content"
+        android:text="Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation"
+        app:layout_constraintStart_toStartOf="@+id/yearOfMovie"
+        app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
+        android:layout_marginTop="16dp"
+        android:paddingBottom="32dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
