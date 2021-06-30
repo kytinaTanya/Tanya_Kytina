@@ -24,7 +24,7 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
-            buildConfigField "String", "URL_GITHUB_REPO", "\"https://github.com/kytinaTanya/Tanya_Kytina.git\""
+            buildConfigField "String", "API_BASE_URL", "\"https://api.themoviedb.org/3/\""
             buildConfigField "String", "V3_AUTH", "\"e19d111501403fed5ffe087a81ca958f\""
             buildConfigField "String", "V4_AUTH", "\"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlMTlkMTExNTAxNDAzZmVkNWZmZTA4N2E4MWNhOTU4ZiIsInN1YiI6IjYwYzg1MmQxMzY3OWExMDA3OGNiOTljNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DdRuCDjlGk0rEF9Wa1_jdrCdKCIe6kwnbovjq3b7d4g\""
             debuggable true

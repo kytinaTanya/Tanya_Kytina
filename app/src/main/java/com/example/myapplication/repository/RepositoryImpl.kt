@@ -1,30 +1,17 @@
-package com.example.myapplication.movies
+package com.example.myapplication.repository
 
+import com.example.myapplication.movies.Movie
+import com.example.myapplication.movies.MoviesResponse
+import com.example.myapplication.movies.TmdbServise
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
-object MoviesData {
-    private val servise: TmdbServise
+class RepositoryImpl(val servise: TmdbServise) : Repository {
 
-    init{
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/3/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        servise = retrofit.create(TmdbServise::class.java)
-    }
-
-    fun getTopRatedMovies(
-        page: Int = 1,
-        language: String = "en-US",
-        onSuccess: (movies: List<Movie>) -> Unit,
-        onError: () -> Unit
-    ) {
-        servise.getTopRatedMovies(page = page, language = language)
+    override fun getData(onSuccess: (List<Movie>) -> Unit, onError: () -> Unit) {
+        // получение данных позже отрефакторить нужно под коррутины и RX
+        servise.getTopRatedMovies(language = "ru-RU")
             .enqueue(object : Callback<MoviesResponse> {
                 override fun onResponse(
                     call: Call<MoviesResponse>,

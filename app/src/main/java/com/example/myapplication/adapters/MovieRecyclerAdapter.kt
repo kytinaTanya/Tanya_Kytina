@@ -16,6 +16,7 @@ class MovieRecyclerAdapter() : RecyclerView.Adapter<MovieRecyclerAdapter.ViewHol
     private var mMoviesList: MutableList<Movie> = LinkedList()
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+        // работу с view реализовать через вью байндинг
         val title: TextView = view.findViewById(R.id.movieTitle)
         val year: TextView = view.findViewById(R.id.yearOfMovie)
         val annotation: TextView = view.findViewById(R.id.movieAnnotation)
@@ -25,7 +26,10 @@ class MovieRecyclerAdapter() : RecyclerView.Adapter<MovieRecyclerAdapter.ViewHol
             title.text = movie.title
             year.text = movie.releaseYear()
             annotation.text = movie.overview
+
+            // работу с Picasso вынести в функцию расширения или в функцию высшего порядка
             Picasso.get()
+                // url подставлять из константы сформированной в gradle
                 .load("https://image.tmdb.org/t/p/w342${movie.posterPath}")
                 .placeholder(R.drawable.poster_placeholder)
                 .error(R.drawable.poster_placeholder)

@@ -18,15 +18,13 @@ class ExampleFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentExampleBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
-    override fun onResume() {
-        super.onResume()
         binding.tvFragment.setOnClickListener {
             val i = Intent(context, SecondActivity::class.java)
             startActivity(i)
         }
+
+        return binding.root
     }
 
     override fun onDestroyView() {
