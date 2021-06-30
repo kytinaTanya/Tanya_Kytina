@@ -10,7 +10,7 @@
         android:id="@+id/tvFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/top_50_rated_movies"
+        android:text="@string/top_20_rated_movies"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

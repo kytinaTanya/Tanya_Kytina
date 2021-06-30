@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">My Application</string>
-    <string name="top_50_rated_movies">Top 50 rated movies</string>
+    <string name="top_20_rated_movies">Click to get top 20 rated movies</string>
 </resources>
