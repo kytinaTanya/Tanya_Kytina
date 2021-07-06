@@ -29,7 +29,7 @@ class RepositoryImplTest {
         val service: TmdbService = mock(TmdbService::class.java)
 
         //Что нужно писать в thenReturn, если метод возвращает Call<MoviesResponse>
-       `when`(service.getTopRatedMovies(language = "ru-RU")).thenReturn()
+       `when`(service.getTopRatedMovies(language = "ru-RU")).thenReturn(correctList)
 
         val repositoryImpl = RepositoryImpl(service)
         repositoryImpl.getData(::onSuccess, ::onError)

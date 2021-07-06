@@ -38,7 +38,7 @@ class SecondFragment : Fragment() {
         repository = RepositoryImpl(TmdbService.createApiService())
 
         binding.movieList.apply {
-            layoutManager = LinearLayoutManager(activity)
+            layoutManager = LinearLayoutManager(requireContext())
             adapter = mAdapter
         }
 
