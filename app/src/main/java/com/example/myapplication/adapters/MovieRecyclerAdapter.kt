@@ -1,48 +1,41 @@
 package com.example.myapplication.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.R
+import com.example.myapplication.BuildConfig
+import com.example.myapplication.databinding.ItemMovieBinding
 import com.example.myapplication.movies.Movie
-import com.squareup.picasso.Picasso
+import com.example.myapplication.utils.setImage
 import java.util.*
 
 class MovieRecyclerAdapter() : RecyclerView.Adapter<MovieRecyclerAdapter.ViewHolder>(){
 
     private var mMoviesList: MutableList<Movie> = LinkedList()
+    private lateinit var binding: ItemMovieBinding
 
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    class ViewHolder(binding: ItemMovieBinding): RecyclerView.ViewHolder(binding.root) {
         // работу с view реализовать через вью байндинг
-        val title: TextView = view.findViewById(R.id.movieTitle)
-        val year: TextView = view.findViewById(R.id.yearOfMovie)
-        val annotation: TextView = view.findViewById(R.id.movieAnnotation)
-        val poster: ImageView = view.findViewById(R.id.movieImage)
+        val title: TextView = binding.movieTitle
+        val year: TextView = binding.yearOfMovie
+        val annotation: TextView = binding.movieAnnotation
+        val poster: ImageView = binding.movieImage
 
         fun bind(movie: Movie){
             title.text = movie.title
             year.text = movie.releaseYear()
             annotation.text = movie.overview
-
-            // работу с Picasso вынести в функцию расширения или в функцию высшего порядка
-            Picasso.get()
-                // url подставлять из константы сформированной в gradle
-                .load("https://image.tmdb.org/t/p/w342${movie.posterPath}")
-                .placeholder(R.drawable.poster_placeholder)
-                .error(R.drawable.poster_placeholder)
-                .into(poster)
+            poster.setImage(BuildConfig.BASE_IMAGE_URL + movie.posterPath)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater
-            .from(parent.context)
-            .inflate(R.layout.item_movie, parent, false)
+        binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        return ViewHolder(view)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

@@ -6,8 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/light_gray"
     android:elevation="5dp"
-    android:layout_marginBottom="16dp"
-    tools:targetApi="lollipop"> <!-- для чего???-->
+    android:layout_marginBottom="16dp">
 
     <ImageView
         android:id="@+id/movieImage"
@@ -18,15 +17,14 @@
         android:layout_marginTop="32dp"
         android:layout_marginLeft="40dp"
         android:layout_marginStart="40dp"
-        android:paddingBottom="32dp"
-        android:src="@color/black"/>
+        android:paddingBottom="32dp"/>
 
     <TextView
         android:id="@+id/movieTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxWidth="238dp"
-        android:text="Name"
+        tools:text="Name"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/movieImage"
@@ -39,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxWidth="238dp"
-        android:text="2000"
+        tools:text="2000"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/movieTitle"
         app:layout_constraintTop_toBottomOf="@+id/movieTitle"
@@ -50,7 +48,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxWidth="238dp"
-        android:text="Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation"
+        android:maxLines="5"
+        android:ellipsize="end"
+        tools:text="Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation"
         app:layout_constraintStart_toStartOf="@+id/yearOfMovie"
         app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
         android:layout_marginTop="16dp"

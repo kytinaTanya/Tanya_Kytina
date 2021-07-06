@@ -25,6 +25,7 @@ android {
         debug {
             applicationIdSuffix ".debug"
             buildConfigField "String", "API_BASE_URL", "\"https://api.themoviedb.org/3/\""
+            buildConfigField "String", "BASE_IMAGE_URL", "\"https://image.tmdb.org/t/p/w342\""
             buildConfigField "String", "V3_AUTH", "\"e19d111501403fed5ffe087a81ca958f\""
             buildConfigField "String", "V4_AUTH", "\"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlMTlkMTExNTAxNDAzZmVkNWZmZTA4N2E4MWNhOTU4ZiIsInN1YiI6IjYwYzg1MmQxMzY3OWExMDA3OGNiOTljNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DdRuCDjlGk0rEF9Wa1_jdrCdKCIe6kwnbovjq3b7d4g\""
             debuggable true
@@ -58,6 +59,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     //Retrofit and picasso
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
     //recyclerView
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
@@ -67,4 +69,9 @@ dependencies {
     //Gson
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
     implementation 'com.google.code.gson:gson:2.8.6'
+    //Mockito
+    testImplementation 'org.mockito:mockito-core:2.24.5'
+
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+    testImplementation 'com.squareup.okhttp3:mockwebserver:4.3.1'
 }

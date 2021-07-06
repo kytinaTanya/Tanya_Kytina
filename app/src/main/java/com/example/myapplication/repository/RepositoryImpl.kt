@@ -1,17 +1,18 @@
 package com.example.myapplication.repository
 
+import android.util.Log
 import com.example.myapplication.movies.Movie
 import com.example.myapplication.movies.MoviesResponse
-import com.example.myapplication.movies.TmdbServise
+import com.example.myapplication.movies.TmdbService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RepositoryImpl(val servise: TmdbServise) : Repository {
+class RepositoryImpl(private val service: TmdbService) : Repository {
 
     override fun getData(onSuccess: (List<Movie>) -> Unit, onError: () -> Unit) {
         // получение данных позже отрефакторить нужно под коррутины и RX
-        servise.getTopRatedMovies(language = "ru-RU")
+        service.getTopRatedMovies(language = "ru-RU")
             .enqueue(object : Callback<MoviesResponse> {
                 override fun onResponse(
                     call: Call<MoviesResponse>,

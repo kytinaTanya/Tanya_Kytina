@@ -1,21 +1,31 @@
 package com.example.myapplication.movies
 
 import com.example.myapplication.BuildConfig
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface TmdbServise {
+interface TmdbService {
 
     companion object {
-        fun createApiService(): TmdbServise {
+        fun createApiService(): TmdbService {
+            val loggingInterceptor = HttpLoggingInterceptor()
+            loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+
+            val okHttpClient = OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build()
+
             return Retrofit.Builder()
                 .baseUrl(BuildConfig.API_BASE_URL)
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .create(TmdbServise::class.java)
+                .create(TmdbService::class.java)
         }
     }
 
