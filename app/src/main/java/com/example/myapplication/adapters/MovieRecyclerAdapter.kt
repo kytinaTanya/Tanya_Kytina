@@ -27,15 +27,13 @@ class MovieRecyclerAdapter() : RecyclerView.Adapter<MovieRecyclerAdapter.ViewHol
             title.text = movie.title
             year.text = movie.releaseYear()
             annotation.text = movie.overview
-
-            val imageUrl: String = initImage(movie)
-            poster.setImage(imageUrl)
-
-            Log.d("initImage", imageUrl)
+            poster.setImage(buildImageUrl(movie))
         }
 
-        private fun initImage(movie: Movie): String {
-            return BuildConfig.BASE_IMAGE_URL + movie.posterPath
+        private fun buildImageUrl(movie: Movie): String {
+            val imageUrl = BuildConfig.BASE_IMAGE_URL + movie.posterPath
+            Log.d("initImage", imageUrl)
+            return imageUrl
         }
     }
 
