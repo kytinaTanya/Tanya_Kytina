@@ -1,34 +1,32 @@
 package com.example.myapplication.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myapplication.BuildConfig
 import com.example.myapplication.adapters.MovieRecyclerAdapter
 import com.example.myapplication.databinding.FragmentSecondBinding
 import com.example.myapplication.movies.Movie
-import com.example.myapplication.movies.TmdbService
-import com.example.myapplication.presenter.MoviePresenter
-import com.example.myapplication.presenter.Presenter
-import com.example.myapplication.repository.RepositoryImpl
-import com.example.myapplication.view.MovieView
+import com.example.myapplication.viewmodel.MovieViewModel
 
 
-class SecondFragment : Fragment(), MovieView {
+class SecondFragment : Fragment() {
     private var _binding: FragmentSecondBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var mPresenter: Presenter
 
     lateinit var mAdapter: MovieRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mPresenter = MoviePresenter.createPresenter(this)
+
+        val movieViewModel: MovieViewModel by viewModels()
+        movieViewModel.getMovies().observe(this, Observer<List<Movie>>{ movies ->
+            mAdapter.appendMovies(movies)
+        })
     }
 
     override fun onCreateView(
@@ -49,16 +47,10 @@ class SecondFragment : Fragment(), MovieView {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = mAdapter
         }
-        mPresenter.onCreateView()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mPresenter.onDestroy()
         _binding = null
-    }
-
-    override fun showMovies(mList: List<Movie>) {
-        mAdapter.appendMovies(mList)
     }
 }
