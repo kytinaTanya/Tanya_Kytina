@@ -12,15 +12,19 @@ import com.example.myapplication.adapters.MovieRecyclerAdapter
 import com.example.myapplication.databinding.FragmentSecondBinding
 import com.example.myapplication.movies.Movie
 import com.example.myapplication.movies.TmdbService
+import com.example.myapplication.presenter.MoviePresenter
+import com.example.myapplication.presenter.Presenter
 import com.example.myapplication.repository.RepositoryImpl
+import com.example.myapplication.view.MovieView
 
 
-class SecondFragment : Fragment() {
+class SecondFragment : Fragment(), MovieView {
     private var _binding: FragmentSecondBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var mPresenter: Presenter
+
     lateinit var mAdapter: MovieRecyclerAdapter
-    lateinit var repository: RepositoryImpl
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,42 +39,23 @@ class SecondFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mAdapter = MovieRecyclerAdapter()
-        repository = RepositoryImpl(TmdbService.createApiService())
 
         binding.movieList.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = mAdapter
         }
 
-        getTopRatedMovies()
+        mPresenter = MoviePresenter(this)
+        mPresenter.onCreateView()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        mPresenter.onDestroy()
         _binding = null
     }
 
-    private fun getTopRatedMovies() {
-        // вот здесь нужно обращаться к слою model в котором реализован паттерн Repository
-        repository.getData(::onTopRatedMoviesFetched, ::onError)
-    }
-
-    private fun onError() {
-        Log.d("GetError", "Что-то пошло не так")
-    }
-
-    private fun onTopRatedMoviesFetched(list: List<Movie>) {
-        mAdapter.appendMovies(list)
-        loggingImages(list)
-    }
-
-    private fun loggingImages(list: List<Movie>) {
-        val task = Thread {
-            list.forEach {
-                Log.d("Image", BuildConfig.BASE_IMAGE_URL + it.posterPath)
-            }
-        }
-        task.start()
-        task.join()
+    override fun showMovies(mList: List<Movie>) {
+        mAdapter.appendMovies(mList)
     }
 }
