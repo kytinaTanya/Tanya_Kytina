@@ -18,7 +18,6 @@ class MovieRecyclerAdapter() : RecyclerView.Adapter<MovieRecyclerAdapter.ViewHol
     private lateinit var binding: ItemMovieBinding
 
     class ViewHolder(binding: ItemMovieBinding): RecyclerView.ViewHolder(binding.root) {
-        // работу с view реализовать через вью байндинг
         val title: TextView = binding.movieTitle
         val year: TextView = binding.yearOfMovie
         val annotation: TextView = binding.movieAnnotation
@@ -28,7 +27,15 @@ class MovieRecyclerAdapter() : RecyclerView.Adapter<MovieRecyclerAdapter.ViewHol
             title.text = movie.title
             year.text = movie.releaseYear()
             annotation.text = movie.overview
-            poster.setImage(BuildConfig.BASE_IMAGE_URL + movie.posterPath)
+
+            val imageUrl: String = initImage(movie)
+            poster.setImage(imageUrl)
+
+            Log.d("initImage", imageUrl)
+        }
+
+        private fun initImage(movie: Movie): String {
+            return BuildConfig.BASE_IMAGE_URL + movie.posterPath
         }
     }
 
