@@ -26,6 +26,11 @@ class SecondFragment : Fragment(), MovieView {
 
     lateinit var mAdapter: MovieRecyclerAdapter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mPresenter = MoviePresenter.createPresenter(this)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,8 +49,6 @@ class SecondFragment : Fragment(), MovieView {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = mAdapter
         }
-
-        mPresenter = MoviePresenter(this)
         mPresenter.onCreateView()
     }
 

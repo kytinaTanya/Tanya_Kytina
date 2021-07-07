@@ -8,11 +8,12 @@ import com.example.myapplication.repository.Repository
 import com.example.myapplication.repository.RepositoryImpl
 import com.example.myapplication.view.MovieView
 
-class MoviePresenter(private var mView: MovieView) : Presenter {
+class MoviePresenter(
+    private val mView: MovieView,
+    private val mRepository: Repository
+    ) : Presenter {
 
-    private val tag: String = "MoviePresenter"
-
-    private var mRepository: Repository = RepositoryImpl(TmdbService.createApiService())
+    private val tag: String = MoviePresenter::class.java.simpleName
 
     override fun onCreateView() {
         mRepository.getData(::onTopRatedMoviesFetched, ::onError)
@@ -39,5 +40,9 @@ class MoviePresenter(private var mView: MovieView) : Presenter {
 
     override fun onDestroy() {
         Log.d(tag, "onDestroy()")
+    }
+
+    companion object {
+        fun createPresenter(view: MovieView) = MoviePresenter(view, RepositoryImpl(TmdbService.createApiService()))
     }
 }
