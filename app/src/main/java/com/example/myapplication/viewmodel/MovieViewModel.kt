@@ -11,9 +11,7 @@ import com.example.myapplication.repository.Repository
 import com.example.myapplication.repository.RepositoryImpl
 import kotlinx.coroutines.launch
 
-class MovieViewModel(
-    private val mRepository: Repository = RepositoryImpl(TmdbService.createApiService()))
-    : ViewModel() {
+class MovieViewModel(private val mRepository: Repository) : ViewModel() {
 
     private val tag: String = MovieViewModel::class.java.simpleName
 

@@ -5,13 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myapplication.MyApplicationClass
 import com.example.myapplication.adapters.MovieRecyclerAdapter
 import com.example.myapplication.databinding.FragmentSecondBinding
 import com.example.myapplication.movies.Movie
 import com.example.myapplication.viewmodel.MovieViewModel
+import javax.inject.Inject
 
 
 class SecondFragment : Fragment() {
@@ -20,10 +21,12 @@ class SecondFragment : Fragment() {
 
     lateinit var mAdapter: MovieRecyclerAdapter
 
+    @Inject lateinit var movieViewModel: MovieViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        MyApplicationClass.appComponent.inject(this)
         super.onCreate(savedInstanceState)
 
-        val movieViewModel: MovieViewModel by viewModels()
         movieViewModel.getMovies().observe(this, Observer<List<Movie>>{ movies ->
             mAdapter.appendMovies(movies)
         })
