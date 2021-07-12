@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.MyApplicationClass
 import com.example.myapplication.adapters.MovieRecyclerAdapter
@@ -21,13 +22,16 @@ class SecondFragment : Fragment() {
 
     lateinit var mAdapter: MovieRecyclerAdapter
 
-    @Inject lateinit var movieViewModel: MovieViewModel
+    @Inject
+    lateinit var factory: ViewModelProvider.Factory
+    lateinit var viewModel: MovieViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         MyApplicationClass.appComponent.inject(this)
+        viewModel = ViewModelProvider(this, factory).get(MovieViewModel::class.java)
         super.onCreate(savedInstanceState)
 
-        movieViewModel.getMovies().observe(this, Observer<List<Movie>>{ movies ->
+        viewModel.getMovies().observe(this, Observer<List<Movie>>{ movies ->
             mAdapter.appendMovies(movies)
         })
     }

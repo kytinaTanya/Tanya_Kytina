@@ -10,8 +10,9 @@ import com.example.myapplication.movies.TmdbService
 import com.example.myapplication.repository.Repository
 import com.example.myapplication.repository.RepositoryImpl
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MovieViewModel(private val mRepository: Repository) : ViewModel() {
+class MovieViewModel @Inject constructor(private val mRepository: Repository) : ViewModel() {
 
     private val tag: String = MovieViewModel::class.java.simpleName
 
