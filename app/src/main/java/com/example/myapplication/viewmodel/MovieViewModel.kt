@@ -1,29 +1,21 @@
 package com.example.myapplication.viewmodel
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
-import com.example.myapplication.movies.Movie
 import com.example.myapplication.movies.TmdbService
-import com.example.myapplication.repository.MoviePagingSource
 import com.example.myapplication.repository.Repository
-import com.example.myapplication.repository.RepositoryImpl
-import kotlinx.coroutines.launch
+import com.example.myapplication.repository.inMemory.MoviePagingSource
+import com.example.myapplication.repository.inMemory.RepositoryImpl
 import javax.inject.Inject
 
-class MovieViewModel @Inject constructor(private val tmdbService: TmdbService) : ViewModel() {
+class MovieViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
     private val tag: String = MovieViewModel::class.java.simpleName
 
-    val movies = Pager(
-        PagingConfig(20, 5)) {
-        MoviePagingSource(tmdbService)
-    }.flow.cachedIn(viewModelScope)
+    val movies = repository.getData()
 
 //    val movies: MutableLiveData<List<Movie>> by lazy {
 //        MutableLiveData<List<Movie>>().also {

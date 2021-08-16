@@ -3,6 +3,7 @@ package com.example.myapplication.repository
 import com.example.myapplication.movies.Movie
 import com.example.myapplication.movies.MoviesResponse
 import com.example.myapplication.movies.TmdbService
+import com.example.myapplication.repository.inMemory.RepositoryImpl
 import com.google.gson.Gson
 import junit.framework.Assert.assertEquals
 import org.junit.Before
@@ -29,10 +30,10 @@ class RepositoryImplTest {
         val service: TmdbService = mock(TmdbService::class.java)
 
         //Что нужно писать в thenReturn, если метод возвращает Call<MoviesResponse>
-       `when`(service.getTopRatedMovies(language = "ru-RU")).thenReturn(correctList)
+      // `when`(service.getTopRatedMovies(language = "ru-RU")).thenReturn(correctList)
 
         val repositoryImpl = RepositoryImpl(service)
-        repositoryImpl.getData(::onSuccess, ::onError)
+       // repositoryImpl.getData(::onSuccess, ::onError)
     }
 
     private fun onSuccess(list: List<Movie>){

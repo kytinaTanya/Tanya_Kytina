@@ -2,8 +2,10 @@ package com.example.myapplication
 
 import android.app.Application
 import com.example.myapplication.di.AppComponent
+import com.example.myapplication.di.AppModule
 import com.example.myapplication.di.DaggerAppComponent
 import com.example.myapplication.listeners.ActivityLifecycleListener
+
 
 class MyApplicationClass : Application() {
 
@@ -18,6 +20,8 @@ class MyApplicationClass : Application() {
     }
 
     private fun initDagger() {
-        appComponent = DaggerAppComponent.builder().build()
+        appComponent = DaggerAppComponent.builder()
+            .appModule(AppModule(this))
+            .build()
     }
 }

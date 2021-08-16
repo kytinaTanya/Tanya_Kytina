@@ -1,7 +1,7 @@
 package com.example.myapplication.di
 
 import com.example.myapplication.movies.TmdbService
-import com.example.myapplication.repository.MoviePagingSource
+import com.example.myapplication.repository.inMemory.MoviePagingSource
 import dagger.Module
 import dagger.Provides
 
