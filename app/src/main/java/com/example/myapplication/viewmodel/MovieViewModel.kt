@@ -16,12 +16,13 @@ import com.example.myapplication.repository.RepositoryImpl
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MovieViewModel @Inject constructor(private val mSource: MoviePagingSource) : ViewModel() {
+class MovieViewModel @Inject constructor(private val tmdbService: TmdbService) : ViewModel() {
 
     private val tag: String = MovieViewModel::class.java.simpleName
 
-    val movies = Pager(PagingConfig(20, 5)) {
-        mSource
+    val movies = Pager(
+        PagingConfig(20, 5)) {
+        MoviePagingSource(tmdbService)
     }.flow.cachedIn(viewModelScope)
 
 //    val movies: MutableLiveData<List<Movie>> by lazy {

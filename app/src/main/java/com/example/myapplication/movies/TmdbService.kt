@@ -31,7 +31,7 @@ interface TmdbService {
     }
 
     @GET("movie/top_rated")
-    fun getTopRatedMovies(
+    suspend fun getTopRatedMovies(
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("language") language: String,
         @Query("page") page: Int = 1
