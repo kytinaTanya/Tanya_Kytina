@@ -1,14 +1,11 @@
 package com.example.myapplication.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.movies.Movie
-import com.example.myapplication.movies.TmdbService
 import com.example.myapplication.repository.Repository
-import com.example.myapplication.repository.RepositoryImpl
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,28 +13,27 @@ class MovieViewModel @Inject constructor(private val mRepository: Repository) : 
 
     private val tag: String = MovieViewModel::class.java.simpleName
 
-    val movies: MutableLiveData<List<Movie>> by lazy {
-        MutableLiveData<List<Movie>>().also {
-            loadMovies()
+    private var _movies: MutableLiveData<List<Movie>> = MutableLiveData<List<Movie>>()
+    val movies: LiveData<List<Movie>>
+        get() {
+            return _movies
         }
-    }
 
-    fun getMovies(): LiveData<List<Movie>>{
-        return movies
-    }
+    private var _movieDetails: MutableLiveData<Movie> = MutableLiveData<Movie>()
+    val movieDetails: LiveData<Movie>
+        get() {
+            return _movieDetails
+        }
 
-    private fun loadMovies() {
+    fun loadMovies() {
         viewModelScope.launch {
-            mRepository.getData(::onTopRatedMoviesFetched, ::onError)
+            _movies.value = mRepository.getListOfMovies()
         }
     }
 
-    private fun onTopRatedMoviesFetched(list: List<Movie>) {
-        movies.value = list
+    fun getMovieDetails(id: Long) {
+        viewModelScope.launch {
+            _movieDetails.value = mRepository.getMovieDetails(id)
+        }
     }
-
-    private fun onError() {
-        Log.d(tag, "Something don't work")
-    }
-
 }

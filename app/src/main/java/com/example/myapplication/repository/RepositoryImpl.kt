@@ -10,30 +10,27 @@ import retrofit2.Response
 
 class RepositoryImpl(private val service: TmdbService) : Repository {
 
-    override fun getData(onSuccess: (List<Movie>) -> Unit, onError: () -> Unit) {
+    override suspend fun getListOfMovies() : List<Movie> {
         // получение данных позже отрефакторить нужно под коррутины и RX
-        service.getTopRatedMovies(language = "ru-RU")
-            .enqueue(object : Callback<MoviesResponse> {
-                override fun onResponse(
-                    call: Call<MoviesResponse>,
-                    response: Response<MoviesResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        val responseBody = response.body()
+        val response = service.getTopRatedMovies(language = "ru-RU")
 
-                        if (responseBody != null) {
-                            onSuccess(responseBody.movies)
-                        } else {
-                            onError()
-                        }
-                    } else {
-                        onError()
-                    }
-                }
+        return if(response.isSuccessful){
+            val responseBody = response.body()
+            responseBody?.movies ?: emptyList()
+        } else {
+            Log.d("Repo", "response is not successful")
+            emptyList()
+        }
+    }
 
-                override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {
-                    onError()
-                }
-            })
+    override suspend fun getMovieDetails(id: Long): Movie {
+        val response = service.getMovieDetails(id = id, language = "ru-RU")
+
+        return if(response.isSuccessful) {
+            response.body() ?: Movie(1, "Non", "Non", "Non", "Non", 0.0F, "Non")
+        } else {
+            Log.d("Repo", "response is not successful")
+            Movie(1, "Non", "Non", "Non", "Non", 0.0F, "Non")
+        }
     }
 }

@@ -4,9 +4,11 @@ import com.example.myapplication.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface TmdbService {
@@ -30,9 +32,16 @@ interface TmdbService {
     }
 
     @GET("movie/top_rated")
-    fun getTopRatedMovies(
+    suspend fun getTopRatedMovies(
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("language") language: String,
         @Query("page") page: Int = 1
-    ): Call<MoviesResponse>
+    ): Response<MoviesResponse>
+
+    @GET("/movie/{movie_id}")
+    suspend fun getMovieDetails(
+        @Path("movie_id") id: Long,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String
+    ): Response<Movie>
 }

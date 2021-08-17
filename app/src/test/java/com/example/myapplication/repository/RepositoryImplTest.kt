@@ -32,7 +32,7 @@ class RepositoryImplTest {
        `when`(service.getTopRatedMovies(language = "ru-RU")).thenReturn(correctList)
 
         val repositoryImpl = RepositoryImpl(service)
-        repositoryImpl.getData(::onSuccess, ::onError)
+        repositoryImpl.getListOfMovies(::onSuccess, ::onError)
     }
 
     private fun onSuccess(list: List<Movie>){

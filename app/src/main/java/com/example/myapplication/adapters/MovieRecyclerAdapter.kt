@@ -2,9 +2,12 @@ package com.example.myapplication.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.databinding.ItemMovieBinding
@@ -12,9 +15,13 @@ import com.example.myapplication.movies.Movie
 import com.example.myapplication.utils.setImage
 import java.util.*
 
-class MovieRecyclerAdapter() : RecyclerView.Adapter<MovieRecyclerAdapter.ViewHolder>(){
+interface MovieClickListener {
+    fun onOpenMovie(id: Long)
+}
 
-    private var mMoviesList: MutableList<Movie> = LinkedList()
+class MovieRecyclerAdapter(private val listener: MovieClickListener) : RecyclerView.Adapter<MovieRecyclerAdapter.ViewHolder>(), View.OnClickListener {
+
+    var mMoviesList: MutableList<Movie> = LinkedList()
     private lateinit var binding: ItemMovieBinding
 
     class ViewHolder(binding: ItemMovieBinding): RecyclerView.ViewHolder(binding.root) {
@@ -40,10 +47,13 @@ class MovieRecyclerAdapter() : RecyclerView.Adapter<MovieRecyclerAdapter.ViewHol
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
+        binding.root.setOnClickListener(this)
+
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.itemView.tag = mMoviesList[position]
         holder.bind(mMoviesList[position])
     }
 
@@ -53,5 +63,10 @@ class MovieRecyclerAdapter() : RecyclerView.Adapter<MovieRecyclerAdapter.ViewHol
         mMoviesList.clear()
         mMoviesList.addAll(movies)
         notifyDataSetChanged()
+    }
+
+    override fun onClick(v: View?) {
+        val movie = v?.tag as Movie
+        listener.onOpenMovie(movie.id)
     }
 }

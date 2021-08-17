@@ -1,5 +1,6 @@
 package com.example.myapplication.di
 
+import com.example.myapplication.ui.MovieFragment
 import com.example.myapplication.ui.SecondFragment
 import dagger.Component
 
@@ -8,4 +9,5 @@ import dagger.Component
 interface AppComponent {
     //Fragment
     fun inject(fragment: SecondFragment)
+    fun inject(fragment: MovieFragment)
 }
