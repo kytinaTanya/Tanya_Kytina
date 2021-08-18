@@ -31,7 +31,7 @@ class FirstFragment : Fragment(){
                 )
                 replace<SecondFragment>(R.id.fragment_container_view)
                 setReorderingAllowed(true)
-                addToBackStack("FirstFragment")
+                addToBackStack("SecondFragment")
             }
         }
 

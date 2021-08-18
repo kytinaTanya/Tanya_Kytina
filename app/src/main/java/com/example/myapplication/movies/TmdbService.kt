@@ -1,9 +1,9 @@
 package com.example.myapplication.movies
 
 import com.example.myapplication.BuildConfig
+import com.example.myapplication.room.entity.Movie
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -38,7 +38,7 @@ interface TmdbService {
         @Query("page") page: Int = 1
     ): Response<MoviesResponse>
 
-    @GET("/movie/{movie_id}")
+    @GET("movie/{movie_id}")
     suspend fun getMovieDetails(
         @Path("movie_id") id: Long,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,

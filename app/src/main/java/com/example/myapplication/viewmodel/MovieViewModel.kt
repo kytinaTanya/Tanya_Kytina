@@ -1,10 +1,11 @@
 package com.example.myapplication.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myapplication.movies.Movie
+import com.example.myapplication.room.entity.Movie
 import com.example.myapplication.repository.Repository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,8 +33,10 @@ class MovieViewModel @Inject constructor(private val mRepository: Repository) : 
     }
 
     fun getMovieDetails(id: Long) {
+        _movieDetails = MutableLiveData<Movie>()
         viewModelScope.launch {
             _movieDetails.value = mRepository.getMovieDetails(id)
+            Log.d("repository", "${_movieDetails.value}")
         }
     }
 }

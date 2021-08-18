@@ -1,6 +1,6 @@
 package com.example.myapplication.repository
 
-import com.example.myapplication.movies.Movie
+import com.example.myapplication.room.entity.Movie
 
 interface Repository {
     suspend fun getListOfMovies() : List<Movie>

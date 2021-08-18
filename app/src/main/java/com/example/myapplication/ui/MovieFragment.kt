@@ -5,16 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.myapplication.BuildConfig
 import com.example.myapplication.MyApplicationClass
-import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentMovieBinding
-import com.example.myapplication.databinding.FragmentSecondBinding
+import com.example.myapplication.room.entity.Movie
+import com.example.myapplication.utils.setImage
 import com.example.myapplication.viewmodel.MovieViewModel
 import javax.inject.Inject
 
 class MovieFragment : Fragment() {
-    private var _binding: FragmentSecondBinding? = null
+    private var _binding: FragmentMovieBinding? = null
     private val binding get() = _binding!!
 
     @Inject
@@ -23,13 +25,16 @@ class MovieFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         MyApplicationClass.appComponent.inject(this)
-        viewModel = ViewModelProvider(this, factory).get(MovieViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity(), factory).get(MovieViewModel::class.java)
         super.onCreate(savedInstanceState)
 
-
-        viewModel.movieDetails.observe(this ){
-
-        }
+        viewModel.movieDetails.observe(this, Observer<Movie>{
+            binding.movieImage.setImage(BuildConfig.BASE_IMAGE_URL + it.posterPath)
+            binding.movieTitle.text = it.title
+            binding.yearOfMovie.text = it.releaseYear()
+            binding.movieRating.text = it.rating.toString()
+            binding.movieAnnotation.text = it.overview
+        })
     }
 
     override fun onCreateView(
@@ -37,7 +42,7 @@ class MovieFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        _binding = FragmentMovieBinding.inflate(inflater, container, false)
         return binding.root
     }
 

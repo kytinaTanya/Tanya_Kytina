@@ -1,6 +1,6 @@
 package com.example.myapplication.repository
 
-import com.example.myapplication.movies.Movie
+import com.example.myapplication.room.entity.Movie
 import com.example.myapplication.movies.MoviesResponse
 import com.example.myapplication.movies.TmdbService
 import com.google.gson.Gson

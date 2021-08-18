@@ -6,12 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.databinding.ItemMovieBinding
-import com.example.myapplication.movies.Movie
+import com.example.myapplication.room.entity.Movie
 import com.example.myapplication.utils.setImage
 import java.util.*
 

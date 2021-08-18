@@ -41,11 +41,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:maxWidth="238dp"
         android:textSize="24sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/right_line"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/movieImage"
         app:layout_constraintTop_toTopOf="@+id/top_line"
+        app:layout_constrainedWidth="true"
         tools:text="Name" />
 
     <TextView
@@ -54,22 +56,31 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:maxWidth="238dp"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/movieTitle"
         app:layout_constraintTop_toBottomOf="@+id/movieTitle"
         tools:text="2000" />
 
     <TextView
+        android:id="@+id/movieRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/yearOfMovie"
+        app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
+        android:layout_marginTop="16dp"
+        tools:text="10.0" />
+
+    <TextView
         android:id="@+id/movieAnnotation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constrainedWidth="true"
         android:layout_marginTop="16dp"
-        android:ellipsize="end"
-        android:maxWidth="238dp"
-        android:maxLines="5"
-        android:paddingBottom="32dp"
-        app:layout_constraintStart_toStartOf="@+id/yearOfMovie"
-        app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
+        app:layout_constraintEnd_toStartOf="@+id/right_line"
+        app:layout_constraintStart_toStartOf="@+id/left_line"
+        app:layout_constraintTop_toBottomOf="@+id/movieImage"
+        android:textSize="16sp"
         tools:text="Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,8 +3,14 @@ package com.example.myapplication.di
 import com.example.myapplication.ui.MovieFragment
 import com.example.myapplication.ui.SecondFragment
 import dagger.Component
+import javax.inject.Singleton
 
-@Component(modules = arrayOf(ViewModelModule::class, RepositoryModule::class, TmdbServiceModule::class))
+@Singleton
+@Component(modules = [ViewModelModule::class,
+    RepositoryModule::class,
+    TmdbServiceModule::class,
+    AppModule::class,
+    RoomModule::class])
 
 interface AppComponent {
     //Fragment
