@@ -1,15 +1,14 @@
 package com.example.myapplication.movies
 
 import com.example.myapplication.BuildConfig
+import com.example.myapplication.models.RequestToken
 import com.example.myapplication.room.entity.Movie
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface TmdbService {
 
@@ -44,4 +43,15 @@ interface TmdbService {
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("language") language: String
     ): Response<Movie>
+
+    @GET("authentication/token/new")
+    suspend fun getRequestToken(
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH
+    ): Response<RequestToken>
+
+    @POST("authentication/token/validate_with_login")
+    suspend fun postSessionWithLogin(
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Body body: String
+    ): Response<RequestToken>
 }

@@ -10,7 +10,7 @@ import androidx.fragment.app.replace
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myapplication.MyApplicationClass
+import com.example.myapplication.appl.MyApplicationClass
 import com.example.myapplication.R
 import com.example.myapplication.adapters.MovieClickListener
 import com.example.myapplication.adapters.MovieRecyclerAdapter

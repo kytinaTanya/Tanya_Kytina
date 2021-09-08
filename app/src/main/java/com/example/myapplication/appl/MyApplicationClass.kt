@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.appl
 
 import android.app.Application
 import com.example.myapplication.di.AppComponent

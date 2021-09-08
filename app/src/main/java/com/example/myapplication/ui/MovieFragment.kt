@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.BuildConfig
-import com.example.myapplication.MyApplicationClass
+import com.example.myapplication.appl.MyApplicationClass
 import com.example.myapplication.databinding.FragmentMovieBinding
 import com.example.myapplication.room.entity.Movie
 import com.example.myapplication.utils.setImage
