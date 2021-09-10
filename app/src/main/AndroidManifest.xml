@@ -11,14 +11,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyApplication">
+        android:theme="@style/Theme.MyApplication.NoActionBar">
         <activity
             android:name=".ui.SingInActivity"
-            android:exported="true" />
+            android:exported="true"/>
         <activity
             android:name=".ui.SingUpActivity"
             android:exported="true" />
-        <activity android:name=".ui.SecondActivity" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,5 +1,6 @@
 package com.example.myapplication.utils
 
+import android.widget.EditText
 import android.widget.ImageView
 import com.example.myapplication.R
 import com.squareup.picasso.Picasso
@@ -10,4 +11,8 @@ fun ImageView.setImage(imageUrl: String){
         .placeholder(R.drawable.poster_placeholder)
         .error(R.drawable.poster_placeholder)
         .into(this)
+}
+
+fun EditText.getStringText(): String {
+    return this.text.toString()
 }

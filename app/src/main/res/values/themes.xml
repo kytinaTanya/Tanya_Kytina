@@ -13,4 +13,21 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <!-- No action bar theme. -->
+    <style name="Theme.MyApplication.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!--Button style-->
+    <style name="RoundedCornerButton"
+        parent="Widget.AppCompat.Button.Colored">
+        <item name="android:background">@drawable/radio_button</item>
+    </style>
+
+    <style name="GreenRoundedCornerButton"
+        parent="Widget.AppCompat.Button.Colored">
+        <item name="android:background">@drawable/green_radio_button</item>
+    </style>
 </resources>
