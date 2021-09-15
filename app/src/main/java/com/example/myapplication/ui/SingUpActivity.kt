@@ -5,9 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivitySingUpBinding
 import com.example.myapplication.utils.getStringText
+import com.example.myapplication.viewmodel.AuthViewModel
+import com.example.myapplication.viewmodel.MovieViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.auth.ktx.auth
@@ -15,6 +19,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.lang.ref.PhantomReference
+import javax.inject.Inject
 
 class SingUpActivity : AppCompatActivity() {
 
@@ -22,6 +27,9 @@ class SingUpActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var reference: DatabaseReference
     private lateinit var sessionKey: String
+    @Inject
+    lateinit var factory: ViewModelProvider.Factory
+    lateinit var viewModel: AuthViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +47,7 @@ class SingUpActivity : AppCompatActivity() {
 
         binding.enter.setOnClickListener {
             if(checkData()) {
+
                 createAccount(binding.name.getStringText(), binding.surname.getStringText(),
                     binding.email.getStringText(), binding.pass.getStringText(), sessionKey)
             }

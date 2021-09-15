@@ -2,6 +2,8 @@ package com.example.myapplication.movies
 
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.models.RequestToken
+import com.example.myapplication.models.RetrofitPostToken
+import com.example.myapplication.models.SessionId
 import com.example.myapplication.room.entity.Movie
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -49,9 +51,9 @@ interface TmdbService {
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH
     ): Response<RequestToken>
 
-    @POST("authentication/token/validate_with_login")
-    suspend fun postSessionWithLogin(
+    @POST("authentication/session/new")
+    suspend fun postSession(
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Body body: String
-    ): Response<RequestToken>
+        @Body body: RetrofitPostToken
+    ): Response<SessionId>
 }

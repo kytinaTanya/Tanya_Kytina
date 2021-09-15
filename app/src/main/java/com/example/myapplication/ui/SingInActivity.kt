@@ -33,8 +33,9 @@ class SingInActivity : AppCompatActivity() {
         }
 
         binding.enter.setOnClickListener {
-            signIn(binding.login.getStringText(), binding.password.getStringText())
-
+            if(checkData()) {
+                signIn(binding.login.getStringText(), binding.password.getStringText())
+            }
         }
     }
 
@@ -50,5 +51,18 @@ class SingInActivity : AppCompatActivity() {
                 }
 
             }
+    }
+
+    private fun checkData(): Boolean {
+        if(isAnyFieldEmpty()) {
+            Toast.makeText(this, "Заполните все поля", Toast.LENGTH_SHORT).show()
+            return false
+        } else {
+            return true
+        }
+    }
+
+    private fun isAnyFieldEmpty(): Boolean {
+        return binding.login.text.isEmpty() || binding.password.text.isEmpty()
     }
 }

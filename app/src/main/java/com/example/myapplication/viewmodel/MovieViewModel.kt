@@ -36,7 +36,7 @@ class MovieViewModel @Inject constructor(private val mRepository: Repository) : 
         _movieDetails = MutableLiveData<Movie>()
         viewModelScope.launch {
             _movieDetails.value = mRepository.getMovieDetails(id)
-            Log.d("repository", "${_movieDetails.value}")
+            Log.d(tag, "${_movieDetails.value}")
         }
     }
 }
