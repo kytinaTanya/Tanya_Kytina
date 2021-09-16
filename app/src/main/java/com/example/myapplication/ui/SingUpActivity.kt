@@ -18,18 +18,19 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import java.lang.ref.PhantomReference
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SingUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySingUpBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var reference: DatabaseReference
     private lateinit var sessionKey: String
-    @Inject
-    lateinit var factory: ViewModelProvider.Factory
-    lateinit var viewModel: AuthViewModel
+
+    private val viewModel: AuthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +39,6 @@ class SingUpActivity : AppCompatActivity() {
 
         auth = Firebase.auth
         reference = Firebase.database.reference
-        sessionKey = "kjfkjfkjfkjkjfkjf"
 
         binding.exit.setOnClickListener {
             val i = Intent(this, SingInActivity::class.java)
@@ -47,7 +47,10 @@ class SingUpActivity : AppCompatActivity() {
 
         binding.enter.setOnClickListener {
             if(checkData()) {
-
+                viewModel.createSessionId()
+                viewModel.sessionId.observe(this) {
+                    sessionKey = it
+                }
                 createAccount(binding.name.getStringText(), binding.surname.getStringText(),
                     binding.email.getStringText(), binding.pass.getStringText(), sessionKey)
             }

@@ -9,7 +9,9 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentFirstBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FirstFragment : Fragment(){
     private var _binding: FragmentFirstBinding? = null
     private val binding get() = _binding!!

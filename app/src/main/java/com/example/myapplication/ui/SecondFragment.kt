@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,22 +18,19 @@ import com.example.myapplication.adapters.MovieRecyclerAdapter
 import com.example.myapplication.databinding.FragmentSecondBinding
 import com.example.myapplication.room.entity.Movie
 import com.example.myapplication.viewmodel.MovieViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class SecondFragment : Fragment() {
     private var _binding: FragmentSecondBinding? = null
     private val binding get() = _binding!!
 
     lateinit var mAdapter: MovieRecyclerAdapter
 
-    @Inject
-    lateinit var factory: ViewModelProvider.Factory
-    lateinit var viewModel: MovieViewModel
+    private val viewModel: MovieViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        MyApplicationClass.appComponent.inject(this)
-        viewModel = ViewModelProvider(requireActivity(), factory).get(MovieViewModel::class.java)
         super.onCreate(savedInstanceState)
 
         viewModel.loadMovies()

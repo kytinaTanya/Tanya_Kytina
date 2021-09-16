@@ -7,9 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.room.entity.Movie
 import com.example.myapplication.repository.Repository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class MovieViewModel @Inject constructor(private val mRepository: Repository) : ViewModel() {
 
     private val tag: String = MovieViewModel::class.java.simpleName

@@ -6,9 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.models.SessionId
 import com.example.myapplication.repository.AuthRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class AuthViewModel @Inject constructor(private val mRepository: AuthRepository) : ViewModel() {
     private val tag = AuthViewModel::class.java.simpleName
 

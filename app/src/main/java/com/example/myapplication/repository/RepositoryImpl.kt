@@ -6,8 +6,9 @@ import com.example.myapplication.room.entity.Movie
 import com.example.myapplication.movies.TmdbService
 import com.example.myapplication.room.dao.MovieDao
 import com.example.myapplication.room.entity.Movie.Companion.TABLE_SIZE
+import javax.inject.Inject
 
-class RepositoryImpl(private val service: TmdbService, private val dao: MovieDao) : Repository, AuthRepository {
+class RepositoryImpl @Inject constructor(private val service: TmdbService, private val dao: MovieDao) : Repository, AuthRepository {
 
     override suspend fun getListOfMovies() : List<Movie> {
         // получение данных позже отрефакторить нужно под коррутины и RX
