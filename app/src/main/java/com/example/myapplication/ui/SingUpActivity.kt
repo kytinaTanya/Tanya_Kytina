@@ -1,8 +1,11 @@
 package com.example.myapplication.ui
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -29,6 +32,7 @@ class SingUpActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var reference: DatabaseReference
     private lateinit var sessionKey: String
+    private var requestToken: String = ""
 
     private val viewModel: AuthViewModel by viewModels()
 
@@ -40,21 +44,40 @@ class SingUpActivity : AppCompatActivity() {
         auth = Firebase.auth
         reference = Firebase.database.reference
 
+        viewModel.getRequestToken()
+        viewModel.requestToken.observe(this) {
+            requestToken = it
+        }
+
+        viewModel.sessionId.observe(this) {
+            sessionKey = it
+        }
+
         binding.exit.setOnClickListener {
             val i = Intent(this, SingInActivity::class.java)
             startActivity(i)
         }
 
+        binding.proof.setOnClickListener {
+            binding.proof.visibility = View.GONE
+            binding.enter.visibility = View.VISIBLE
+            val intent = Intent(Intent.ACTION_VIEW,
+                Uri.parse("https://www.themoviedb.org/authenticate/$requestToken"))
+            startActivity(intent)
+        }
+
         binding.enter.setOnClickListener {
             if(checkData()) {
-                viewModel.createSessionId()
-                viewModel.sessionId.observe(this) {
-                    sessionKey = it
-                }
+
                 createAccount(binding.name.getStringText(), binding.surname.getStringText(),
                     binding.email.getStringText(), binding.pass.getStringText(), sessionKey)
             }
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        viewModel.getSessionId(requestToken)
     }
 
     private fun createAccount(name: String,
@@ -63,6 +86,9 @@ class SingUpActivity : AppCompatActivity() {
                               password: String,
                               sessionKey: String) {
         auth.createUserWithEmailAndPassword(email, password)
+            .addOnCanceledListener {
+                Toast.makeText(this, "Отмена операции1", Toast.LENGTH_SHORT).show()
+            }
             .addOnCompleteListener(this) { task ->
                 if(task.isSuccessful) {
                     val uid = auth.currentUser?.uid.toString()
@@ -75,17 +101,22 @@ class SingUpActivity : AppCompatActivity() {
                     dataMap["sessionKey"] = sessionKey
 
                     reference.child("users").child(uid).updateChildren(dataMap)
+                        .addOnCanceledListener {
+                            Toast.makeText(this, "Отмена операции2", Toast.LENGTH_SHORT).show()
+                        }
                         .addOnCompleteListener { userTask ->
                             if(userTask.isSuccessful) {
                                 Toast.makeText(this, "Регистрация прошла успешно", Toast.LENGTH_SHORT).show()
                                 val i = Intent(this, MainActivity::class.java)
                                 startActivity(i)
                             } else {
-                                Toast.makeText(this, "Не получилось зарегистрироваться", Toast.LENGTH_SHORT).show()
+                                Log.d("AUTH", "${userTask.exception}")
+                                Toast.makeText(this, "Не получилось зарегистрироваться: ${userTask.exception}", Toast.LENGTH_SHORT).show()
                             }
                         }
                 } else {
-                    Toast.makeText(this, "Не получилось зарегистрироваться", Toast.LENGTH_SHORT).show()
+                    Log.d("AUTH", "${task.exception}")
+                    Toast.makeText(this, "Не получилось зарегистрироваться: ${task.exception}", Toast.LENGTH_SHORT).show()
                 }
             }
     }

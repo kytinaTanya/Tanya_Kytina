@@ -1,6 +1,9 @@
 package com.example.myapplication.repository
 
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
+import com.example.myapplication.models.RequestToken
 import com.example.myapplication.models.RetrofitPostToken
 import com.example.myapplication.room.entity.Movie
 import com.example.myapplication.movies.TmdbService
@@ -56,23 +59,24 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService, priva
         val response = service.getRequestToken()
 
         return if(response.isSuccessful) {
-            response.body()?.requestToken ?: EMPTY_STRING
+            val req = response.body()?.requestToken ?: EMPTY_STRING
+            Log.d("REQUESTTOKEN", req)
+            req
         } else {
             EMPTY_STRING
         }
     }
 
-    override suspend fun createSessionId(): String {
-        val requestToken = getRequestToken()
-
+    override suspend fun createSessionId(requestToken: String): String {
         if(requestToken == EMPTY_STRING) {
             Log.d("TOKEN", "Not found")
-            return ""
+            return EMPTY_STRING
         }
 
         val body = RetrofitPostToken(requestToken)
 
         val response = service.postSession(body = body)
+        Log.d("POSTRESPONSE", response.message())
 
         return if(response.isSuccessful) {
             response.body()?.sessionId ?: EMPTY_STRING

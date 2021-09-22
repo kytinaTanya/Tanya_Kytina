@@ -146,6 +146,17 @@
         style="@style/GreenRoundedCornerButton"/>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/proof"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Подтвердить доступ"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_line"
+        app:layout_constraintEnd_toEndOf="@id/end_line"
+        app:layout_constraintStart_toStartOf="@id/start_line"
+        app:layout_constrainedWidth="true"
+        style="@style/RoundedCornerButton"/>
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/enter"
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -154,6 +165,7 @@
         app:layout_constraintEnd_toEndOf="@id/end_line"
         app:layout_constraintStart_toStartOf="@id/start_line"
         app:layout_constrainedWidth="true"
-        style="@style/RoundedCornerButton"/>
+        style="@style/RoundedCornerButton"
+        android:visibility="invisible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
