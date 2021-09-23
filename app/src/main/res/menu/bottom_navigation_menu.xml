@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:icon="@drawable/ic_baseline_movie"
+        android:id="@+id/main"
+        android:title="Главная"/>
+
+    <item
+        android:icon="@drawable/ic_baseline_bookmark"
+        android:id="@+id/favorite"
+        android:title="Закладки" />
+
+    <item
+        android:icon="@drawable/ic_baseline_access_time"
+        android:id="@+id/history"
+        android:title="История" />
+
+    <item
+        android:icon="@drawable/ic_baseline_account"
+        android:id="@+id/account"
+        android:title="Профиль" />
+</menu>

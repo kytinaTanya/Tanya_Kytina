@@ -15,15 +15,15 @@ import com.example.myapplication.appl.MyApplicationClass
 import com.example.myapplication.R
 import com.example.myapplication.adapters.MovieClickListener
 import com.example.myapplication.adapters.MovieRecyclerAdapter
-import com.example.myapplication.databinding.FragmentSecondBinding
+import com.example.myapplication.databinding.FragmentFavoriteBinding
 import com.example.myapplication.room.entity.Movie
 import com.example.myapplication.viewmodel.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SecondFragment : Fragment() {
-    private var _binding: FragmentSecondBinding? = null
+class FavoriteFragment : Fragment() {
+    private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
 
     lateinit var mAdapter: MovieRecyclerAdapter
@@ -41,7 +41,7 @@ class SecondFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         return binding.root
     }
 
