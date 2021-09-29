@@ -1,10 +1,9 @@
-package com.example.myapplication.movies
+package com.example.myapplication.repository
 
 import com.example.myapplication.BuildConfig
-import com.example.myapplication.models.RequestToken
-import com.example.myapplication.models.RetrofitPostToken
-import com.example.myapplication.models.SessionId
-import com.example.myapplication.room.entity.Movie
+import com.example.myapplication.models.*
+import com.example.myapplication.models.movies.MoviesResponse
+import com.example.myapplication.models.movies.TVResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
@@ -44,7 +43,7 @@ interface TmdbService {
         @Path("movie_id") id: Long,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("language") language: String
-    ): Response<Movie>
+    ): Response<Film>
 
     @GET("authentication/token/new")
     suspend fun getRequestToken(
@@ -56,4 +55,35 @@ interface TmdbService {
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Body body: RetrofitPostToken
     ): Response<SessionId>
+
+    @GET("movie/popular")
+    suspend fun getPopularMovies(
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = "ru-RU",
+        @Query("page") page: Int = 1,
+        @Query("region") region: String = "RU"
+    ): Response<MoviesResponse>
+
+    @GET("movie/upcoming")
+    suspend fun getLatestMovies(
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = "ru-RU",
+        @Query("page") page: Int = 1,
+        @Query("region") region: String = "RU"
+    ): Response<MoviesResponse>
+
+    @GET("movie/now_playing")
+    suspend fun getRecommendationsMovies(
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = "ru-RU",
+        @Query("page") page: Int = 1,
+        @Query("region") region: String = "RU"
+    ): Response<MoviesResponse>
+
+    @GET("tv/popular")
+    suspend fun getPopularTV(
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = "ru-RU",
+        @Query("page") page: Int = 1
+    ): Response<TVResponse>
 }

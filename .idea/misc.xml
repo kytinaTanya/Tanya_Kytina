@@ -7,13 +7,20 @@
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/edit_text_style.xml" value="0.15989583333333332" />
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/green_radio_button.xml" value="0.2175925925925926" />
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/ic_logo1.xml" value="0.15989583333333332" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/poster_item.xml" value="0.13697916666666668" />
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/radio_button.xml" value="0.15989583333333332" />
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/layout/activity_main.xml" value="0.192481884057971" />
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/layout/activity_sing_in.xml" value="0.2" />
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/layout/activity_sing_up.xml" value="0.1598731884057971" />
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/layout/fragment_account.xml" value="0.18659420289855072" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/layout/fragment_favorite.xml" value="0.12083333333333333" />
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/layout/fragment_first.xml" value="0.18659420289855072" />
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/layout/fragment_history.xml" value="0.18659420289855072" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/layout/fragment_main.xml" value="0.12083333333333333" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/layout/fragment_movie.xml" value="0.1802536231884058" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/layout/item_backdrop_title.xml" value="0.1802536231884058" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/layout/item_movie.xml" value="0.1334853090172239" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/layout/item_poster.xml" value="0.12083333333333333" />
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.2037037037037037" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2128623188405797" />
         <entry key="app/src/main/res/layout/fragment_movie.xml" value="0.322463768115942" />

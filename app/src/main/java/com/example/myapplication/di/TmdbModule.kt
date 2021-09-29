@@ -1,6 +1,6 @@
 package com.example.myapplication.di
 
-import com.example.myapplication.movies.TmdbService
+import com.example.myapplication.repository.TmdbService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

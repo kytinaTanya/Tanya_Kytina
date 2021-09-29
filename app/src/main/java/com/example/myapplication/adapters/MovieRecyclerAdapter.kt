@@ -4,12 +4,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.BuildConfig
-import com.example.myapplication.databinding.ItemMovieBinding
-import com.example.myapplication.room.entity.Movie
+import com.example.myapplication.R
+import com.example.myapplication.databinding.ItemBackdropTitleBinding
+import com.example.myapplication.databinding.ItemPosterBinding
+import com.example.myapplication.models.Film
+import com.example.myapplication.models.Movie
+import com.example.myapplication.models.TV
 import com.example.myapplication.utils.setImage
 import java.util.*
 
@@ -17,45 +19,66 @@ interface MovieClickListener {
     fun onOpenMovie(id: Long)
 }
 
-class MovieRecyclerAdapter(private val listener: MovieClickListener) : RecyclerView.Adapter<MovieRecyclerAdapter.ViewHolder>(), View.OnClickListener {
+class MovieRecyclerAdapter(private val listener: MovieClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
 
     var mMoviesList: MutableList<Movie> = LinkedList()
-    private lateinit var binding: ItemMovieBinding
 
-    class ViewHolder(binding: ItemMovieBinding): RecyclerView.ViewHolder(binding.root) {
-        val title: TextView = binding.movieTitle
-        val year: TextView = binding.yearOfMovie
-        val annotation: TextView = binding.movieAnnotation
-        val poster: ImageView = binding.movieImage
+    class PosterViewHolder(val binding: ItemPosterBinding): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(movie: Movie){
-            title.text = movie.title
-            year.text = movie.releaseYear()
-            annotation.text = movie.overview
-            poster.setImage(buildImageUrl(movie))
+        fun bind(movie: Film){
+            binding.posterImage.setImage(buildImageUrl(movie))
         }
 
-        private fun buildImageUrl(movie: Movie): String {
+        private fun buildImageUrl(movie: Film): String {
             val imageUrl = BuildConfig.BASE_IMAGE_URL + movie.posterPath
             Log.d("initImage", imageUrl)
             return imageUrl
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    class BackdropAndTitleViewHolder(val binding: ItemBackdropTitleBinding): RecyclerView.ViewHolder(binding.root) {
 
-        binding.root.setOnClickListener(this)
+        fun bind(tv: TV){
+            binding.backdropImage.setImage(buildImageUrl(tv))
+            binding.title.text = tv.name
+        }
 
-        return ViewHolder(binding)
+        fun buildImageUrl(tv: TV): String {
+            val imageUrl = BuildConfig.BASE_IMAGE_URL + tv.backdropPath
+            Log.d("initImage", imageUrl)
+            return imageUrl
+        }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if(viewType == R.layout.item_poster) {
+            val binding = ItemPosterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            binding.root.setOnClickListener(this)
+            PosterViewHolder(binding)
+        } else {
+            val binding = ItemBackdropTitleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            binding.root.setOnClickListener(this)
+            BackdropAndTitleViewHolder(binding)
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.tag = mMoviesList[position]
-        holder.bind(mMoviesList[position])
+        when(holder) {
+            is PosterViewHolder -> holder.bind(mMoviesList[position] as Film)
+            is BackdropAndTitleViewHolder -> holder.bind(mMoviesList[position] as TV)
+        }
     }
 
     override fun getItemCount() = mMoviesList.size
+
+    override fun getItemViewType(position: Int): Int {
+        return when(mMoviesList[position]) {
+            is Film -> R.layout.item_poster
+            is TV -> R.layout.item_backdrop_title
+            else -> R.layout.item_poster
+        }
+    }
 
     fun appendMovies(movies: List<Movie>) {
         mMoviesList.clear()
@@ -65,6 +88,6 @@ class MovieRecyclerAdapter(private val listener: MovieClickListener) : RecyclerV
 
     override fun onClick(v: View?) {
         val movie = v?.tag as Movie
-        listener.onOpenMovie(movie.id)
+        listener.onOpenMovie(movie.mid)
     }
 }

@@ -1,8 +1,12 @@
 package com.example.myapplication.repository
 
-import com.example.myapplication.room.entity.Movie
+import com.example.myapplication.models.Film
+import com.example.myapplication.models.TV
 
 interface Repository {
-    suspend fun getListOfMovies() : List<Movie>
-    suspend fun getMovieDetails(id: Long) : Movie
+    suspend fun getListOfPopularMovies() : List<Film>
+    suspend fun getListOfRecommendations() : List<Film>
+    suspend fun getListOfLatestMovies() : List<Film>
+    suspend fun getMovieDetails(id: Long) : Film
+    suspend fun getPopularTv() : List<TV>
 }

@@ -1,10 +1,10 @@
-package com.example.myapplication.movies
+package com.example.myapplication.models.movies
 
-import com.example.myapplication.room.entity.Movie
+import com.example.myapplication.models.Film
 import com.google.gson.annotations.SerializedName
 
 data class MoviesResponse(
     @SerializedName("page") val page: Int,
-    @SerializedName("results") val movies: List<Movie>,
+    @SerializedName("results") val movies: List<Film>,
     @SerializedName("total_pages") val pages: Int
 )

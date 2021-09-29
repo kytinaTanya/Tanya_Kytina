@@ -1,8 +1,7 @@
 package com.example.myapplication.repository
 
-import com.example.myapplication.room.entity.Movie
-import com.example.myapplication.movies.MoviesResponse
-import com.example.myapplication.movies.TmdbService
+import com.example.myapplication.models.Movie
+import com.example.myapplication.models.movies.MoviesResponse
 import com.google.gson.Gson
 import junit.framework.Assert.assertEquals
 import org.junit.Before
@@ -32,7 +31,7 @@ class RepositoryImplTest {
        `when`(service.getTopRatedMovies(language = "ru-RU")).thenReturn(correctList)
 
         val repositoryImpl = RepositoryImpl(service)
-        repositoryImpl.getListOfMovies(::onSuccess, ::onError)
+        repositoryImpl.getListOfPopularMovies(::onSuccess, ::onError)
     }
 
     private fun onSuccess(list: List<Movie>){
