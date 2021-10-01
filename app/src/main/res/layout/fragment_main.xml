@@ -12,7 +12,6 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/trendTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -22,7 +21,7 @@
             android:textStyle="bold"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/inTrendRV"
+            android:id="@+id/popular_movies"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:orientation="horizontal"
@@ -32,17 +31,16 @@
             android:layout_marginEnd="16dp"/>
 
         <TextView
-            android:id="@+id/ratedTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Вы оценили"
+            android:text="Популярные сериалы"
             android:textSize="30sp"
             android:textStyle="bold"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ratedRV"
+            android:id="@+id/popular_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -52,17 +50,93 @@
             android:layout_marginEnd="16dp"/>
 
         <TextView
-            android:id="@+id/newTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Новое"
+            android:text="Сейчас смотрят"
             android:textSize="30sp"
             android:textStyle="bold"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/newRV"
+            android:id="@+id/now_playing_movies"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="horizontal"
+            tools:listitem="@layout/item_poster"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Скоро в прокате"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/upcoming_movies"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="horizontal"
+            tools:listitem="@layout/item_poster"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Лучшие сериалы"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/top_rated_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:listitem="@layout/item_backdrop_title"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Сегодня в эфире"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/on_air_today_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:listitem="@layout/item_backdrop_title"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Лучшие фильмы"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/top_rated_movies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -72,21 +146,20 @@
             android:layout_marginEnd="16dp"/>
 
         <TextView
-            android:id="@+id/recTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Для вас"
+            android:text="Сейчас в эфире"
             android:textSize="30sp"
             android:textStyle="bold"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recRV"
+            android:id="@+id/now_on_air_tv"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            tools:listitem="@layout/item_poster"
+            tools:listitem="@layout/item_backdrop_title"
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"

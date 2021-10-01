@@ -1,10 +1,10 @@
 package com.example.myapplication.repository
 
 import android.util.Log
-import com.example.myapplication.models.Film
+import com.example.myapplication.models.movies.Film
 import com.example.myapplication.models.RetrofitPostToken
-import com.example.myapplication.models.Movie
-import com.example.myapplication.models.TV
+import com.example.myapplication.models.movies.Person
+import com.example.myapplication.models.movies.TV
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(private val service: TmdbService) : Repository, AuthRepository {
@@ -20,8 +20,8 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService) : Rep
         }
     }
 
-    override suspend fun getListOfRecommendations(): List<Film> {
-        val response = service.getRecommendationsMovies()
+    override suspend fun getListOfNowPlayingMovies(): List<Film> {
+        val response = service.getNowPlayingMovies()
         return if(response.isSuccessful) {
             response.body()?.movies ?: emptyList()
         } else {
@@ -29,8 +29,17 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService) : Rep
         }
     }
 
-    override suspend fun getListOfLatestMovies(): List<Film> {
-        val response = service.getLatestMovies()
+    override suspend fun getListOfUpcomingMovies(): List<Film> {
+        val response = service.getUpcomingMovies()
+        return if(response.isSuccessful) {
+            response.body()?.movies ?: emptyList()
+        } else {
+            emptyList()
+        }
+    }
+
+    override suspend fun getListOfTopRatedMovies(): List<Film> {
+        val response = service.getTopRatedMovies()
         return if(response.isSuccessful) {
             response.body()?.movies ?: emptyList()
         } else {
@@ -49,10 +58,46 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService) : Rep
         }
     }
 
-    override suspend fun getPopularTv(): List<TV> {
+    override suspend fun getListOfPopularTv(): List<TV> {
         val response = service.getPopularTV()
         return if(response.isSuccessful) {
             response.body()?.TV ?: emptyList()
+        } else {
+            emptyList()
+        }
+    }
+
+    override suspend fun getListOfOnAirTodayTV(): List<TV> {
+        val response = service.getOnAirTodayTV()
+        return if(response.isSuccessful) {
+            response.body()?.TV ?: emptyList()
+        } else {
+            emptyList()
+        }
+    }
+
+    override suspend fun getListOfNowOnAirTV(): List<TV> {
+        val response = service.getNowOnAirTV()
+        return if(response.isSuccessful) {
+            response.body()?.TV ?: emptyList()
+        } else {
+            emptyList()
+        }
+    }
+
+    override suspend fun getListOfTopRatedTV(): List<TV> {
+        val response = service.getTopRatedTV()
+        return if(response.isSuccessful) {
+            response.body()?.TV ?: emptyList()
+        } else {
+            emptyList()
+        }
+    }
+
+    override suspend fun getListOfPopularPersons(): List<Person> {
+        val response = service.getPopularPersons()
+        return if(response.isSuccessful) {
+            response.body()?.persons ?: emptyList()
         } else {
             emptyList()
         }

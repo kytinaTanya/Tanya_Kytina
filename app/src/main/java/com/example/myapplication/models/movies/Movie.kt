@@ -1,11 +1,9 @@
-package com.example.myapplication.models
+package com.example.myapplication.models.movies
 
 import com.google.gson.annotations.SerializedName
 
-sealed class Movie(val mid: Long,
-                   val mtitle: String,
-                   val mposterPath: String,
-                   val mbackdropPath: String)
+sealed class Movie(val mid: Long)
+
 data class Film(
     @SerializedName("id")
     val id: Long,
@@ -27,11 +25,12 @@ data class Film(
 
     @SerializedName("release_date")
     val releaseDate: String,
-) : Movie(id, title, posterPath, backdropPath) {
+) : Movie(id) {
     fun releaseYear(): String{
         return releaseDate.substringBefore("-")
     }
 }
+
 data class TV(
     @SerializedName("id")
     val id: Long,
@@ -50,4 +49,21 @@ data class TV(
 
     @SerializedName("vote_average")
     val rating: Float
-) : Movie(id, name, posterPath, backdropPath)
+) : Movie(id)
+
+data class Person(
+    @SerializedName("id")
+    val id: Long,
+
+    @SerializedName("name")
+    val name: String,
+
+    @SerializedName("profile_path")
+    val profilePath: String,
+
+    @SerializedName("adult")
+    val adult: Boolean,
+
+    @SerializedName("popularity")
+    val popularity: Number
+)

@@ -2,7 +2,9 @@ package com.example.myapplication.repository
 
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.models.*
+import com.example.myapplication.models.movies.Film
 import com.example.myapplication.models.movies.MoviesResponse
+import com.example.myapplication.models.movies.PersonResponse
 import com.example.myapplication.models.movies.TVResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -31,13 +33,6 @@ interface TmdbService {
         }
     }
 
-    @GET("movie/top_rated")
-    suspend fun getTopRatedMovies(
-        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Query("language") language: String,
-        @Query("page") page: Int = 1
-    ): Response<MoviesResponse>
-
     @GET("movie/{movie_id}")
     suspend fun getMovieDetails(
         @Path("movie_id") id: Long,
@@ -65,7 +60,7 @@ interface TmdbService {
     ): Response<MoviesResponse>
 
     @GET("movie/upcoming")
-    suspend fun getLatestMovies(
+    suspend fun getUpcomingMovies(
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("language") language: String = "ru-RU",
         @Query("page") page: Int = 1,
@@ -73,11 +68,18 @@ interface TmdbService {
     ): Response<MoviesResponse>
 
     @GET("movie/now_playing")
-    suspend fun getRecommendationsMovies(
+    suspend fun getNowPlayingMovies(
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("language") language: String = "ru-RU",
         @Query("page") page: Int = 1,
         @Query("region") region: String = "RU"
+    ): Response<MoviesResponse>
+
+    @GET("movie/top_rated")
+    suspend fun getTopRatedMovies(
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = "ru-RU",
+        @Query("page") page: Int = 1
     ): Response<MoviesResponse>
 
     @GET("tv/popular")
@@ -86,4 +88,32 @@ interface TmdbService {
         @Query("language") language: String = "ru-RU",
         @Query("page") page: Int = 1
     ): Response<TVResponse>
+
+    @GET("tv/airing_today")
+    suspend fun getOnAirTodayTV(
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = "ru-RU",
+        @Query("page") page: Int = 1
+    ): Response<TVResponse>
+
+    @GET("tv/on_the_air")
+    suspend fun getNowOnAirTV(
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = "ru-RU",
+        @Query("page") page: Int = 1
+    ): Response<TVResponse>
+
+    @GET("tv/top_rated")
+    suspend fun getTopRatedTV(
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = "ru-RU",
+        @Query("page") page: Int = 1
+    ): Response<TVResponse>
+
+    @GET("person/popular")
+    suspend fun getPopularPersons(
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = "ru-RU",
+        @Query("page") page: Int = 1
+    ): Response<PersonResponse>
 }

@@ -9,9 +9,9 @@ import com.example.myapplication.BuildConfig
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ItemBackdropTitleBinding
 import com.example.myapplication.databinding.ItemPosterBinding
-import com.example.myapplication.models.Film
-import com.example.myapplication.models.Movie
-import com.example.myapplication.models.TV
+import com.example.myapplication.models.movies.Film
+import com.example.myapplication.models.movies.Movie
+import com.example.myapplication.models.movies.TV
 import com.example.myapplication.utils.setImage
 import java.util.*
 

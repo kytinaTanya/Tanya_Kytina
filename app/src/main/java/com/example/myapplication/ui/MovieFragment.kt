@@ -9,8 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.databinding.FragmentMovieBinding
-import com.example.myapplication.models.Film
-import com.example.myapplication.models.Movie
+import com.example.myapplication.models.movies.Film
 import com.example.myapplication.utils.setImage
 import com.example.myapplication.viewmodel.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint

@@ -22,19 +22,27 @@ class MainFragment : Fragment(){
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-    lateinit var inTrendAdapter: MovieRecyclerAdapter
-    lateinit var recommendationAdapter: MovieRecyclerAdapter
-    lateinit var ratedAdapter: MovieRecyclerAdapter
-    lateinit var newAdapter: MovieRecyclerAdapter
+    private lateinit var filmsInTrendAdapter: MovieRecyclerAdapter
+    private lateinit var filmsUpcomingAdapter: MovieRecyclerAdapter
+    private lateinit var tvPopularAdapter: MovieRecyclerAdapter
+    private lateinit var filmsNowPlayingAdapter: MovieRecyclerAdapter
+    lateinit var tvBestAdapter: MovieRecyclerAdapter
+    lateinit var tvNowOnAirAdapter: MovieRecyclerAdapter
+    lateinit var tvTodayOnAirAdapter: MovieRecyclerAdapter
+    lateinit var filmsBestAdapter: MovieRecyclerAdapter
 
     private val viewModel: MovieViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.loadMoviesInTrend()
-        viewModel.loadNewMovies()
-        viewModel.loadRecommendations()
+        viewModel.loadNowPlayingMovies()
+        viewModel.loadUpcomingMovies()
         viewModel.loadPopularTV()
+        viewModel.loadNowOnAirTV()
+        viewModel.loadOnAirTodayTV()
+        viewModel.loadTopRatedMovies()
+        viewModel.loadTopRatedTV()
     }
 
     override fun onCreateView(
@@ -55,19 +63,35 @@ class MainFragment : Fragment(){
         super.onResume()
 
         viewModel.moviesInTrend.observe(this) { movies ->
-            inTrendAdapter.appendMovies(movies)
+            filmsInTrendAdapter.appendMovies(movies)
         }
 
-        viewModel.moviesNew.observe(this) { movies ->
-            newAdapter.appendMovies(movies)
+        viewModel.moviesNowPlaying.observe(this) { movies ->
+            filmsNowPlayingAdapter.appendMovies(movies)
         }
 
-        viewModel.moviesRecommend.observe(this) { movies ->
-            recommendationAdapter.appendMovies(movies)
+        viewModel.moviesUpcoming.observe(this) { movies ->
+            filmsUpcomingAdapter.appendMovies(movies)
         }
 
-        viewModel.popularTV.observe(this) { movies ->
-            ratedAdapter.appendMovies(movies)
+        viewModel.popularTV.observe(this) { tv ->
+            tvPopularAdapter.appendMovies(tv)
+        }
+
+        viewModel.topRatedTV.observe(this) { tv ->
+            tvBestAdapter.appendMovies(tv)
+        }
+
+        viewModel.nowOnAirTV.observe(this) { tv ->
+            tvNowOnAirAdapter.appendMovies(tv)
+        }
+
+        viewModel.onAirTodayTV.observe(this) { tv ->
+            tvTodayOnAirAdapter.appendMovies(tv)
+        }
+
+        viewModel.moviesTopRated.observe(this) { movies ->
+            filmsBestAdapter.appendMovies(movies)
         }
     }
 
@@ -77,59 +101,115 @@ class MainFragment : Fragment(){
     }
 
     private fun initRecyclerViews() {
-        inTrendAdapter = MovieRecyclerAdapter(object : MovieClickListener {
+        filmsInTrendAdapter = MovieRecyclerAdapter(object : MovieClickListener {
             override fun onOpenMovie(id: Long) {
                 viewModel.getMovieDetails(id)
                 openChild()
             }
         })
-        binding.inTrendRV.apply {
+        binding.popularMovies.apply {
             layoutManager = LinearLayoutManager(requireContext(),
                 LinearLayoutManager.HORIZONTAL,
                 false)
-            adapter = inTrendAdapter
+            adapter = filmsInTrendAdapter
             addItemDecoration(DividerItemDecoration(16))
         }
 
-        recommendationAdapter = MovieRecyclerAdapter(object : MovieClickListener {
+        filmsUpcomingAdapter = MovieRecyclerAdapter(object : MovieClickListener {
             override fun onOpenMovie(id: Long) {
                 viewModel.getMovieDetails(id)
                 openChild()
             }
         })
-        binding.recRV.apply {
+        binding.upcomingMovies.apply {
             layoutManager = LinearLayoutManager(requireContext(),
                 LinearLayoutManager.HORIZONTAL,
                 false)
-            adapter = recommendationAdapter
+            adapter = filmsUpcomingAdapter
             addItemDecoration(DividerItemDecoration(16))
         }
 
-        ratedAdapter =MovieRecyclerAdapter(object : MovieClickListener {
+        tvPopularAdapter =MovieRecyclerAdapter(object : MovieClickListener {
             override fun onOpenMovie(id: Long) {
                 viewModel.getMovieDetails(id)
                 openChild()
             }
         })
-        binding.ratedRV.apply {
+        binding.popularTv.apply {
             layoutManager = LinearLayoutManager(requireContext(),
                 LinearLayoutManager.HORIZONTAL,
                 false)
-            adapter = ratedAdapter
+            adapter = tvPopularAdapter
             addItemDecoration(DividerItemDecoration(16))
         }
 
-        newAdapter = MovieRecyclerAdapter(object : MovieClickListener {
+        filmsNowPlayingAdapter = MovieRecyclerAdapter(object : MovieClickListener {
             override fun onOpenMovie(id: Long) {
                 viewModel.getMovieDetails(id)
                 openChild()
             }
         })
-        binding.newRV.apply {
+        binding.nowPlayingMovies.apply {
             layoutManager = LinearLayoutManager(requireContext(),
                 LinearLayoutManager.HORIZONTAL,
                 false)
-            adapter = newAdapter
+            adapter = filmsNowPlayingAdapter
+            addItemDecoration(DividerItemDecoration(16))
+        }
+
+        tvBestAdapter = MovieRecyclerAdapter(object : MovieClickListener {
+            override fun onOpenMovie(id: Long) {
+                viewModel.getMovieDetails(id)
+                openChild()
+            }
+        })
+        binding.topRatedTv.apply {
+            layoutManager = LinearLayoutManager(requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false)
+            adapter = tvBestAdapter
+            addItemDecoration(DividerItemDecoration(16))
+        }
+
+        tvNowOnAirAdapter = MovieRecyclerAdapter(object : MovieClickListener {
+            override fun onOpenMovie(id: Long) {
+                viewModel.getMovieDetails(id)
+                openChild()
+            }
+        })
+        binding.nowOnAirTv.apply {
+            layoutManager = LinearLayoutManager(requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false)
+            adapter = tvNowOnAirAdapter
+            addItemDecoration(DividerItemDecoration(16))
+        }
+
+        tvTodayOnAirAdapter = MovieRecyclerAdapter(object : MovieClickListener {
+            override fun onOpenMovie(id: Long) {
+                viewModel.getMovieDetails(id)
+                openChild()
+            }
+        })
+        binding.onAirTodayTv.apply {
+            layoutManager = LinearLayoutManager(requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false)
+            adapter = tvTodayOnAirAdapter
+            addItemDecoration(DividerItemDecoration(16))
+        }
+
+        filmsBestAdapter = MovieRecyclerAdapter(object : MovieClickListener {
+            override fun onOpenMovie(id: Long) {
+                viewModel.getMovieDetails(id)
+                openChild()
+            }
+        })
+        binding.topRatedMovies.apply {
+            layoutManager = LinearLayoutManager(requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false)
+            adapter = filmsBestAdapter
             addItemDecoration(DividerItemDecoration(16))
         }
     }

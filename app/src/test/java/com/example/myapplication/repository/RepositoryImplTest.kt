@@ -1,6 +1,6 @@
 package com.example.myapplication.repository
 
-import com.example.myapplication.models.Movie
+import com.example.myapplication.models.movies.Movie
 import com.example.myapplication.models.movies.MoviesResponse
 import com.google.gson.Gson
 import junit.framework.Assert.assertEquals
