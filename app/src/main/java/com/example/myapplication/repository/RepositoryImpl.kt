@@ -3,11 +3,12 @@ package com.example.myapplication.repository
 import android.util.Log
 import com.example.myapplication.models.movies.Film
 import com.example.myapplication.models.RetrofitPostToken
+import com.example.myapplication.models.lists.*
 import com.example.myapplication.models.movies.Person
 import com.example.myapplication.models.movies.TV
 import javax.inject.Inject
 
-class RepositoryImpl @Inject constructor(private val service: TmdbService) : Repository, AuthRepository {
+class RepositoryImpl @Inject constructor(private val service: TmdbService) : Repository, AuthRepository, ListRepository {
 
     override suspend fun getListOfPopularMovies() : List<Film> {
         val response = service.getPopularMovies()
@@ -135,5 +136,50 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService) : Rep
 
     companion object {
         val EMPTY_STRING = ""
+    }
+
+    override suspend fun getCreatedLists(sessionId: String): List<CreatedList> {
+        val response = service.getCreatedList(sessionId = sessionId)
+        return if(response.isSuccessful) {
+            response.body()?.result ?: emptyList()
+        } else {
+            emptyList()
+        }
+    }
+
+    override suspend fun getFavoriteMoviesList(sessionId: String): FavouriteMovieList? {
+        val response = service.getFavouriteMovieList(sessionId = sessionId)
+        return if(response.isSuccessful) {
+            response.body()
+        } else {
+            null
+        }
+    }
+
+    override suspend fun getFavoriteTVsList(sessionId: String): FavouriteTVList? {
+        val response = service.getFavouriteTVList(sessionId = sessionId)
+        return if(response.isSuccessful) {
+            response.body()
+        } else {
+            null
+        }
+    }
+
+    override suspend fun getMovieWatchlist(sessionId: String): MovieWatchList? {
+        val response = service.getMovieWatchlist(sessionId = sessionId)
+        return if(response.isSuccessful) {
+            response.body()
+        } else {
+            null
+        }
+    }
+
+    override suspend fun getTVWatchlist(sessionId: String): TVWatchList? {
+        val response = service.getTVWatchlist(sessionId = sessionId)
+        return if(response.isSuccessful) {
+            response.body()
+        } else {
+            null
+        }
     }
 }

@@ -18,7 +18,7 @@ import com.example.myapplication.viewmodel.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainFragment : Fragment(){
+class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
@@ -30,6 +30,7 @@ class MainFragment : Fragment(){
     lateinit var tvNowOnAirAdapter: MovieRecyclerAdapter
     lateinit var tvTodayOnAirAdapter: MovieRecyclerAdapter
     lateinit var filmsBestAdapter: MovieRecyclerAdapter
+    lateinit var personPopularAdapter: MovieRecyclerAdapter
 
     private val viewModel: MovieViewModel by viewModels()
 
@@ -43,6 +44,7 @@ class MainFragment : Fragment(){
         viewModel.loadOnAirTodayTV()
         viewModel.loadTopRatedMovies()
         viewModel.loadTopRatedTV()
+        viewModel.loadPopularPersons()
     }
 
     override fun onCreateView(
@@ -93,6 +95,10 @@ class MainFragment : Fragment(){
         viewModel.moviesTopRated.observe(this) { movies ->
             filmsBestAdapter.appendMovies(movies)
         }
+
+        viewModel.popularPersons.observe(this) { persons ->
+            personPopularAdapter.appendMovies(persons)
+        }
     }
 
     override fun onDestroyView() {
@@ -105,6 +111,14 @@ class MainFragment : Fragment(){
             override fun onOpenMovie(id: Long) {
                 viewModel.getMovieDetails(id)
                 openChild()
+            }
+
+            override fun onOpenTV(id: Long) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onOpenPerson(id: Long) {
+                TODO("Not yet implemented")
             }
         })
         binding.popularMovies.apply {
@@ -120,6 +134,14 @@ class MainFragment : Fragment(){
                 viewModel.getMovieDetails(id)
                 openChild()
             }
+
+            override fun onOpenTV(id: Long) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onOpenPerson(id: Long) {
+                TODO("Not yet implemented")
+            }
         })
         binding.upcomingMovies.apply {
             layoutManager = LinearLayoutManager(requireContext(),
@@ -133,6 +155,14 @@ class MainFragment : Fragment(){
             override fun onOpenMovie(id: Long) {
                 viewModel.getMovieDetails(id)
                 openChild()
+            }
+
+            override fun onOpenTV(id: Long) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onOpenPerson(id: Long) {
+                TODO("Not yet implemented")
             }
         })
         binding.popularTv.apply {
@@ -148,6 +178,14 @@ class MainFragment : Fragment(){
                 viewModel.getMovieDetails(id)
                 openChild()
             }
+
+            override fun onOpenTV(id: Long) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onOpenPerson(id: Long) {
+                TODO("Not yet implemented")
+            }
         })
         binding.nowPlayingMovies.apply {
             layoutManager = LinearLayoutManager(requireContext(),
@@ -161,6 +199,14 @@ class MainFragment : Fragment(){
             override fun onOpenMovie(id: Long) {
                 viewModel.getMovieDetails(id)
                 openChild()
+            }
+
+            override fun onOpenTV(id: Long) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onOpenPerson(id: Long) {
+                TODO("Not yet implemented")
             }
         })
         binding.topRatedTv.apply {
@@ -176,6 +222,14 @@ class MainFragment : Fragment(){
                 viewModel.getMovieDetails(id)
                 openChild()
             }
+
+            override fun onOpenTV(id: Long) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onOpenPerson(id: Long) {
+                TODO("Not yet implemented")
+            }
         })
         binding.nowOnAirTv.apply {
             layoutManager = LinearLayoutManager(requireContext(),
@@ -189,6 +243,14 @@ class MainFragment : Fragment(){
             override fun onOpenMovie(id: Long) {
                 viewModel.getMovieDetails(id)
                 openChild()
+            }
+
+            override fun onOpenTV(id: Long) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onOpenPerson(id: Long) {
+                TODO("Not yet implemented")
             }
         })
         binding.onAirTodayTv.apply {
@@ -204,12 +266,42 @@ class MainFragment : Fragment(){
                 viewModel.getMovieDetails(id)
                 openChild()
             }
+
+            override fun onOpenTV(id: Long) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onOpenPerson(id: Long) {
+                TODO("Not yet implemented")
+            }
         })
         binding.topRatedMovies.apply {
             layoutManager = LinearLayoutManager(requireContext(),
                 LinearLayoutManager.HORIZONTAL,
                 false)
             adapter = filmsBestAdapter
+            addItemDecoration(DividerItemDecoration(16))
+        }
+
+        personPopularAdapter = MovieRecyclerAdapter(object : MovieClickListener {
+            override fun onOpenMovie(id: Long) {
+                viewModel.getMovieDetails(id)
+                openChild()
+            }
+
+            override fun onOpenTV(id: Long) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onOpenPerson(id: Long) {
+                TODO("Not yet implemented")
+            }
+        })
+        binding.popularPersons.apply {
+            layoutManager = LinearLayoutManager(requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false)
+            adapter = personPopularAdapter
             addItemDecoration(DividerItemDecoration(16))
         }
     }

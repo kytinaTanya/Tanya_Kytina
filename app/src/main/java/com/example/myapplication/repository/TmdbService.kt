@@ -2,6 +2,7 @@ package com.example.myapplication.repository
 
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.models.*
+import com.example.myapplication.models.lists.*
 import com.example.myapplication.models.movies.Film
 import com.example.myapplication.models.movies.MoviesResponse
 import com.example.myapplication.models.movies.PersonResponse
@@ -116,4 +117,48 @@ interface TmdbService {
         @Query("language") language: String = "ru-RU",
         @Query("page") page: Int = 1
     ): Response<PersonResponse>
+
+    @GET("account/${BuildConfig.MY_ID}/lists")
+    suspend fun getCreatedList(
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = "ru-RU",
+        @Query("session_id") sessionId: String,
+        @Query("page") page: Int = 1
+    ): Response<ListResponse>
+
+    @GET("account/${BuildConfig.MY_ID}/favorite/movies")
+    suspend fun getFavouriteMovieList(
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("session_id") sessionId: String,
+        @Query("language") language: String = "ru-RU",
+        @Query("sort_by") sortBy: String = "created_at.desc",
+        @Query("page") page: Int = 1
+    ): Response<FavouriteMovieList>
+
+    @GET("account/${BuildConfig.MY_ID}/favorite/tv")
+    suspend fun getFavouriteTVList(
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("session_id") sessionId: String,
+        @Query("language") language: String = "ru-RU",
+        @Query("sort_by") sortBy: String = "created_at.desc",
+        @Query("page") page: Int = 1
+    ): Response<FavouriteTVList>
+
+    @GET("account/${BuildConfig.MY_ID}/watchlist/movies")
+    suspend fun getMovieWatchlist(
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("session_id") sessionId: String,
+        @Query("language") language: String = "ru-RU",
+        @Query("sort_by") sortBy: String = "created_at.desc",
+        @Query("page") page: Int = 1
+    ): Response<MovieWatchList>
+
+    @GET("account/${BuildConfig.MY_ID}/watchlist/tv")
+    suspend fun getTVWatchlist(
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("session_id") sessionId: String,
+        @Query("language") language: String = "ru-RU",
+        @Query("sort_by") sortBy: String = "created_at.desc",
+        @Query("page") page: Int = 1
+    ): Response<TVWatchList>
 }

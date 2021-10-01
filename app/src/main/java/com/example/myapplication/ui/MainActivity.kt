@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var reference: DatabaseReference
-    private lateinit var user: User
     private var currentUser: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,7 +97,7 @@ class MainActivity : AppCompatActivity() {
             .addListenerForSingleValueEvent(
                 object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        user = snapshot.getValue(User::class.java) ?: User()
+                        USER = snapshot.getValue(User::class.java) ?: User()
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -106,5 +105,9 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             )
+    }
+
+    companion object {
+        var USER = User()
     }
 }

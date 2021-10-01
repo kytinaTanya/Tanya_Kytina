@@ -66,4 +66,4 @@ data class Person(
 
     @SerializedName("popularity")
     val popularity: Number
-)
+): Movie(id)
