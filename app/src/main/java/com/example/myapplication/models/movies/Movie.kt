@@ -2,7 +2,7 @@ package com.example.myapplication.models.movies
 
 import com.google.gson.annotations.SerializedName
 
-sealed class Movie(val mid: Long)
+sealed class Movie()
 
 data class Film(
     @SerializedName("id")
@@ -25,7 +25,7 @@ data class Film(
 
     @SerializedName("release_date")
     val releaseDate: String,
-) : Movie(id) {
+) : Movie() {
     fun releaseYear(): String{
         return releaseDate.substringBefore("-")
     }
@@ -49,7 +49,7 @@ data class TV(
 
     @SerializedName("vote_average")
     val rating: Float
-) : Movie(id)
+) : Movie()
 
 data class Person(
     @SerializedName("id")
@@ -64,6 +64,9 @@ data class Person(
     @SerializedName("adult")
     val adult: Boolean,
 
+    @SerializedName("biography")
+    val biography: String,
+
     @SerializedName("popularity")
     val popularity: Number
-): Movie(id)
+): Movie()

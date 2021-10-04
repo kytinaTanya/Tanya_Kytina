@@ -5,10 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myapplication.models.movies.Film
-import com.example.myapplication.models.movies.Person
-import com.example.myapplication.models.movies.PersonResponse
-import com.example.myapplication.models.movies.TV
+import com.example.myapplication.models.movies.*
 import com.example.myapplication.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -73,10 +70,22 @@ class MovieViewModel @Inject constructor(private val mRepository: Repository) : 
             return _popularPersons
         }
 
-    private var _movieDetails: MutableLiveData<Film> = MutableLiveData<Film>()
-    val movieDetails: LiveData<Film>
+    private var _movieDetails: MutableLiveData<Movie> = MutableLiveData<Movie>()
+    val movieDetails: LiveData<Movie>
         get() {
             return _movieDetails
+        }
+
+    private var _tvDetails: MutableLiveData<TV> = MutableLiveData<TV>()
+    val tvDetails: LiveData<TV>
+        get() {
+            return _tvDetails
+        }
+
+    private var _personDetails: MutableLiveData<Person> = MutableLiveData<Person>()
+    val personDetails: LiveData<Person>
+        get() {
+            return _personDetails
         }
 
     fun loadMoviesInTrend() {
@@ -134,9 +143,25 @@ class MovieViewModel @Inject constructor(private val mRepository: Repository) : 
     }
 
     fun getMovieDetails(id: Long) {
-        _movieDetails = MutableLiveData<Film>()
+        _movieDetails = MutableLiveData<Movie>()
         viewModelScope.launch {
             _movieDetails.value = mRepository.getMovieDetails(id)
+            Log.d(tag, "${_movieDetails.value}")
+        }
+    }
+
+    fun getTVDetails(id: Long) {
+        _movieDetails = MutableLiveData<Movie>()
+        viewModelScope.launch {
+            _movieDetails.value = mRepository.getTVDetails(id)
+            Log.d(tag, "${_movieDetails.value}")
+        }
+    }
+
+    fun getPersonDetails(id: Long) {
+        _movieDetails = MutableLiveData<Movie>()
+        viewModelScope.launch {
+            _movieDetails.value = mRepository.getPersonDetails(id)
             Log.d(tag, "${_movieDetails.value}")
         }
     }

@@ -14,11 +14,9 @@ import javax.inject.Inject
 @HiltViewModel
 class ListsViewModel @Inject constructor(private val mRepository: ListRepository): ViewModel() {
 
-    private var _createdLists: MutableLiveData<List<CreatedList>> = MutableLiveData()
-    val createdLists: LiveData<List<CreatedList>>
-        get() {
-            return _createdLists
-        }
+    private var _allLists: MutableLiveData<List<MovieList>> = MutableLiveData()
+    val allLists: LiveData<List<MovieList>>
+    get() = _allLists
 
     private var _favoriteMoviesList: MutableLiveData<FavouriteMovieList> = MutableLiveData()
     val favoriteMoviesList: LiveData<FavouriteMovieList>
@@ -44,9 +42,9 @@ class ListsViewModel @Inject constructor(private val mRepository: ListRepository
             return _tvWatchlist
         }
 
-    fun loadCreatedLists(sessionId: String) {
+    fun loadLists(sessionId: String) {
         viewModelScope.launch {
-            _createdLists.value = mRepository.getCreatedLists(sessionId = sessionId)
+            _allLists.value = mRepository.getAllLists(sessionId)
         }
     }
 

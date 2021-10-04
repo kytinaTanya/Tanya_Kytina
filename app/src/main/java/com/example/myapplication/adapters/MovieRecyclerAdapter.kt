@@ -132,7 +132,7 @@ class MovieRecyclerAdapter(private val listener: MovieClickListener) : RecyclerV
     override fun onClick(v: View?) {
         val movie = v?.tag as Movie
         when(movie) {
-            is Film -> listener.onOpenMovie(movie.mid)
+            is Film -> listener.onOpenMovie(movie.id)
             is TV -> listener.onOpenTV(movie.id)
             is Person -> listener.onOpenPerson(movie.id)
         }

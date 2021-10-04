@@ -1,9 +1,6 @@
 package com.example.myapplication.di
 
-import com.example.myapplication.repository.TmdbService
-import com.example.myapplication.repository.AuthRepository
-import com.example.myapplication.repository.Repository
-import com.example.myapplication.repository.RepositoryImpl
+import com.example.myapplication.repository.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,6 +19,12 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideAuthRepository(service: TmdbService) : AuthRepository {
+        return RepositoryImpl(service)
+    }
+
+    @Provides
+    @Singleton
+    fun provideListRepository(service: TmdbService) : ListRepository {
         return RepositoryImpl(service)
     }
 }

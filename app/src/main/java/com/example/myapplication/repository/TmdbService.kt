@@ -3,10 +3,7 @@ package com.example.myapplication.repository
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.models.*
 import com.example.myapplication.models.lists.*
-import com.example.myapplication.models.movies.Film
-import com.example.myapplication.models.movies.MoviesResponse
-import com.example.myapplication.models.movies.PersonResponse
-import com.example.myapplication.models.movies.TVResponse
+import com.example.myapplication.models.movies.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
@@ -40,6 +37,20 @@ interface TmdbService {
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("language") language: String
     ): Response<Film>
+
+    @GET("tv/{tv_id}")
+    suspend fun getTvDetails(
+        @Path("tv_id") id: Long,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String
+    ): Response<TV>
+
+    @GET("person/{person_id}")
+    suspend fun getPersonDetails(
+        @Path("person_id") id: Long,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String
+    ): Response<Person>
 
     @GET("authentication/token/new")
     suspend fun getRequestToken(

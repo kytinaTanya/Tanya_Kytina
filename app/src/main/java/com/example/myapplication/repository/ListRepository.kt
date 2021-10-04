@@ -8,4 +8,5 @@ interface ListRepository {
     suspend fun getFavoriteTVsList(sessionId: String): FavouriteTVList?
     suspend fun getMovieWatchlist(sessionId: String): MovieWatchList?
     suspend fun getTVWatchlist(sessionId: String): TVWatchList?
+    suspend fun getAllLists(sessionId: String): List<MovieList>
 }
