@@ -1,14 +1,18 @@
-package com.example.myapplication.adapters
+package com.example.myapplication.ui.recyclerview.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.databinding.*
 import com.example.myapplication.models.lists.*
-import com.example.myapplication.models.movies.Movie
 
-class ListsRecyclerAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+interface ListClickListener {
+    fun openList(list: MovieList)
+}
+
+class ListsRecyclerAdapter(val listener: ListClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
 
     var listOfLists: MutableList<MovieList> = arrayListOf()
 
@@ -54,6 +58,7 @@ class ListsRecyclerAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     ItemCreatedListBinding.inflate(LayoutInflater.from(parent.context),
                     parent,
                     false)
+                binding.root.setOnClickListener(this)
                 CreatedListViewHolder(binding)
             }
             R.layout.item_favorite_movies -> {
@@ -61,6 +66,7 @@ class ListsRecyclerAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     ItemFavoriteMoviesBinding.inflate(LayoutInflater.from(parent.context),
                     parent,
                     false)
+                binding.root.setOnClickListener(this)
                 FavoriteMovieViewHolder(binding)
             }
             R.layout.item_favorite_tvs -> {
@@ -68,6 +74,7 @@ class ListsRecyclerAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     ItemFavoriteTvsBinding.inflate(LayoutInflater.from(parent.context),
                     parent,
                     false)
+                binding.root.setOnClickListener(this)
                 FavoriteTvViewHolder(binding)
             }
             R.layout.item_movie_watchlist -> {
@@ -75,6 +82,7 @@ class ListsRecyclerAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     ItemMovieWatchlistBinding.inflate(LayoutInflater.from(parent.context),
                         parent,
                         false)
+                binding.root.setOnClickListener(this)
                 MovieWatchlistViewHolder(binding)
             }
             else -> {
@@ -82,12 +90,14 @@ class ListsRecyclerAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     ItemTvWatchlistBinding.inflate(LayoutInflater.from(parent.context),
                         parent,
                         false)
+                binding.root.setOnClickListener(this)
                 TvWatchlistViewHolder(binding)
             }
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        holder.itemView.tag = listOfLists[position]
         when(holder) {
             is CreatedListViewHolder -> holder.bind(listOfLists[position] as CreatedList)
             is FavoriteMovieViewHolder -> holder.bind(listOfLists[position] as FavouriteMovieList)
@@ -118,5 +128,10 @@ class ListsRecyclerAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun addList(list: MovieList) {
         listOfLists.add(list)
         notifyDataSetChanged()
+    }
+
+    override fun onClick(v: View?) {
+        val list = v?.tag as MovieList
+        listener.openList(list)
     }
 }

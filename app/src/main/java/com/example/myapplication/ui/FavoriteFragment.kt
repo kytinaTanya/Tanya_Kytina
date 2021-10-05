@@ -4,14 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.*
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.myapplication.adapters.ListsRecyclerAdapter
+import com.example.myapplication.R
+import com.example.myapplication.ui.recyclerview.adapters.ListClickListener
+import com.example.myapplication.ui.recyclerview.adapters.ListsRecyclerAdapter
 import com.example.myapplication.databinding.FragmentFavoriteBinding
-import com.example.myapplication.recyclerview.DividerItemDecoration
+import com.example.myapplication.models.lists.*
+import com.example.myapplication.ui.recyclerview.DividerItemDecoration
 import com.example.myapplication.ui.MainActivity.Companion.USER
+import com.example.myapplication.ui.viewpager.MoviesCollectionAdapter
 import com.example.myapplication.viewmodel.ListsViewModel
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,18 +23,7 @@ class FavoriteFragment : Fragment() {
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var listAdapter: ListsRecyclerAdapter
-
-    private val viewModel: ListsViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//        viewModel.loadFavoriteMoviesList(USER.sessionKey)
-//        viewModel.loadFavoriteTVsList(USER.sessionKey)
-//        viewModel.loadMovieWatchlist(USER.sessionKey)
-//        viewModel.loadTVWatchlist(USER.sessionKey)
-        viewModel.loadLists(USER.sessionKey)
-    }
+    private lateinit var movieCollectionAdapter: MoviesCollectionAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,35 +36,17 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecyclerView()
-    }
-
-    override fun onResume() {
-        super.onResume()
-//        viewModel.favoriteMoviesList.observe(this) {
-//            listAdapter.addList(it)
-//        }
-//        viewModel.favoriteTVsList.observe(this) {
-//            listAdapter.addList(it)
-//        }
-//        viewModel.movieWatchlist.observe(this) {
-//            listAdapter.addList(it)
-//        }
-//        viewModel.tvWatchlist.observe(this) {
-//            listAdapter.addList(it)
-//        }
-        viewModel.allLists.observe(this) { lists ->
-            listAdapter.addLists(lists)
-        }
-    }
-
-    private fun initRecyclerView() {
-        listAdapter = ListsRecyclerAdapter()
-        binding.listOfLists.apply {
-            layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-            adapter = listAdapter
-            addItemDecoration(DividerItemDecoration(16))
-        }
+        movieCollectionAdapter = MoviesCollectionAdapter(this)
+        binding.pager.adapter = movieCollectionAdapter
+        TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
+            tab.text = when(position) {
+                0 -> "Любимые фильмы"
+                1 -> "Любимые сериалы"
+                2 -> "Watchlist фильмов"
+                3 -> "Watchlist сериалов"
+                else -> ""
+            }
+        }.attach()
     }
 
     override fun onDestroyView() {

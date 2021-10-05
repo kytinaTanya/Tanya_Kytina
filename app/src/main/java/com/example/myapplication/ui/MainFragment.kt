@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
-import com.example.myapplication.adapters.MovieClickListener
-import com.example.myapplication.adapters.MovieRecyclerAdapter
+import com.example.myapplication.ui.recyclerview.adapters.MovieClickListener
+import com.example.myapplication.ui.recyclerview.adapters.MovieRecyclerAdapter
 import com.example.myapplication.databinding.FragmentMainBinding
-import com.example.myapplication.recyclerview.DividerItemDecoration
+import com.example.myapplication.ui.recyclerview.DividerItemDecoration
 import com.example.myapplication.viewmodel.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -122,7 +122,7 @@ class MainFragment : Fragment(), MovieClickListener {
             addItemDecoration(DividerItemDecoration(16))
         }
 
-        tvPopularAdapter =MovieRecyclerAdapter(this)
+        tvPopularAdapter = MovieRecyclerAdapter(this)
         binding.popularTv.apply {
             layoutManager = LinearLayoutManager(requireContext(),
                 LinearLayoutManager.HORIZONTAL,

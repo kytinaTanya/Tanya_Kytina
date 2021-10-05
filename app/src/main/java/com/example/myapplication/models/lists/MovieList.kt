@@ -27,7 +27,7 @@ data class FavouriteMovieList(
     @SerializedName("page")
     val page: Int,
 
-    @SerializedName("result")
+    @SerializedName("results")
     val result: List<Film>,
 
     @SerializedName("total_pages")
@@ -41,7 +41,7 @@ data class MovieWatchList(
     @SerializedName("page")
     val page: Int,
 
-    @SerializedName("result")
+    @SerializedName("results")
     val result: List<Film>,
 
     @SerializedName("total_pages")
@@ -55,7 +55,7 @@ data class FavouriteTVList(
     @SerializedName("page")
     val page: Int,
 
-    @SerializedName("result")
+    @SerializedName("results")
     val result: List<TV>,
 
     @SerializedName("total_pages")
@@ -69,7 +69,7 @@ data class TVWatchList(
     @SerializedName("page")
     val page: Int,
 
-    @SerializedName("result")
+    @SerializedName("results")
     val result: List<TV>,
 
     @SerializedName("total_pages")

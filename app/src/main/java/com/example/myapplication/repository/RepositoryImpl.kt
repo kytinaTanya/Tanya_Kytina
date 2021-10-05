@@ -200,9 +200,4 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService) : Rep
             null
         }
     }
-
-    override suspend fun getAllLists(sessionId: String): List<MovieList> {
-        return listOf(getFavoriteMoviesList(sessionId)!!, getFavoriteTVsList(sessionId)!!,
-            getMovieWatchlist(sessionId)!!, getTVWatchlist(sessionId)!!)
-    }
 }
