@@ -26,6 +26,16 @@ data class Film(
     @SerializedName("release_date")
     val releaseDate: String,
 ) : Movie() {
+    constructor() : this(
+        0,
+        "Non",
+        "Non",
+        "Non",
+        "Non",
+        0.0F,
+        "Non"
+    )
+
     fun releaseYear(): String{
         return releaseDate.substringBefore("-")
     }
@@ -49,7 +59,16 @@ data class TV(
 
     @SerializedName("vote_average")
     val rating: Float
-) : Movie()
+) : Movie() {
+    constructor() : this(
+        0,
+        "Non",
+        "Non",
+        "Non",
+        "Non",
+        0.0F
+    )
+}
 
 data class Person(
     @SerializedName("id")
@@ -69,4 +88,13 @@ data class Person(
 
     @SerializedName("popularity")
     val popularity: Number
-): Movie()
+): Movie() {
+    constructor() : this(
+        0,
+        "Non",
+        "Non",
+        false,
+        "Non",
+        0
+    )
+}

@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/fragment_favorite.xml" value="0.35833333333333334" />
+        <entry key="app/src/main/res/layout/fragment_history.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/fragment_list.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/fragment_main.xml" value="0.14628623188405798" />
         <entry key="app/src/main/res/layout/fragment_movie.xml" value="0.1" />
@@ -12,6 +13,7 @@
         <entry key="app/src/main/res/layout/item_created_list.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/item_favorite_movies.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/item_favorite_tvs.xml" value="0.35833333333333334" />
+        <entry key="app/src/main/res/layout/item_movie_history.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/item_movie_watchlist.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/item_person.xml" value="0.2884963768115942" />
         <entry key="app/src/main/res/layout/item_poster.xml" value="0.2884963768115942" />

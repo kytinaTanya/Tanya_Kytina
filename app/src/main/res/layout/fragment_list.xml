@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.ListFragment"
-    tools:listitem="@layout/item_movie"
-    android:id="@+id/movie_list"/>
+    android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/movie_list"
+        />
+
+    <TextView
+        android:id="@+id/warning"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="В этом списке ничего нет"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:visibility="gone"/>
+</FrameLayout>
+

@@ -6,13 +6,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.models.movies.*
+import com.example.myapplication.repository.DetailsRepository
 import com.example.myapplication.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieViewModel @Inject constructor(private val mRepository: Repository) : ViewModel() {
+class MovieViewModel @Inject constructor(
+    private val mainRepository: Repository,
+    private val detailsRepository: DetailsRepository
+    ) : ViewModel() {
 
     private val tag: String = MovieViewModel::class.java.simpleName
 
@@ -76,76 +80,64 @@ class MovieViewModel @Inject constructor(private val mRepository: Repository) : 
             return _movieDetails
         }
 
-    private var _tvDetails: MutableLiveData<TV> = MutableLiveData<TV>()
-    val tvDetails: LiveData<TV>
-        get() {
-            return _tvDetails
-        }
-
-    private var _personDetails: MutableLiveData<Person> = MutableLiveData<Person>()
-    val personDetails: LiveData<Person>
-        get() {
-            return _personDetails
-        }
-
     fun loadMoviesInTrend() {
         viewModelScope.launch {
-            _moviesInTrend.value = mRepository.getListOfPopularMovies()
+            _moviesInTrend.value = mainRepository.getListOfPopularMovies()
         }
     }
 
     fun loadNowPlayingMovies() {
         viewModelScope.launch {
-            _moviesNowPlaying.value = mRepository.getListOfNowPlayingMovies()
+            _moviesNowPlaying.value = mainRepository.getListOfNowPlayingMovies()
         }
     }
 
     fun loadUpcomingMovies() {
         viewModelScope.launch {
-            _moviesUpcoming.value = mRepository.getListOfUpcomingMovies()
+            _moviesUpcoming.value = mainRepository.getListOfUpcomingMovies()
         }
     }
 
     fun loadTopRatedMovies() {
         viewModelScope.launch {
-            _moviesTopRated.value = mRepository.getListOfTopRatedMovies()
+            _moviesTopRated.value = mainRepository.getListOfTopRatedMovies()
         }
     }
 
     fun loadPopularTV() {
         viewModelScope.launch {
-            _popularTV.value = mRepository.getListOfPopularTv()
+            _popularTV.value = mainRepository.getListOfPopularTv()
         }
     }
 
     fun loadOnAirTodayTV() {
         viewModelScope.launch {
-            _onAirTodayTV.value = mRepository.getListOfOnAirTodayTV()
+            _onAirTodayTV.value = mainRepository.getListOfOnAirTodayTV()
         }
     }
 
     fun loadNowOnAirTV() {
         viewModelScope.launch {
-            _nowOnAirTV.value = mRepository.getListOfNowOnAirTV()
+            _nowOnAirTV.value = mainRepository.getListOfNowOnAirTV()
         }
     }
 
     fun loadTopRatedTV() {
         viewModelScope.launch {
-            _topRatedTV.value = mRepository.getListOfTopRatedTV()
+            _topRatedTV.value = mainRepository.getListOfTopRatedTV()
         }
     }
 
     fun loadPopularPersons() {
         viewModelScope.launch {
-            _popularPersons.value = mRepository.getListOfPopularPersons()
+            _popularPersons.value = mainRepository.getListOfPopularPersons()
         }
     }
 
     fun getMovieDetails(id: Long) {
         _movieDetails = MutableLiveData<Movie>()
         viewModelScope.launch {
-            _movieDetails.value = mRepository.getMovieDetails(id)
+            _movieDetails.value = detailsRepository.getMovieDetails(id)
             Log.d(tag, "${_movieDetails.value}")
         }
     }
@@ -153,7 +145,7 @@ class MovieViewModel @Inject constructor(private val mRepository: Repository) : 
     fun getTVDetails(id: Long) {
         _movieDetails = MutableLiveData<Movie>()
         viewModelScope.launch {
-            _movieDetails.value = mRepository.getTVDetails(id)
+            _movieDetails.value = detailsRepository.getTVDetails(id)
             Log.d(tag, "${_movieDetails.value}")
         }
     }
@@ -161,7 +153,7 @@ class MovieViewModel @Inject constructor(private val mRepository: Repository) : 
     fun getPersonDetails(id: Long) {
         _movieDetails = MutableLiveData<Movie>()
         viewModelScope.launch {
-            _movieDetails.value = mRepository.getPersonDetails(id)
+            _movieDetails.value = detailsRepository.getPersonDetails(id)
             Log.d(tag, "${_movieDetails.value}")
         }
     }

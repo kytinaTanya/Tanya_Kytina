@@ -17,12 +17,6 @@ import com.example.myapplication.models.movies.TV
 import com.example.myapplication.utils.setImage
 import java.util.*
 
-interface MovieClickListener {
-    fun onOpenMovie(id: Long)
-    fun onOpenTV(id: Long)
-    fun onOpenPerson(id: Long)
-}
-
 class MovieRecyclerAdapter(private val listener: MovieClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
 
     var mMoviesList: MutableList<Movie> = arrayListOf()

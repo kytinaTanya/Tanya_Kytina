@@ -4,7 +4,7 @@ import com.example.myapplication.models.movies.Film
 import com.example.myapplication.models.movies.Person
 import com.example.myapplication.models.movies.TV
 
-interface Repository: DetailsRepository {
+interface Repository {
     suspend fun getListOfPopularMovies() : List<Film>
     suspend fun getListOfNowPlayingMovies() : List<Film>
     suspend fun getListOfUpcomingMovies() : List<Film>

@@ -8,7 +8,9 @@ import com.example.myapplication.models.movies.Person
 import com.example.myapplication.models.movies.TV
 import javax.inject.Inject
 
-class RepositoryImpl @Inject constructor(private val service: TmdbService) : Repository, AuthRepository, ListRepository {
+class RepositoryImpl @Inject constructor(private val service: TmdbService) : Repository,
+    AuthRepository,
+    ListRepository {
 
     override suspend fun getListOfPopularMovies() : List<Film> {
         val response = service.getPopularMovies()
@@ -45,35 +47,6 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService) : Rep
             response.body()?.movies ?: emptyList()
         } else {
             emptyList()
-        }
-    }
-
-    override suspend fun getMovieDetails(id: Long): Film {
-        val response = service.getMovieDetails(id = id, language = "ru-RU")
-
-        return if(response.isSuccessful) {
-            response.body() ?: Film(1, "Non", "Non", "Non", "Non", 0.0F, "Non")
-        } else {
-            Log.d("Repo", "response is not successful")
-            Film(1, "Non", "Non", "Non", "Non", 0.0F, "Non")
-        }
-    }
-
-    override suspend fun getTVDetails(id: Long): TV {
-        val response = service.getTvDetails(id = id, language = "ru-RU")
-        return if(response.isSuccessful) {
-            response.body() ?: TV(1, "Non", "Non", "Non", "Non", 0.0F)
-        } else {
-            TV(1, "Non", "Non", "Non", "Non", 0.0F)
-        }
-    }
-
-    override suspend fun getPersonDetails(id: Long): Person {
-        val response = service.getPersonDetails(id = id, language = "ru-RU")
-        return if(response.isSuccessful) {
-            response.body() ?: Person(1, "Non", "Non", false, "Non", 0)
-        } else {
-            Person(1, "Non", "Non", false, "Non", 0)
         }
     }
 

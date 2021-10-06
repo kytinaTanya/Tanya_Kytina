@@ -27,4 +27,10 @@ class RepositoryModule {
     fun provideListRepository(service: TmdbService) : ListRepository {
         return RepositoryImpl(service)
     }
+
+    @Provides
+    @Singleton
+    fun provideDetailsRepository(service: TmdbService) : DetailsRepository {
+        return DetailsRepositoryImpl(service)
+    }
 }
