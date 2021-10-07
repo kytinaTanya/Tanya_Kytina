@@ -33,4 +33,10 @@ class RepositoryModule {
     fun provideDetailsRepository(service: TmdbService) : DetailsRepository {
         return DetailsRepositoryImpl(service)
     }
+
+    @Provides
+    @Singleton
+    fun provideHistoryRepository(service: TmdbService) : HistoryRepository {
+        return HistoryRepositoryImpl(service)
+    }
 }

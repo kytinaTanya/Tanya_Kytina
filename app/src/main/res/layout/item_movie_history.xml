@@ -21,11 +21,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/movie_image"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Name" />
+        tools:text="Name"
+        android:maxWidth="185dp"
+        android:maxLines="2"
+        android:ellipsize="end"/>
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/star_button"

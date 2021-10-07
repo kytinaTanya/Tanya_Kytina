@@ -6,14 +6,113 @@
     android:layout_height="match_parent"
     tools:context=".ui.AccountFragment">
 
-
-    <TextView
+    <androidx.constraintlayout.widget.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Account fragment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/top_line"
+        app:layout_constraintGuide_begin="32dp"
+        android:orientation="horizontal"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/start_line"
+        app:layout_constraintGuide_begin="32dp"
+        android:orientation="vertical"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottom_line"
+        app:layout_constraintGuide_end="32dp"
+        android:orientation="horizontal"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/end_line"
+        app:layout_constraintGuide_end="32dp"
+        android:orientation="vertical"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/image_card"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:cardCornerRadius="100dp"
+        app:layout_constraintStart_toStartOf="@+id/start_line"
+        app:layout_constraintTop_toTopOf="@+id/top_line">
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/end_line"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/image_card"
+        app:layout_constraintTop_toTopOf="@+id/top_line"
+        tools:text="Username"
+        app:layout_constrainedWidth="true"
+        android:maxLines="2"
+        android:ellipsize="end"/>
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/end_line"
+        app:layout_constraintStart_toEndOf="@+id/image_card"
+        app:layout_constraintTop_toBottomOf="@+id/username"
+        tools:text="email@email.com"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constrainedWidth="true"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textSize="16sp"/>
+
+    <Button
+        android:id="@+id/settings_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toStartOf="@+id/end_line"
+        app:layout_constraintStart_toStartOf="@+id/start_line"
+        app:layout_constraintTop_toBottomOf="@+id/image_card"
+        android:layout_marginTop="16dp"
+        android:drawableLeft="@drawable/ic_baseline_settings"
+        android:text="Настройки"
+        android:textAlignment="textStart"
+        style="@color/white"/>
+
+    <Button
+        android:id="@+id/discussion_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toStartOf="@+id/end_line"
+        app:layout_constraintStart_toStartOf="@+id/start_line"
+        app:layout_constraintTop_toBottomOf="@+id/settings_button"
+        android:drawableLeft="@drawable/ic_baseline_message"
+        android:text="Обсуждения"
+        android:textAlignment="textStart"/>
+
+    <Button
+        android:id="@+id/exit_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toStartOf="@+id/end_line"
+        app:layout_constraintStart_toStartOf="@+id/start_line"
+        app:layout_constraintTop_toBottomOf="@+id/discussion_button"
+        android:text="Выйти" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.example.myapplication.repository
 
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.models.*
+import com.example.myapplication.models.history.*
 import com.example.myapplication.models.lists.*
 import com.example.myapplication.models.movies.*
 import okhttp3.OkHttpClient
@@ -35,21 +36,21 @@ interface TmdbService {
     suspend fun getMovieDetails(
         @Path("movie_id") id: Long,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Query("language") language: String
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE
     ): Response<Film>
 
     @GET("tv/{tv_id}")
     suspend fun getTvDetails(
         @Path("tv_id") id: Long,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Query("language") language: String
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE
     ): Response<TV>
 
     @GET("person/{person_id}")
     suspend fun getPersonDetails(
         @Path("person_id") id: Long,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Query("language") language: String
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE
     ): Response<Person>
 
     @GET("authentication/token/new")
@@ -66,7 +67,7 @@ interface TmdbService {
     @GET("movie/popular")
     suspend fun getPopularMovies(
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Query("language") language: String = "ru-RU",
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
         @Query("page") page: Int = 1,
         @Query("region") region: String = "RU"
     ): Response<MoviesResponse>
@@ -74,7 +75,7 @@ interface TmdbService {
     @GET("movie/upcoming")
     suspend fun getUpcomingMovies(
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Query("language") language: String = "ru-RU",
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
         @Query("page") page: Int = 1,
         @Query("region") region: String = "RU"
     ): Response<MoviesResponse>
@@ -82,7 +83,7 @@ interface TmdbService {
     @GET("movie/now_playing")
     suspend fun getNowPlayingMovies(
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Query("language") language: String = "ru-RU",
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
         @Query("page") page: Int = 1,
         @Query("region") region: String = "RU"
     ): Response<MoviesResponse>
@@ -90,49 +91,49 @@ interface TmdbService {
     @GET("movie/top_rated")
     suspend fun getTopRatedMovies(
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Query("language") language: String = "ru-RU",
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
         @Query("page") page: Int = 1
     ): Response<MoviesResponse>
 
     @GET("tv/popular")
     suspend fun getPopularTV(
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Query("language") language: String = "ru-RU",
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
         @Query("page") page: Int = 1
     ): Response<TVResponse>
 
     @GET("tv/airing_today")
     suspend fun getOnAirTodayTV(
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Query("language") language: String = "ru-RU",
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
         @Query("page") page: Int = 1
     ): Response<TVResponse>
 
     @GET("tv/on_the_air")
     suspend fun getNowOnAirTV(
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Query("language") language: String = "ru-RU",
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
         @Query("page") page: Int = 1
     ): Response<TVResponse>
 
     @GET("tv/top_rated")
     suspend fun getTopRatedTV(
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Query("language") language: String = "ru-RU",
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
         @Query("page") page: Int = 1
     ): Response<TVResponse>
 
     @GET("person/popular")
     suspend fun getPopularPersons(
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Query("language") language: String = "ru-RU",
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
         @Query("page") page: Int = 1
     ): Response<PersonResponse>
 
     @GET("account/${BuildConfig.MY_ID}/lists")
     suspend fun getCreatedList(
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Query("language") language: String = "ru-RU",
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
         @Query("session_id") sessionId: String,
         @Query("page") page: Int = 1
     ): Response<ListResponse>
@@ -141,7 +142,7 @@ interface TmdbService {
     suspend fun getFavouriteMovieList(
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("session_id") sessionId: String,
-        @Query("language") language: String = "ru-RU",
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
         @Query("sort_by") sortBy: String = "created_at.desc",
         @Query("page") page: Int = 1
     ): Response<FavouriteMovieList>
@@ -150,7 +151,7 @@ interface TmdbService {
     suspend fun getFavouriteTVList(
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("session_id") sessionId: String,
-        @Query("language") language: String = "ru-RU",
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
         @Query("sort_by") sortBy: String = "created_at.desc",
         @Query("page") page: Int = 1
     ): Response<FavouriteTVList>
@@ -159,7 +160,7 @@ interface TmdbService {
     suspend fun getMovieWatchlist(
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("session_id") sessionId: String,
-        @Query("language") language: String = "ru-RU",
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
         @Query("sort_by") sortBy: String = "created_at.desc",
         @Query("page") page: Int = 1
     ): Response<MovieWatchList>
@@ -168,8 +169,41 @@ interface TmdbService {
     suspend fun getTVWatchlist(
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("session_id") sessionId: String,
-        @Query("language") language: String = "ru-RU",
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
         @Query("sort_by") sortBy: String = "created_at.desc",
         @Query("page") page: Int = 1
     ): Response<TVWatchList>
+
+    @POST("list")
+    suspend fun createList(
+        @Header("Content-Type") contextType: String = BuildConfig.HEADER,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("session_id") sessionId: String,
+        @Body body: CreatedListBody
+    ): Response<HistoryList>
+
+    @POST("list/{list_id}/add_item")
+    suspend fun addMovie(
+        @Path("list_id") id: Int,
+        @Header("Content-Type") contextType: String = BuildConfig.HEADER,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("session_id") sessionId: String,
+        @Body body: MediaBody
+    ): Response<PostResponseStatus>
+
+    @POST("list/{list_id}/remove_item")
+    suspend fun removeMovie(
+        @Path("list_id") id: Int,
+        @Header("Content-Type") contextType: String = BuildConfig.HEADER,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("session_id") sessionId: String,
+        @Body body: MediaBody
+    ): Response<PostResponseStatus>
+
+    @GET("list/{list_id}")
+    suspend fun detailsAboutHistoryList(
+        @Path("list_id") id: Int,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("session_id") sessionId: String
+    ): Response<HistoryResponse>
 }

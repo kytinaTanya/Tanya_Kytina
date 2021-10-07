@@ -99,6 +99,8 @@ class SingUpActivity : AppCompatActivity() {
                     dataMap["email"] = email
                     dataMap["password"] = password
                     dataMap["sessionKey"] = sessionKey
+                    dataMap["accessToken"] = ""
+                    dataMap["historyListID"] = 0
 
                     reference.child("users").child(uid).updateChildren(dataMap)
                         .addOnCanceledListener {

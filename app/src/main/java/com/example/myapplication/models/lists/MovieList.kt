@@ -78,3 +78,4 @@ data class TVWatchList(
     @SerializedName("total_results")
     val totalResults: Int
 ): MovieList()
+

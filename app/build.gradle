@@ -41,6 +41,8 @@ android {
             buildConfigField "String", "V3_AUTH", "\"e19d111501403fed5ffe087a81ca958f\""
             buildConfigField "String", "V4_AUTH", "\"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlMTlkMTExNTAxNDAzZmVkNWZmZTA4N2E4MWNhOTU4ZiIsInN1YiI6IjYwYzg1MmQxMzY3OWExMDA3OGNiOTljNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DdRuCDjlGk0rEF9Wa1_jdrCdKCIe6kwnbovjq3b7d4g\""
             buildConfigField "String", "MY_ID", "\"10620415\""
+            buildConfigField "String", "GENERAL_LANGUAGE", "\"ru_RU\""
+            buildConfigField "String", "HEADER", "\"application/json;charset=utf-8\""
             debuggable true
         }
         release {
