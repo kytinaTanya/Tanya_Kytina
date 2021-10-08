@@ -111,6 +111,7 @@ class SingUpActivity : AppCompatActivity() {
                                 Toast.makeText(this, "Регистрация прошла успешно", Toast.LENGTH_SHORT).show()
                                 val i = Intent(this, MainActivity::class.java)
                                 startActivity(i)
+                                finish()
                             } else {
                                 Log.d("AUTH", "${userTask.exception}")
                                 Toast.makeText(this, "Не получилось зарегистрироваться: ${userTask.exception}", Toast.LENGTH_SHORT).show()

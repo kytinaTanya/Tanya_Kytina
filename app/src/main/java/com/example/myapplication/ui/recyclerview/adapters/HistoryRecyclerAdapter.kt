@@ -17,6 +17,11 @@ class HistoryRecyclerAdapter : Adapter<HistoryRecyclerAdapter.HistoryViewHolder>
         fun bind(film: Film) {
             binding.movieImage.setImage(BuildConfig.BASE_IMAGE_URL + film.backdropPath)
             binding.textView.text = film.title
+            binding.favoriteButton.setOnClickListener {
+
+            }
+            binding.markButton.setOnClickListener {  }
+            binding.starButton.setOnClickListener {  }
         }
     }
 

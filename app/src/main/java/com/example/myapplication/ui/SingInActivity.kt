@@ -48,10 +48,10 @@ class SingInActivity : AppCompatActivity() {
                     Toast.makeText(this, "Добро пожаловать!", Toast.LENGTH_SHORT).show()
                     val i = Intent(this, MainActivity::class.java)
                     startActivity(i)
+                    finish()
                 } else {
                     Toast.makeText(this, "Попробуйте еще раз", Toast.LENGTH_SHORT).show()
                 }
-
             }
     }
 

@@ -10,6 +10,7 @@ import androidx.fragment.app.replace
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.models.User
+import com.example.myapplication.utils.replaceFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         if (currentUser == null) {
             startActivity(Intent(this, SingInActivity::class.java))
+            finish()
         } else {
             if (savedInstanceState == null) {
                 supportFragmentManager.commit {
@@ -51,35 +53,19 @@ class MainActivity : AppCompatActivity() {
         binding.navigationBar.setOnItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.main -> {
-                    supportFragmentManager.commit {
-                        setReorderingAllowed(true)
-                        replace<MainFragment>(R.id.fragment_container_view)
-                        addToBackStack("first")
-                    }
+                    replaceFragment(MainFragment(), "main")
                     true
                 }
                 R.id.favorite -> {
-                    supportFragmentManager.commit {
-                        setReorderingAllowed(true)
-                        replace<FavoriteFragment>(R.id.fragment_container_view)
-                        addToBackStack("first")
-                    }
+                    replaceFragment(FavoriteFragment(), "favorite")
                     true
                 }
                 R.id.history -> {
-                    supportFragmentManager.commit {
-                        setReorderingAllowed(true)
-                        replace<HistoryFragment>(R.id.fragment_container_view)
-                        addToBackStack("first")
-                    }
+                    replaceFragment(HistoryFragment(), "history")
                     true
                 }
                 R.id.account -> {
-                    supportFragmentManager.commit {
-                        setReorderingAllowed(true)
-                        replace<AccountFragment>(R.id.fragment_container_view)
-                        addToBackStack("first")
-                    }
+                    replaceFragment(AccountFragment(), "account")
                     true
                 }
                 else -> false

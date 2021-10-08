@@ -31,8 +31,9 @@ class AccountFragment : Fragment() {
         binding.email.text = USER.email
         binding.exitButton.setOnClickListener {
             Firebase.auth.signOut()
-            val intent = Intent(requireContext(), SingInActivity::class.java)
+            val intent = Intent(activity, SingInActivity::class.java)
             startActivity(intent)
+            activity?.finish()
         }
     }
 
