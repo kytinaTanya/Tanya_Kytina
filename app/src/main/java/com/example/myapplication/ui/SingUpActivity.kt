@@ -6,24 +6,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModelProvider
-import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivitySingUpBinding
 import com.example.myapplication.utils.getStringText
 import com.example.myapplication.viewmodel.AuthViewModel
-import com.example.myapplication.viewmodel.MovieViewModel
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.ref.PhantomReference
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SingUpActivity : AppCompatActivity() {

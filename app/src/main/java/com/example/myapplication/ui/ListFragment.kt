@@ -111,22 +111,12 @@ class ListFragment : Fragment(), MovieClickListener {
     }
 
     override fun onOpenMovie(id: Long) {
-        viewModel.getMovieDetails(id)
-        openChild()
+        MainActivity.openMovie(id, 1, requireActivity())
     }
 
     override fun onOpenTV(id: Long) {
         Log.d("TAG", "TAG")
-        viewModel.getTVDetails(id)
-        openChild()
-    }
-
-    fun openChild() {
-        parentFragment?.parentFragmentManager?.commit {
-            addToBackStack("ListFragment")
-            setReorderingAllowed(true)
-            replace<MovieFragment>(R.id.fragment_container_view)
-        }
+        MainActivity.openMovie(id, 2, requireActivity())
     }
 
     override fun onOpenPerson(id: Long) {

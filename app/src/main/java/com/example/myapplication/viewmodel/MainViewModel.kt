@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.models.movies.*
-import com.example.myapplication.repository.DetailsRepository
 import com.example.myapplication.repository.HistoryRepository
 import com.example.myapplication.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,13 +13,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieViewModel @Inject constructor(
-    private val mainRepository: Repository,
-    private val detailsRepository: DetailsRepository,
-    private val historyRepository: HistoryRepository
+class MainViewModel @Inject constructor(
+    private val mainRepository: Repository
     ) : ViewModel() {
 
-    private val tag: String = MovieViewModel::class.java.simpleName
+    private val tag: String = MainViewModel::class.java.simpleName
 
     private var _moviesInTrend: MutableLiveData<List<Film>> = MutableLiveData<List<Film>>()
     val moviesInTrend: LiveData<List<Film>>
@@ -76,16 +73,6 @@ class MovieViewModel @Inject constructor(
             return _popularPersons
         }
 
-    private var _movieDetails: MutableLiveData<Movie> = MutableLiveData<Movie>()
-    val movieDetails: LiveData<Movie>
-        get() {
-            return _movieDetails
-        }
-
-    private var _listId: MutableLiveData<Int> = MutableLiveData()
-    val listId: LiveData<Int>
-    get() = _listId
-
     fun loadMoviesInTrend() {
         viewModelScope.launch {
             _moviesInTrend.value = mainRepository.getListOfPopularMovies()
@@ -137,49 +124,6 @@ class MovieViewModel @Inject constructor(
     fun loadPopularPersons() {
         viewModelScope.launch {
             _popularPersons.value = mainRepository.getListOfPopularPersons()
-        }
-    }
-
-    fun getMovieDetails(id: Long) {
-        _movieDetails = MutableLiveData<Movie>()
-        viewModelScope.launch {
-            _movieDetails.value = detailsRepository.getMovieDetails(id)
-            Log.d(tag, "${_movieDetails.value}")
-        }
-    }
-
-    fun getTVDetails(id: Long) {
-        _movieDetails = MutableLiveData<Movie>()
-        viewModelScope.launch {
-            _movieDetails.value = detailsRepository.getTVDetails(id)
-            Log.d(tag, "${_movieDetails.value}")
-        }
-    }
-
-    fun getPersonDetails(id: Long) {
-        _movieDetails = MutableLiveData<Movie>()
-        viewModelScope.launch {
-            _movieDetails.value = detailsRepository.getPersonDetails(id)
-            Log.d(tag, "${_movieDetails.value}")
-        }
-    }
-
-    fun createList(sessionId: String) {
-        viewModelScope.launch {
-            _listId.value = historyRepository.createList(sessionId)
-            Log.d(tag, "${_listId.value}")
-        }
-    }
-
-    fun addMovie(id: Int, sessionId: String, mediaId: Long) {
-        viewModelScope.launch {
-            historyRepository.addMovie(id, sessionId, mediaId)
-        }
-    }
-
-    fun removeMovie(id: Int, sessionId: String, mediaId: Long) {
-        viewModelScope.launch {
-            historyRepository.removeMovie(id, sessionId, mediaId)
         }
     }
 }

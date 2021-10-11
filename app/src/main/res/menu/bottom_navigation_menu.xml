@@ -11,9 +11,9 @@
         android:title="Закладки" />
 
     <item
-        android:icon="@drawable/ic_baseline_access_time"
+        android:icon="@drawable/ic_baseline_search"
         android:id="@+id/history"
-        android:title="История" />
+        android:title="Поиск" />
 
     <item
         android:icon="@drawable/ic_baseline_account"

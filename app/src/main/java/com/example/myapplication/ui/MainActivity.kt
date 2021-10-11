@@ -1,5 +1,6 @@
 package com.example.myapplication.ui
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -95,5 +96,14 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         var USER = User()
+        val MEDIA_ID = "media_id"
+        val ITEM_TYPE = "item_type"
+        fun openMovie(id: Long, itemType: Int, context: Context) {
+            val intent = Intent(context, ItemInfoActivity::class.java).apply {
+                putExtra(MEDIA_ID, id)
+                putExtra(ITEM_TYPE, itemType)
+            }
+            context.startActivity(intent)
+        }
     }
 }

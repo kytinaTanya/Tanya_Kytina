@@ -13,8 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication.NoActionBar">
         <activity
+            android:name=".ui.ItemInfoActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.SingInActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".ui.SingUpActivity"
             android:exported="true" />

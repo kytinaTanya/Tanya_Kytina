@@ -11,7 +11,7 @@ import com.example.myapplication.ui.recyclerview.adapters.MovieClickListener
 import com.example.myapplication.ui.recyclerview.adapters.MovieRecyclerAdapter
 import com.example.myapplication.databinding.FragmentMainBinding
 import com.example.myapplication.ui.recyclerview.DividerItemDecoration
-import com.example.myapplication.viewmodel.MovieViewModel
+import com.example.myapplication.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,7 +29,7 @@ class MainFragment : Fragment(), MovieClickListener {
     lateinit var filmsBestAdapter: MovieRecyclerAdapter
     lateinit var personPopularAdapter: MovieRecyclerAdapter
 
-    private val viewModel: MovieViewModel by activityViewModels()
+    private val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -186,26 +186,15 @@ class MainFragment : Fragment(), MovieClickListener {
         }
     }
 
-    fun openChild() {
-        parentFragmentManager.commit {
-            addToBackStack("MovieFragment")
-            setReorderingAllowed(true)
-            replace<MovieFragment>(R.id.fragment_container_view)
-        }
-    }
-
     override fun onOpenMovie(id: Long) {
-        viewModel.getMovieDetails(id)
-        openChild()
+        MainActivity.openMovie(id, 1, requireActivity())
     }
 
     override fun onOpenTV(id: Long) {
-        viewModel.getTVDetails(id)
-        openChild()
+        MainActivity.openMovie(id, 2, requireActivity())
     }
 
     override fun onOpenPerson(id: Long) {
-        viewModel.getPersonDetails(id)
-        openChild()
+        MainActivity.openMovie(id, 3, requireActivity())
     }
 }

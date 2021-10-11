@@ -52,9 +52,9 @@ class HistoryFragment : Fragment() {
 
     private fun initRecyclerView() {
         historyAdapter = HistoryRecyclerAdapter()
-        binding.historyList.apply {
+        binding.historyListFilms.apply {
             adapter = historyAdapter
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             addItemDecoration(DividerItemDecoration(32))
         }
     }

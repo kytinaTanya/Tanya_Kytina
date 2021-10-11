@@ -16,8 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ListsViewModel @Inject constructor(
-    private val mRepository: ListRepository,
-    private val detailsRepository: DetailsRepository
+    private val mRepository: ListRepository
 ): ViewModel() {
 
     val tag: String = ListsViewModel::class.java.simpleName
@@ -46,12 +45,6 @@ class ListsViewModel @Inject constructor(
             return _tvWatchlist
         }
 
-    private var _movieDetails: MutableLiveData<Movie> = MutableLiveData<Movie>()
-    val movieDetails: LiveData<Movie>
-        get() {
-            return _movieDetails
-        }
-
     fun loadFavoriteMoviesList(sessionId: String) {
         viewModelScope.launch {
             _favoriteMoviesList.value = mRepository.getFavoriteMoviesList(sessionId = sessionId)
@@ -73,22 +66,6 @@ class ListsViewModel @Inject constructor(
     fun loadTVWatchlist(sessionId: String) {
         viewModelScope.launch {
             _tvWatchlist.value = mRepository.getTVWatchlist(sessionId = sessionId)
-        }
-    }
-
-    fun getMovieDetails(id: Long) {
-        _movieDetails = MutableLiveData<Movie>()
-        viewModelScope.launch {
-            _movieDetails.value = detailsRepository.getMovieDetails(id)
-            Log.d(tag, "${_movieDetails.value}")
-        }
-    }
-
-    fun getTVDetails(id: Long) {
-        _movieDetails = MutableLiveData<Movie>()
-        viewModelScope.launch {
-            _movieDetails.value = detailsRepository.getTVDetails(id)
-            Log.d(tag, "${_movieDetails.value}")
         }
     }
 }

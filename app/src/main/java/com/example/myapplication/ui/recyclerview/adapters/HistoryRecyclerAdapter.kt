@@ -9,7 +9,7 @@ import com.example.myapplication.databinding.ItemMovieHistoryBinding
 import com.example.myapplication.models.movies.Film
 import com.example.myapplication.utils.setImage
 
-class HistoryRecyclerAdapter : Adapter<HistoryRecyclerAdapter.HistoryViewHolder>() {
+class HistoryRecyclerAdapter() : Adapter<HistoryRecyclerAdapter.HistoryViewHolder>() {
 
     private val filmList: MutableList<Film> = arrayListOf()
 
