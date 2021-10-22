@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
@@ -30,6 +31,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var reference: DatabaseReference
     private var currentUser: FirebaseUser? = null
+    private val mainFragment = MainFragment()
+    private val favFragment = FavoriteFragment()
+    private val hisFragment = HistoryFragment()
+    private val accFragment = AccountFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             if (savedInstanceState == null) {
                 supportFragmentManager.commit {
                     setReorderingAllowed(true)
-                    add<MainFragment>(R.id.fragment_container_view)
+                    add(R.id.fragment_container_view, mainFragment)
                 }
             }
         }
@@ -54,19 +59,19 @@ class MainActivity : AppCompatActivity() {
         binding.navigationBar.setOnItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.main -> {
-                    replaceFragment(MainFragment(), "main")
+                    replaceFragment(mainFragment, "main")
                     true
                 }
                 R.id.favorite -> {
-                    replaceFragment(FavoriteFragment(), "favorite")
+                    replaceFragment(favFragment, "favorite")
                     true
                 }
                 R.id.history -> {
-                    replaceFragment(HistoryFragment(), "history")
+                    replaceFragment(hisFragment, "history")
                     true
                 }
                 R.id.account -> {
-                    replaceFragment(AccountFragment(), "account")
+                    replaceFragment(accFragment, "account")
                     true
                 }
                 else -> false
@@ -96,12 +101,29 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         var USER = User()
-        val MEDIA_ID = "media_id"
-        val ITEM_TYPE = "item_type"
+        const val MEDIA_ID = "media_id"
+        const val ITEM_TYPE = "item_type"
+        const val SEASON = "season_number"
+        const val EPISODE = "episode_number"
+        const val MOVIE_TYPE = 1
+        const val TV_TYPE = 2
+        const val PERSON_TYPE = 3
+        const val EPISODE_TYPE = 4
+
         fun openMovie(id: Long, itemType: Int, context: Context) {
             val intent = Intent(context, ItemInfoActivity::class.java).apply {
                 putExtra(MEDIA_ID, id)
                 putExtra(ITEM_TYPE, itemType)
+            }
+            context.startActivity(intent)
+        }
+
+        fun openMovie(tvId: Long, season: Int, episode: Int, context: Context) {
+            val intent = Intent(context, ItemInfoActivity::class.java).apply {
+                putExtra(MEDIA_ID, tvId)
+                putExtra(ITEM_TYPE, EPISODE_TYPE)
+                putExtra(SEASON, season)
+                putExtra(EPISODE, episode)
             }
             context.startActivity(intent)
         }

@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.myapplication.models.history.PostResponseStatus
+import com.example.myapplication.models.marks.AccountStates
 import com.example.myapplication.models.movies.Movie
 import com.example.myapplication.repository.DetailsRepository
 import com.example.myapplication.repository.HistoryRepository
@@ -29,6 +31,22 @@ class ItemInfoViewModel @Inject constructor(
     val listId: LiveData<Int>
         get() = _listId
 
+    private var _movieStates: MutableLiveData<AccountStates> = MutableLiveData()
+    val movieStates: LiveData<AccountStates>
+        get() = _movieStates
+
+    private var _addToWatchlistState: MutableLiveData<PostResponseStatus> = MutableLiveData()
+    val addToWatchlistState: LiveData<PostResponseStatus>
+        get() = _addToWatchlistState
+
+    private var _markAsFavState: MutableLiveData<PostResponseStatus> = MutableLiveData()
+    val markAsFavState: LiveData<PostResponseStatus>
+        get() = _markAsFavState
+
+    private var _ratedState: MutableLiveData<PostResponseStatus> = MutableLiveData()
+    val ratedState: LiveData<PostResponseStatus>
+        get() = _ratedState
+
     fun loadFilmDetails(id: Long) {
         _movieDetails = MutableLiveData()
         viewModelScope.launch {
@@ -50,6 +68,13 @@ class ItemInfoViewModel @Inject constructor(
         }
     }
 
+    fun loadEpisodeDetails(showId: Long, season: Int, episode: Int) {
+        _movieDetails = MutableLiveData()
+        viewModelScope.launch {
+            _movieDetails.value = detailsRepository.getEpisodeDetails(showId, season, episode)
+        }
+    }
+
     fun createList(sessionId: String) {
         viewModelScope.launch {
             _listId.value = historyRepository.createList(sessionId)
@@ -66,6 +91,42 @@ class ItemInfoViewModel @Inject constructor(
     fun removeMovie(id: Int, sessionId: String, mediaId: Long) {
         viewModelScope.launch {
             historyRepository.removeMovie(id, sessionId, mediaId)
+        }
+    }
+
+    fun markAsFavorite(id: Long, type: String, mark: Boolean, sessionId: String) {
+        viewModelScope.launch {
+            _markAsFavState.value = detailsRepository.markAsFavorite(id, type, mark, sessionId)
+        }
+    }
+
+    fun addToWatchlist(id: Long, type: String, add: Boolean, sessionId: String) {
+        viewModelScope.launch {
+            _addToWatchlistState.value = detailsRepository.addToWatchlist(id, type, add, sessionId)
+        }
+    }
+
+    fun rateMovie(id: Long, sessionId: String, rating: Float) {
+        viewModelScope.launch {
+            _ratedState.value = detailsRepository.rateMovie(id, sessionId, rating)
+        }
+    }
+
+    fun rateTv(id: Long, sessionId: String, rating: Float) {
+        viewModelScope.launch {
+            _ratedState.value = detailsRepository.rateTv(id, sessionId, rating)
+        }
+    }
+
+    fun loadMovieStates(id: Long, sessionId: String) {
+        viewModelScope.launch {
+            _movieStates.value = detailsRepository.getMovieAccountStates(id, sessionId)
+        }
+    }
+
+    fun loadTvStates(id: Long, sessionId: String) {
+        viewModelScope.launch {
+            _movieStates.value = detailsRepository.getTvAccountStates(id, sessionId)
         }
     }
 }

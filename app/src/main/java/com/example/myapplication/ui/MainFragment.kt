@@ -187,14 +187,14 @@ class MainFragment : Fragment(), MovieClickListener {
     }
 
     override fun onOpenMovie(id: Long) {
-        MainActivity.openMovie(id, 1, requireActivity())
+        MainActivity.openMovie(id, MainActivity.MOVIE_TYPE, requireActivity())
     }
 
     override fun onOpenTV(id: Long) {
-        MainActivity.openMovie(id, 2, requireActivity())
+        MainActivity.openMovie(id, MainActivity.TV_TYPE, requireActivity())
     }
 
     override fun onOpenPerson(id: Long) {
-        MainActivity.openMovie(id, 3, requireActivity())
+        MainActivity.openMovie(id, MainActivity.PERSON_TYPE, requireActivity())
     }
 }

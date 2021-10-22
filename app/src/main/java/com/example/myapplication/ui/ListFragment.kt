@@ -27,6 +27,7 @@ class ListFragment : Fragment(), MovieClickListener {
 
     private val viewModel: ListsViewModel by viewModels()
     private lateinit var mAdapter: CollectionRecyclerAdapter
+    private var list = 1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,15 +39,18 @@ class ListFragment : Fragment(), MovieClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         arguments?.takeIf { it.containsKey("object") }?.apply {
-            val list = getInt("object")
-            when(list) {
-                1 -> viewModel.loadFavoriteMoviesList(USER.sessionKey)
-                2 -> viewModel.loadFavoriteTVsList(USER.sessionKey)
-                3 -> viewModel.loadMovieWatchlist(USER.sessionKey)
-                4 -> viewModel.loadTVWatchlist(USER.sessionKey)
-            }
+            list = getInt("object")
         }
-        initRecyclerView()
+
+    }
+
+    private fun loadData() {
+        when(list) {
+            1 -> viewModel.loadFavoriteMoviesList(USER.sessionKey)
+            2 -> viewModel.loadFavoriteTVsList(USER.sessionKey)
+            3 -> viewModel.loadMovieWatchlist(USER.sessionKey)
+            4 -> viewModel.loadTVWatchlist(USER.sessionKey)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,6 +101,12 @@ class ListFragment : Fragment(), MovieClickListener {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        loadData()
+        initRecyclerView()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -111,16 +121,11 @@ class ListFragment : Fragment(), MovieClickListener {
     }
 
     override fun onOpenMovie(id: Long) {
-        MainActivity.openMovie(id, 1, requireActivity())
+        MainActivity.openMovie(id, MainActivity.MOVIE_TYPE, requireActivity())
     }
 
     override fun onOpenTV(id: Long) {
         Log.d("TAG", "TAG")
-        MainActivity.openMovie(id, 2, requireActivity())
+        MainActivity.openMovie(id, MainActivity.TV_TYPE, requireActivity())
     }
-
-    override fun onOpenPerson(id: Long) {
-        TODO("Not yet implemented")
-    }
-
 }

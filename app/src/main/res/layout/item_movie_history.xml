@@ -20,44 +20,43 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constrainedWidth="true"
+        android:ellipsize="end"
+        android:maxLines="2"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/movie_image"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Name"
-        android:maxWidth="185dp"
-        android:maxLines="2"
-        android:ellipsize="end"/>
+        tools:text="Name" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/star_button"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:background="@drawable/ic_star"
+    <TextView
+        android:id="@+id/user_grade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constrainedWidth="true"
         app:layout_constraintStart_toEndOf="@+id/movie_image"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"/>
+        android:text="Общая оценка:"
+        android:textSize="18sp"/>
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/mark_button"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:background="@drawable/ic_turned_in"
-        app:layout_constraintStart_toEndOf="@+id/star_button"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"/>
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/favorite_button"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:background="@drawable/ic_favorite"
-        app:layout_constraintStart_toEndOf="@+id/mark_button"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"/>
+    <TextView
+        android:id="@+id/general_grade"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constrainedWidth="true"
+        android:drawableEnd="@drawable/ic_baseline_star_marked"
+        app:layout_constraintStart_toEndOf="@+id/movie_image"
+        app:layout_constraintTop_toBottomOf="@+id/user_grade"
+        tools:text="Общая оценка: 7.8"
+        android:textSize="18sp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -70,6 +70,43 @@ data class TV(
     )
 }
 
+data class Episode(
+    @SerializedName("id")
+    val id: Long,
+
+    @SerializedName("episode_number")
+    val episodeNum: Int,
+
+    @SerializedName("season_number")
+    val seasonNum: Int,
+
+    @SerializedName("show_id")
+    val showId: Long,
+
+    @SerializedName("name")
+    val name: String,
+
+    @SerializedName("overview")
+    val overview: String,
+
+    @SerializedName("still_path")
+    val stillPath: String,
+
+    @SerializedName("vote_average")
+    val rating: Double
+) : Movie() {
+    constructor() : this(
+        0,
+        0,
+        0,
+        0,
+        "Non",
+        "Non",
+        "Non",
+        0.0
+    )
+}
+
 data class Person(
     @SerializedName("id")
     val id: Long,

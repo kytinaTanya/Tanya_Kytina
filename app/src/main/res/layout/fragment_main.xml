@@ -24,7 +24,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/popular_movies"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             tools:listitem="@layout/item_poster"
             android:layout_marginTop="16dp"
@@ -64,7 +64,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/now_playing_movies"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             tools:listitem="@layout/item_poster"
             android:layout_marginTop="16dp"
@@ -84,7 +84,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/upcoming_movies"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             tools:listitem="@layout/item_poster"
             android:layout_marginTop="16dp"

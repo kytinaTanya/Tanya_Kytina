@@ -23,13 +23,13 @@ class CollectionRecyclerAdapter(val listener: MovieClickListener):
 
     class MovieViewHolder(val binding: ItemMovieBinding): RecyclerView.ViewHolder(binding.root) {
         fun bindFilm(movie: Film) {
-            binding.movieImage.setImage(BuildConfig.BASE_IMAGE_URL + movie.posterPath)
+            binding.movieImage.setImage(BuildConfig.BASE_POSTER_URL + movie.posterPath)
             binding.movieTitle.text = movie.title
             binding.movieAnnotation.text = movie.overview
             binding.yearOfMovie.text = movie.releaseYear()
         }
         fun bindTV(tv: TV) {
-            binding.movieImage.setImage(BuildConfig.BASE_IMAGE_URL + tv.posterPath)
+            binding.movieImage.setImage(BuildConfig.BASE_POSTER_URL + tv.posterPath)
             binding.movieTitle.text = tv.name
             binding.movieAnnotation.text = tv.overview
             binding.yearOfMovie.text = tv.rating.toString()

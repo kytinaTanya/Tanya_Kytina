@@ -9,37 +9,68 @@
     android:background="@color/light_gray"
     android:elevation="5dp">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/start_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/end_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/top_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="16dp"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bottom_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="16dp"/>
+
     <ImageView
         android:id="@+id/movieImage"
         android:layout_width="90dp"
         android:layout_height="152dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="32dp"
         android:paddingBottom="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/bottom_line"
+        app:layout_constraintStart_toStartOf="@+id/start_line"
+        app:layout_constraintTop_toTopOf="@+id/top_line"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/movieTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:maxWidth="238dp"
+        android:layout_marginStart="8dp"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/end_line"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/movieImage"
-        app:layout_constraintTop_toTopOf="@+id/movieImage"
-        tools:text="Name" />
+        app:layout_constraintTop_toTopOf="@+id/top_line"
+        tools:text="Name"
+        app:layout_constrainedWidth="true"
+        android:maxLines="2"
+        android:ellipsize="end"/>
 
     <TextView
         android:id="@+id/yearOfMovie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:maxWidth="238dp"
+        android:layout_marginTop="6dp"
         android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/end_line"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/movieTitle"
         app:layout_constraintTop_toBottomOf="@+id/movieTitle"
         tools:text="2000" />
@@ -48,11 +79,12 @@
         android:id="@+id/movieAnnotation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="6dp"
         android:ellipsize="end"
-        android:maxWidth="238dp"
         android:maxLines="5"
-        android:paddingBottom="32dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_line"
+        app:layout_constraintEnd_toStartOf="@+id/end_line"
         app:layout_constraintStart_toStartOf="@+id/yearOfMovie"
         app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
         tools:text="Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation" />

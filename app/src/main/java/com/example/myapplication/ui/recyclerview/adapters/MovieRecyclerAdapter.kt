@@ -10,10 +10,7 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.ItemBackdropTitleBinding
 import com.example.myapplication.databinding.ItemPersonBinding
 import com.example.myapplication.databinding.ItemPosterBinding
-import com.example.myapplication.models.movies.Film
-import com.example.myapplication.models.movies.Movie
-import com.example.myapplication.models.movies.Person
-import com.example.myapplication.models.movies.TV
+import com.example.myapplication.models.movies.*
 import com.example.myapplication.utils.setImage
 import java.util.*
 
@@ -28,7 +25,7 @@ class MovieRecyclerAdapter(private val listener: MovieClickListener) : RecyclerV
         }
 
         private fun buildImageUrl(movie: Film): String {
-            val imageUrl = BuildConfig.BASE_IMAGE_URL + movie.posterPath
+            val imageUrl = BuildConfig.BASE_POSTER_URL + movie.posterPath
             Log.d("initImage", imageUrl)
             return imageUrl
         }
@@ -42,7 +39,7 @@ class MovieRecyclerAdapter(private val listener: MovieClickListener) : RecyclerV
         }
 
         fun buildImageUrl(tv: TV): String {
-            val imageUrl = BuildConfig.BASE_IMAGE_URL + tv.backdropPath
+            val imageUrl = BuildConfig.BASE_BACKDROP_URL + tv.backdropPath
             Log.d("initImage", imageUrl)
             return imageUrl
         }
@@ -56,7 +53,7 @@ class MovieRecyclerAdapter(private val listener: MovieClickListener) : RecyclerV
         }
 
         fun buildImageUrl(person: Person): String {
-            val imageUrl = BuildConfig.BASE_IMAGE_URL + person.profilePath
+            val imageUrl = BuildConfig.BASE_PROFILE_URL + person.profilePath
             Log.d("initImage", imageUrl)
             return imageUrl
         }
@@ -114,6 +111,7 @@ class MovieRecyclerAdapter(private val listener: MovieClickListener) : RecyclerV
             is Film -> R.layout.item_poster
             is TV -> R.layout.item_backdrop_title
             is Person -> R.layout.item_person
+            is Episode -> R.layout.item_poster
         }
     }
 

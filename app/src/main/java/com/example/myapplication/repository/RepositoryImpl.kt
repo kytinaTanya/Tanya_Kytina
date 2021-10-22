@@ -53,7 +53,7 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService) : Rep
     override suspend fun getListOfPopularTv(): List<TV> {
         val response = service.getPopularTV()
         return if(response.isSuccessful) {
-            response.body()?.TV ?: emptyList()
+            response.body()?.movies ?: emptyList()
         } else {
             emptyList()
         }
@@ -62,7 +62,7 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService) : Rep
     override suspend fun getListOfOnAirTodayTV(): List<TV> {
         val response = service.getOnAirTodayTV()
         return if(response.isSuccessful) {
-            response.body()?.TV ?: emptyList()
+            response.body()?.movies ?: emptyList()
         } else {
             emptyList()
         }
@@ -71,7 +71,7 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService) : Rep
     override suspend fun getListOfNowOnAirTV(): List<TV> {
         val response = service.getNowOnAirTV()
         return if(response.isSuccessful) {
-            response.body()?.TV ?: emptyList()
+            response.body()?.movies ?: emptyList()
         } else {
             emptyList()
         }
@@ -80,7 +80,7 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService) : Rep
     override suspend fun getListOfTopRatedTV(): List<TV> {
         val response = service.getTopRatedTV()
         return if(response.isSuccessful) {
-            response.body()?.TV ?: emptyList()
+            response.body()?.movies ?: emptyList()
         } else {
             emptyList()
         }
@@ -89,7 +89,7 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService) : Rep
     override suspend fun getListOfPopularPersons(): List<Person> {
         val response = service.getPopularPersons()
         return if(response.isSuccessful) {
-            response.body()?.persons ?: emptyList()
+            response.body()?.movies ?: emptyList()
         } else {
             emptyList()
         }
