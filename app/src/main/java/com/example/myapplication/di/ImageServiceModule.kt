@@ -1,6 +1,6 @@
 package com.example.myapplication.di
 
-import com.example.myapplication.repository.services.TmdbService
+import com.example.myapplication.repository.services.ImageService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -9,10 +9,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class TmdbModule {
+class ImageServiceModule {
     @Provides
     @Singleton
-    fun provideTmdbService(): TmdbService {
-        return TmdbService.createApiService()
+    fun provideImageService() : ImageService {
+        return ImageService.createImageService()
     }
 }

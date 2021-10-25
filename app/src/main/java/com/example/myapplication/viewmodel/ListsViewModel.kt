@@ -1,16 +1,12 @@
 package com.example.myapplication.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.models.lists.*
-import com.example.myapplication.models.movies.Movie
-import com.example.myapplication.repository.DetailsRepository
-import com.example.myapplication.repository.ListRepository
+import com.example.myapplication.repository.repositories.ListRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import hilt_aggregated_deps._com_example_myapplication_di_RepositoryModule
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

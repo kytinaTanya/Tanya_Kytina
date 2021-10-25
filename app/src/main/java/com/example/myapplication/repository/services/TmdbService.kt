@@ -1,4 +1,4 @@
-package com.example.myapplication.repository
+package com.example.myapplication.repository.services
 
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.models.*

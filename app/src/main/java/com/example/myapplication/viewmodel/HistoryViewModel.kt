@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.myapplication.models.movies.Episode
 import com.example.myapplication.models.movies.Film
 import com.example.myapplication.models.movies.TV
-import com.example.myapplication.repository.HistoryRepository
+import com.example.myapplication.repository.repositories.HistoryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

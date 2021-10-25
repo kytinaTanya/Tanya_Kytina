@@ -1,5 +1,7 @@
 package com.example.myapplication.ui
 
+import android.R.attr
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +25,14 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.core.app.ActivityCompat.startActivityForResult
+import android.R.attr.data
+
+
+
+
+
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -109,6 +119,7 @@ class MainActivity : AppCompatActivity() {
         const val TV_TYPE = 2
         const val PERSON_TYPE = 3
         const val EPISODE_TYPE = 4
+        const val GALLERY_REQUEST = 1
 
         fun openMovie(id: Long, itemType: Int, context: Context) {
             val intent = Intent(context, ItemInfoActivity::class.java).apply {

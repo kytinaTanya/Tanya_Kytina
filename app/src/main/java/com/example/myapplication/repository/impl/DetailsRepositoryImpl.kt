@@ -1,4 +1,4 @@
-package com.example.myapplication.repository
+package com.example.myapplication.repository.impl
 
 import com.example.myapplication.models.history.PostResponseStatus
 import com.example.myapplication.models.marks.AccountStates
@@ -9,6 +9,8 @@ import com.example.myapplication.models.movies.Episode
 import com.example.myapplication.models.movies.Film
 import com.example.myapplication.models.movies.Person
 import com.example.myapplication.models.movies.TV
+import com.example.myapplication.repository.repositories.DetailsRepository
+import com.example.myapplication.repository.services.TmdbService
 import com.google.gson.GsonBuilder
 
 

@@ -1,4 +1,4 @@
-package com.example.myapplication.repository
+package com.example.myapplication.repository.repositories
 
 import com.example.myapplication.models.lists.*
 

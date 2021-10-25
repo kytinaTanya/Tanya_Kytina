@@ -8,8 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.myapplication.models.history.PostResponseStatus
 import com.example.myapplication.models.marks.AccountStates
 import com.example.myapplication.models.movies.Movie
-import com.example.myapplication.repository.DetailsRepository
-import com.example.myapplication.repository.HistoryRepository
+import com.example.myapplication.repository.repositories.DetailsRepository
+import com.example.myapplication.repository.repositories.HistoryRepository
 import com.example.myapplication.ui.ItemInfoActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

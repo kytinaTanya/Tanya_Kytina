@@ -1,14 +1,14 @@
-package com.example.myapplication.repository
+package com.example.myapplication.repository.impl
 
-import android.app.DownloadManager
 import android.util.Log
 import com.example.myapplication.models.history.CreatedListBody
 import com.example.myapplication.models.history.MediaBody
 import com.example.myapplication.models.history.PostResponseStatus
 import com.example.myapplication.models.movies.Episode
 import com.example.myapplication.models.movies.Film
-import com.example.myapplication.models.movies.Movie
 import com.example.myapplication.models.movies.TV
+import com.example.myapplication.repository.repositories.HistoryRepository
+import com.example.myapplication.repository.services.TmdbService
 
 class HistoryRepositoryImpl(val service: TmdbService): HistoryRepository {
     override suspend fun getDetailsAboutHistoryList(id: Int, sessionId: String): List<Film> {

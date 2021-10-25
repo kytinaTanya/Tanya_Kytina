@@ -2,11 +2,12 @@ package com.example.myapplication.repository
 
 import com.example.myapplication.models.movies.Movie
 import com.example.myapplication.models.movies.MoviesResponse
+import com.example.myapplication.repository.impl.RepositoryImpl
+import com.example.myapplication.repository.services.TmdbService
 import com.google.gson.Gson
 import junit.framework.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 import java.io.FileReader
 
