@@ -1,4 +1,4 @@
-package com.example.myapplication.ui
+package com.example.myapplication.ui.activities
 
 import android.content.Intent
 import android.net.Uri
@@ -9,21 +9,18 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.myapplication.databinding.ActivitySingUpBinding
+import com.example.myapplication.firebase.AUTH
+import com.example.myapplication.firebase.REF_DATABASE_ROOT
+import com.example.myapplication.firebase.UID
+import com.example.myapplication.firebase.initFirebase
 import com.example.myapplication.utils.getStringText
 import com.example.myapplication.viewmodel.AuthViewModel
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SingUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySingUpBinding
-    private lateinit var auth: FirebaseAuth
-    private lateinit var reference: DatabaseReference
     private lateinit var sessionKey: String
     private var requestToken: String = ""
 
@@ -33,9 +30,7 @@ class SingUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySingUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        auth = Firebase.auth
-        reference = Firebase.database.reference
+        initFirebase()
 
         viewModel.getRequestToken()
         viewModel.requestToken.observe(this) {
@@ -78,13 +73,13 @@ class SingUpActivity : AppCompatActivity() {
                               email: String,
                               password: String,
                               sessionKey: String) {
-        auth.createUserWithEmailAndPassword(email, password)
+        AUTH.createUserWithEmailAndPassword(email, password)
             .addOnCanceledListener {
                 Toast.makeText(this, "Отмена операции1", Toast.LENGTH_SHORT).show()
             }
             .addOnCompleteListener(this) { task ->
                 if(task.isSuccessful) {
-                    val uid = auth.currentUser?.uid.toString()
+                    val uid = UID
                     val dataMap = mutableMapOf<String, Any>()
 
                     dataMap["id"] = uid
@@ -95,7 +90,7 @@ class SingUpActivity : AppCompatActivity() {
                     dataMap["accessToken"] = ""
                     dataMap["historyListID"] = 0
 
-                    reference.child("users").child(uid).updateChildren(dataMap)
+                    REF_DATABASE_ROOT.child("users").child(uid).updateChildren(dataMap)
                         .addOnCanceledListener {
                             Toast.makeText(this, "Отмена операции2", Toast.LENGTH_SHORT).show()
                         }

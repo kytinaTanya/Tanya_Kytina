@@ -1,4 +1,4 @@
-package com.example.myapplication.ui
+package com.example.myapplication.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +11,8 @@ import androidx.fragment.app.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentHistoryBinding
-import com.example.myapplication.ui.MainActivity.Companion.USER
+import com.example.myapplication.firebase.USER
+import com.example.myapplication.ui.activities.MainActivity
 import com.example.myapplication.ui.recyclerview.DividerItemDecoration
 import com.example.myapplication.ui.recyclerview.adapters.HistoryRecyclerAdapter
 import com.example.myapplication.ui.recyclerview.adapters.MovieClickListener

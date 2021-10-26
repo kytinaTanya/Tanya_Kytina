@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.SearchResultFragment"
+    tools:context=".ui.fragments.SearchResultFragment"
     android:orientation="vertical"
     tools:listitem="@layout/item_movie"
     android:id="@+id/search_list">

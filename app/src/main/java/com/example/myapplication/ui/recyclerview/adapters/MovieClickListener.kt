@@ -1,7 +1,5 @@
 package com.example.myapplication.ui.recyclerview.adapters
 
-import com.example.myapplication.ui.MainActivity
-
 interface MovieClickListener {
     fun onOpenMovie(id: Long) {
         println("Open movie")

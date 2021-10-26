@@ -1,4 +1,4 @@
-package com.example.myapplication.ui
+package com.example.myapplication.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -6,15 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentListBinding
+import com.example.myapplication.firebase.USER
 import com.example.myapplication.models.movies.Film
 import com.example.myapplication.models.movies.TV
-import com.example.myapplication.ui.MainActivity.Companion.USER
+import com.example.myapplication.ui.activities.MainActivity
 import com.example.myapplication.ui.recyclerview.adapters.CollectionRecyclerAdapter
 import com.example.myapplication.ui.recyclerview.adapters.MovieClickListener
 import com.example.myapplication.viewmodel.ListsViewModel

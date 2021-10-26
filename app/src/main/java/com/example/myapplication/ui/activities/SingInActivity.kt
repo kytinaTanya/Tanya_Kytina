@@ -1,33 +1,25 @@
-package com.example.myapplication.ui
+package com.example.myapplication.ui.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivitySingInBinding
+import com.example.myapplication.firebase.AUTH
+import com.example.myapplication.firebase.initFirebase
 import com.example.myapplication.utils.getStringText
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SingInActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySingInBinding
-    private lateinit var auth: FirebaseAuth
-    private lateinit var reference: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySingInBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        auth = Firebase.auth
-        reference = Firebase.database.reference
+        initFirebase()
 
         binding.exit.setOnClickListener {
             val i = Intent(this, SingUpActivity::class.java)
@@ -42,7 +34,7 @@ class SingInActivity : AppCompatActivity() {
     }
 
     private fun signIn(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password)
+        AUTH.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if(task.isSuccessful) {
                     Toast.makeText(this, "Добро пожаловать!", Toast.LENGTH_SHORT).show()

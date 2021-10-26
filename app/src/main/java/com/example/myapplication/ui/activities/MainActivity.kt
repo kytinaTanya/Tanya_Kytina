@@ -1,45 +1,31 @@
-package com.example.myapplication.ui
+package com.example.myapplication.ui.activities
 
-import android.R.attr
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.add
 import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.models.User
 import com.example.myapplication.utils.replaceFragment
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.core.app.ActivityCompat.startActivityForResult
-import android.R.attr.data
-
-
-
-
-
+import com.example.myapplication.firebase.*
+import com.example.myapplication.ui.fragments.AccountFragment
+import com.example.myapplication.ui.fragments.FavoriteFragment
+import com.example.myapplication.ui.fragments.HistoryFragment
+import com.example.myapplication.ui.fragments.MainFragment
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var auth: FirebaseAuth
-    private lateinit var reference: DatabaseReference
     private var currentUser: FirebaseUser? = null
     private val mainFragment = MainFragment()
     private val favFragment = FavoriteFragment()
@@ -50,9 +36,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        auth = Firebase.auth
-        reference = Firebase.database.reference
-        currentUser = auth.currentUser
+        initFirebase()
+        currentUser = AUTH.currentUser
 
         if (currentUser == null) {
             startActivity(Intent(this, SingInActivity::class.java))
@@ -95,8 +80,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initUser() {
-        reference.child("users").child(currentUser?.uid.toString())
-            .addListenerForSingleValueEvent(
+        REF_DATABASE_ROOT.child("users").child(UID)
+            .addValueEventListener(
                 object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         USER = snapshot.getValue(User::class.java) ?: User()
@@ -105,12 +90,12 @@ class MainActivity : AppCompatActivity() {
                     override fun onCancelled(error: DatabaseError) {
                         Log.d("INITUSER", "initialization is failed")
                     }
+
                 }
             )
     }
 
     companion object {
-        var USER = User()
         const val MEDIA_ID = "media_id"
         const val ITEM_TYPE = "item_type"
         const val SEASON = "season_number"
@@ -119,7 +104,6 @@ class MainActivity : AppCompatActivity() {
         const val TV_TYPE = 2
         const val PERSON_TYPE = 3
         const val EPISODE_TYPE = 4
-        const val GALLERY_REQUEST = 1
 
         fun openMovie(id: Long, itemType: Int, context: Context) {
             val intent = Intent(context, ItemInfoActivity::class.java).apply {
@@ -137,6 +121,16 @@ class MainActivity : AppCompatActivity() {
                 putExtra(EPISODE, episode)
             }
             context.startActivity(intent)
+        }
+
+        fun setProfileImage(url: String) {
+            REF_DATABASE_ROOT.child("users").child(UID).child("profileUrl").setValue("https://$url").addOnCompleteListener {
+                if(it.isSuccessful) {
+                    Log.d("PROFILE_IMAGE", "Successful")
+                } else {
+                    Log.d("PROFILE_IMAGE", "${it.exception}")
+                }
+            }
         }
     }
 }

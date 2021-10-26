@@ -1,5 +1,7 @@
 package com.example.myapplication.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.repository.repositories.AccountRepository
@@ -16,6 +18,10 @@ import javax.inject.Inject
 class AccountViewModel @Inject constructor(
     private val accountRepository: AccountRepository
 ) : ViewModel() {
+    private var _profileImageUrl: MutableLiveData<String> = MutableLiveData()
+    val profileImageUrl: LiveData<String>
+        get() = _profileImageUrl
+
     fun uploadImage(inputStream: InputStream) {
         val part: MultipartBody.Part = MultipartBody.Part.createFormData(
             "pic", "myPic", RequestBody.create(
@@ -24,7 +30,11 @@ class AccountViewModel @Inject constructor(
             )
         )
         viewModelScope.launch {
-            accountRepository.uploadImage(part)
+            accountRepository.uploadImage(part, ::getUrl)
         }
+    }
+
+    fun getUrl(url: String) {
+        _profileImageUrl.value = url
     }
 }

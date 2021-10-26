@@ -14,15 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication.NoActionBar">
         <activity
-            android:name=".ui.ItemInfoActivity"
+            android:name=".ui.activities.ItemInfoActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.SingInActivity"
+            android:name=".ui.activities.SingInActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.SingUpActivity"
+            android:name=".ui.activities.SingUpActivity"
             android:exported="true" />
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".ui.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

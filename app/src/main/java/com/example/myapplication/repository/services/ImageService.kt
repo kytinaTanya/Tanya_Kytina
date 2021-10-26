@@ -1,6 +1,7 @@
 package com.example.myapplication.repository.services
 
 import com.example.myapplication.BuildConfig
+import com.example.myapplication.models.images.ImageRequest
 import com.example.myapplication.models.images.UploadeModel
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -34,8 +35,8 @@ interface ImageService {
     @POST("images")
     fun uploadImage(
         @Part file: MultipartBody.Part,
-        @Part("api_key") key: String = BuildConfig.IMAGE_API_KEY
-    ): Call<UploadeModel>
+        @Query("api_key") key: String = BuildConfig.IMAGE_API_KEY
+    ): Call<ImageRequest>
 
     @GET("images/{id}")
     fun getImage(

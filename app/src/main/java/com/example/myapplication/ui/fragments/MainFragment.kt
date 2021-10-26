@@ -1,4 +1,4 @@
-package com.example.myapplication.ui
+package com.example.myapplication.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.*
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myapplication.R
 import com.example.myapplication.ui.recyclerview.adapters.MovieClickListener
 import com.example.myapplication.ui.recyclerview.adapters.MovieRecyclerAdapter
 import com.example.myapplication.databinding.FragmentMainBinding
+import com.example.myapplication.ui.activities.MainActivity
 import com.example.myapplication.ui.recyclerview.DividerItemDecoration
 import com.example.myapplication.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint

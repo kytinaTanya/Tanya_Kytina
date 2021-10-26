@@ -15,6 +15,9 @@ data class BasicImage(
     @SerializedName("filename")
     val filename: String,
 
+    @SerializedName("direct_link")
+    val link: String,
+
     @SerializedName("original_filename")
     val originFilename: String,
 

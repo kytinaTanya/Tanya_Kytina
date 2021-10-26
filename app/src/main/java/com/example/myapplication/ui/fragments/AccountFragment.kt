@@ -1,7 +1,5 @@
-package com.example.myapplication.ui
+package com.example.myapplication.ui.fragments
 
-import android.content.ContentProvider
-import android.content.ContentResolver
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,18 +8,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
+import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentAccountBinding
-import com.example.myapplication.ui.MainActivity.Companion.USER
+import com.example.myapplication.firebase.AUTH
+import com.example.myapplication.firebase.USER
+import com.example.myapplication.ui.activities.MainActivity
+import com.example.myapplication.ui.activities.SingInActivity
+import com.example.myapplication.ui.dialogs.CheckToDeleteFragment
+import com.example.myapplication.ui.dialogs.ProfileImageActionsFragment
+import com.example.myapplication.ui.dialogs.UploadProcessFragment
+import com.example.myapplication.utils.setImage
 import com.example.myapplication.viewmodel.AccountViewModel
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.File
 import java.io.InputStream
-import java.util.*
 
 @AndroidEntryPoint
 class AccountFragment : Fragment() {
@@ -30,18 +33,15 @@ class AccountFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel by viewModels<AccountViewModel>()
-    private var file: ByteArray? = null
     private var inputStream: InputStream? = null
+    private var dialog: UploadProcessFragment = UploadProcessFragment()
 
     private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         binding.profileImage.setImageURI(uri)
 
         if(uri != null) {
-            inputStream = requireContext().contentResolver.openInputStream(uri)!!
+            inputStream = activity?.contentResolver?.openInputStream(uri)!!
         }
-
-        //file = uri?.path?.readBytes()
-        //viewModel.uploadImage(File(uri as URI).readBytes())
     }
 
     override fun onCreateView(
@@ -55,14 +55,22 @@ class AccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.username.text = USER.username
         binding.email.text = USER.email
+        val image = USER.profileUrl
+        Log.d("USER", "${USER}")
+        if(image != "") {
+            setImage(USER.profileUrl)
+        }
         binding.exitButton.setOnClickListener {
-            Firebase.auth.signOut()
+            AUTH.signOut()
             val intent = Intent(activity, SingInActivity::class.java)
             startActivity(intent)
             activity?.finish()
         }
         binding.profileImage.setOnClickListener {
-            openGalleryForImage()
+            ProfileImageActionsFragment().show(
+                childFragmentManager, ProfileImageActionsFragment.TAG
+            )
+            //openGalleryForImage()
         }
     }
 
@@ -74,6 +82,15 @@ class AccountFragment : Fragment() {
         super.onResume()
         if(inputStream != null) {
             viewModel.uploadImage(inputStream!!)
+            dialog.show(
+                childFragmentManager, UploadProcessFragment.TAG
+            )
+            inputStream = null
+        }
+
+        viewModel.profileImageUrl.observe(this) { url ->
+            MainActivity.setProfileImage(url)
+            dialog.dismiss()
         }
     }
 
@@ -82,11 +99,30 @@ class AccountFragment : Fragment() {
         _binding = null
     }
 
-    private fun openGalleryForImage() {
-            getContent.launch("image/*")
+    fun openGalleryForImage() {
+        getContent.launch("image/*")
     }
 
-    companion object {
-        const val REQUEST_CODE = 100
+    fun openPhoto() {
+        parentFragmentManager.commit {
+            addToBackStack("photo")
+            setReorderingAllowed(true)
+            replace<PhotoFragment>(R.id.fragment_container_view)
+        }
+    }
+
+    fun checkDecision() {
+        CheckToDeleteFragment().show(
+            childFragmentManager, CheckToDeleteFragment.TAG
+        )
+    }
+
+    fun deletePhoto() {
+        MainActivity.setProfileImage("")
+        setImage("")
+    }
+
+    private fun setImage(url: String) {
+        binding.profileImage.setImage(url)
     }
 }

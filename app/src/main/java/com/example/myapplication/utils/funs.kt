@@ -5,9 +5,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import com.example.myapplication.R
-import com.example.myapplication.ui.MainFragment
 import com.squareup.picasso.Picasso
 
 fun ImageView.setImage(imageUrl: String){
