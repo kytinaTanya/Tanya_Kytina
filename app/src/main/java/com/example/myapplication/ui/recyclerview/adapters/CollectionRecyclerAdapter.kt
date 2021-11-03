@@ -1,16 +1,13 @@
 package com.example.myapplication.ui.recyclerview.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.databinding.ItemMovieBinding
 import com.example.myapplication.models.movies.Film
-import com.example.myapplication.models.movies.Movie
-import com.example.myapplication.models.movies.Person
+import com.example.myapplication.models.movies.BaseItem
 import com.example.myapplication.models.movies.TV
 import com.example.myapplication.utils.setImage
 
@@ -19,7 +16,7 @@ class CollectionRecyclerAdapter(val listener: MovieClickListener):
     RecyclerView.Adapter<CollectionRecyclerAdapter.MovieViewHolder>(),
     View.OnClickListener {
 
-    private var movieList: MutableList<Movie> = arrayListOf()
+    private var baseItemList: MutableList<BaseItem> = arrayListOf()
 
     class MovieViewHolder(val binding: ItemMovieBinding): RecyclerView.ViewHolder(binding.root) {
         fun bindFilm(movie: Film) {
@@ -43,25 +40,25 @@ class CollectionRecyclerAdapter(val listener: MovieClickListener):
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.itemView.tag = movieList[position]
-        when(movieList[position]) {
-            is Film -> holder.bindFilm(movieList[position] as Film)
-            is TV -> holder.bindTV(movieList[position] as TV)
+        holder.itemView.tag = baseItemList[position]
+        when(baseItemList[position]) {
+            is Film -> holder.bindFilm(baseItemList[position] as Film)
+            is TV -> holder.bindTV(baseItemList[position] as TV)
         }
     }
 
     override fun getItemCount(): Int {
-        return movieList.size
+        return baseItemList.size
     }
 
-    fun addMovies(movies: List<Movie>) {
-        movieList.clear()
-        movieList.addAll(movies)
+    fun addMovies(baseItems: List<BaseItem>) {
+        baseItemList.clear()
+        baseItemList.addAll(baseItems)
         notifyDataSetChanged()
     }
 
     override fun onClick(v: View?) {
-        val movie = v?.tag as Movie
+        val movie = v?.tag as BaseItem
         when(movie) {
             is Film -> listener.onOpenMovie(movie.id)
             is TV -> listener.onOpenTV(movie.id)

@@ -3,7 +3,6 @@ package com.example.myapplication.repository.repositories
 import com.example.myapplication.models.history.PostResponseStatus
 import com.example.myapplication.models.movies.Episode
 import com.example.myapplication.models.movies.Film
-import com.example.myapplication.models.movies.Movie
 import com.example.myapplication.models.movies.TV
 
 interface HistoryRepository {

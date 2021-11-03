@@ -10,6 +10,9 @@ interface MovieClickListener {
     fun onOpenPerson(id: Long) {
         println("Open person")
     }
+    fun onOpenSeason(id: Long, season: Int) {
+        println("Open season")
+    }
     fun onOpenEpisode(tvId: Long, season: Int, episode: Int) {
         println("Open episode")
     }

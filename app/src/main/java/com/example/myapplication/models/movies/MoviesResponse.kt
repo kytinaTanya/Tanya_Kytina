@@ -2,7 +2,7 @@ package com.example.myapplication.models.movies
 
 import com.google.gson.annotations.SerializedName
 
-data class MoviesResponse<T : Movie>(
+data class MoviesResponse<T : BaseItem>(
     @SerializedName("page") val page: Int,
     @SerializedName("results") val movies: List<T>,
     @SerializedName("total_pages") val pages: Int,

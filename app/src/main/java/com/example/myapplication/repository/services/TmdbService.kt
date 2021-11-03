@@ -39,21 +39,107 @@ interface TmdbService {
         @Path("movie_id") id: Long,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE
-    ): Response<Film>
+    ): Response<FilmDetails>
+
+    @GET("movie/{movie_id}/images")
+    suspend fun getMovieImages(
+        @Path("movie_id") id: Long,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH
+    ): Response<ImageData>
+
+    @GET("movie/{movie_id}/credits")
+    suspend fun getMovieCredits(
+        @Path("movie_id") id: Long,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE
+    ): Response<CreditsResponse>
+
+    @GET("movie/{movie_id}/recommendations")
+    suspend fun getRecommendationMovies(
+        @Path("movie_id") id: Long,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
+        @Query("page") page: Int = 1
+    ): Response<MoviesResponse<Film>>
+
+    @GET("movie/{movie_id}/similar")
+    suspend fun getSimilarMovies(
+        @Path("movie_id") id: Long,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
+        @Query("page") page: Int = 1
+    ): Response<MoviesResponse<Film>>
+
+    @GET("movie/{movie_id}/videos")
+    suspend fun getMovieVideos(
+        @Path("movie_id") id: Long,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE
+    ): Response<VideoData>
 
     @GET("tv/{tv_id}")
     suspend fun getTvDetails(
         @Path("tv_id") id: Long,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE
-    ): Response<TV>
+    ): Response<TvDetails>
+
+    @GET("tv/{tv_id}/images")
+    suspend fun getTvImages(
+        @Path("tv_id") id: Long,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH
+    ): Response<ImageData>
+
+    @GET("tv/{tv_id}/credits")
+    suspend fun getTvCredits(
+        @Path("tv_id") id: Long,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE
+    ): Response<CreditsResponse>
+
+    @GET("tv/{tv_id}/recommendations")
+    suspend fun getRecommendationTvs(
+        @Path("tv_id") id: Long,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
+        @Query("page") page: Int = 1
+    ): Response<MoviesResponse<TV>>
+
+    @GET("tv/{tv_id}/similar")
+    suspend fun getSimilarTvs(
+        @Path("tv_id") id: Long,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
+        @Query("page") page: Int = 1
+    ): Response<MoviesResponse<TV>>
+
+    @GET("tv/{tv_id}/videos")
+    suspend fun getTvVideos(
+        @Path("tv_id") id: Long,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE
+    ): Response<VideoData>
 
     @GET("person/{person_id}")
     suspend fun getPersonDetails(
         @Path("person_id") id: Long,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE
-    ): Response<Person>
+    ): Response<PersonDetails>
+
+    @GET("person/{person_id}/images")
+    suspend fun getPersonImages(
+        @Path("person_id") id: Long,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH
+    ): Response<ImageData>
+
+    @GET("tv/{tv_id}/season/{season_number}")
+    suspend fun getSeasonDetails(
+        @Path("tv_id") tvId: Long,
+        @Path("season_number") seasonNum: Int,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE
+    ) : Response<SeasonDetails>
 
     @GET("tv/{tv_id}/season/{season_number}/episode/{episode_number}")
     suspend fun getEpisodeDetails(
@@ -62,7 +148,7 @@ interface TmdbService {
         @Path("episode_number") episodeNum: Int,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE
-    ): Response<Episode>
+    ): Response<EpisodeDetails>
 
     @GET("authentication/token/new")
     suspend fun getRequestToken(

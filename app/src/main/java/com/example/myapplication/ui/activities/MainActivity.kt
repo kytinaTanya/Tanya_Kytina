@@ -103,7 +103,8 @@ class MainActivity : AppCompatActivity() {
         const val MOVIE_TYPE = 1
         const val TV_TYPE = 2
         const val PERSON_TYPE = 3
-        const val EPISODE_TYPE = 4
+        const val SEASON_TYPE = 4
+        const val EPISODE_TYPE = 5
 
         fun openMovie(id: Long, itemType: Int, context: Context) {
             val intent = Intent(context, ItemInfoActivity::class.java).apply {
@@ -113,10 +114,19 @@ class MainActivity : AppCompatActivity() {
             context.startActivity(intent)
         }
 
-        fun openMovie(tvId: Long, season: Int, episode: Int, context: Context) {
+        fun openMovie(tvId: Long, season: Int, itemType: Int, context: Context) {
             val intent = Intent(context, ItemInfoActivity::class.java).apply {
                 putExtra(MEDIA_ID, tvId)
-                putExtra(ITEM_TYPE, EPISODE_TYPE)
+                putExtra(ITEM_TYPE, itemType)
+                putExtra(SEASON, season)
+            }
+            context.startActivity(intent)
+        }
+
+        fun openMovie(tvId: Long, season: Int, episode: Int, itemType: Int, context: Context) {
+            val intent = Intent(context, ItemInfoActivity::class.java).apply {
+                putExtra(MEDIA_ID, tvId)
+                putExtra(ITEM_TYPE, itemType)
                 putExtra(SEASON, season)
                 putExtra(EPISODE, episode)
             }

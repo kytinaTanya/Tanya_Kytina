@@ -3,7 +3,7 @@
     package="com.example.myapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".appl.MyApplicationClass"
@@ -13,6 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication.NoActionBar">
+        <activity
+            android:name=".ui.activities.PictureActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.activities.ItemInfoActivity"
             android:exported="true" />

@@ -17,14 +17,14 @@
         tools:src="@drawable/poster_placeholder" />
 
     <TextView
-        android:id="@+id/name_item"
+        android:id="@+id/name_episode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constrainedWidth="true"
         android:ellipsize="end"
-        android:maxLines="2"
+        android:maxLines="3"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,29 +34,32 @@
         tools:text="Name" />
 
     <TextView
-        android:id="@+id/user_grade"
+        android:id="@+id/rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Общая оценка:"
+        android:textSize="18sp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/movie_image"
+        app:layout_constraintTop_toBottomOf="@+id/name_episode" />
+
+    <TextView
+        android:id="@+id/overview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:maxLines="5"
+        android:textSize="18sp"
         app:layout_constrainedWidth="true"
-        app:layout_constraintStart_toEndOf="@+id/movie_image"
-        app:layout_constraintTop_toBottomOf="@+id/name_item"
-        android:text="Общая оценка:"
-        android:textSize="18sp"/>
-
-    <TextView
-        android:id="@+id/general_grade"
-        android:layout_width="wrap_content"
-        android:layout_height="18dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constrainedWidth="true"
-        android:drawableEnd="@drawable/ic_baseline_star_marked"
-        app:layout_constraintStart_toEndOf="@+id/movie_image"
-        app:layout_constraintTop_toBottomOf="@+id/user_grade"
-        tools:text="Общая оценка: 7.8"
-        android:textSize="18sp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movie_image"
+        tools:text="Общая оценка: 7.8" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

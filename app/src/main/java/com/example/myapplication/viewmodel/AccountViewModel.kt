@@ -11,6 +11,7 @@ import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.InputStream
 import javax.inject.Inject
 
@@ -24,10 +25,11 @@ class AccountViewModel @Inject constructor(
 
     fun uploadImage(inputStream: InputStream) {
         val part: MultipartBody.Part = MultipartBody.Part.createFormData(
-            "pic", "myPic", RequestBody.create(
-                "image/*".toMediaTypeOrNull(),
-                inputStream.readBytes()
-            )
+            "pic", "myPic", inputStream.readBytes()
+                .toRequestBody(
+                    "image/*".toMediaTypeOrNull(),
+                    0
+                )
         )
         viewModelScope.launch {
             accountRepository.uploadImage(part, ::getUrl)

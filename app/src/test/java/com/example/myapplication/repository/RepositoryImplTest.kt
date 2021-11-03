@@ -1,6 +1,6 @@
 package com.example.myapplication.repository
 
-import com.example.myapplication.models.movies.Movie
+import com.example.myapplication.models.movies.BaseItem
 import com.example.myapplication.models.movies.MoviesResponse
 import com.example.myapplication.repository.impl.RepositoryImpl
 import com.example.myapplication.repository.services.TmdbService
@@ -14,7 +14,7 @@ import java.io.FileReader
 
 class RepositoryImplTest {
 
-    private lateinit var movieList: List<Movie>
+    private lateinit var baseItemList: List<BaseItem>
 
     private val moviesResponseObj: MoviesResponse = Gson()
         .fromJson(
@@ -35,8 +35,8 @@ class RepositoryImplTest {
         //repositoryImpl.getListOfPopularMovies(::onSuccess, ::onError)
     }
 
-    private fun onSuccess(list: List<Movie>){
-        movieList = list
+    private fun onSuccess(list: List<BaseItem>){
+        baseItemList = list
     }
 
     private fun onError(){
@@ -45,7 +45,7 @@ class RepositoryImplTest {
 
     @Test
     fun responseIsCorrect(){
-        assertEquals(correctList, movieList)
+        assertEquals(correctList, baseItemList)
     }
 
 }

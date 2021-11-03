@@ -13,6 +13,7 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentHistoryBinding
 import com.example.myapplication.firebase.USER
 import com.example.myapplication.ui.activities.MainActivity
+import com.example.myapplication.ui.activities.MainActivity.Companion.EPISODE_TYPE
 import com.example.myapplication.ui.recyclerview.DividerItemDecoration
 import com.example.myapplication.ui.recyclerview.adapters.HistoryRecyclerAdapter
 import com.example.myapplication.ui.recyclerview.adapters.MovieClickListener
@@ -121,6 +122,6 @@ class HistoryFragment : Fragment(), MovieClickListener {
     }
 
     override fun onOpenEpisode(tvId: Long, season: Int, episode: Int) {
-        MainActivity.openMovie(tvId, season, episode, requireActivity())
+        MainActivity.openMovie(tvId, season, episode, EPISODE_TYPE, requireActivity())
     }
 }

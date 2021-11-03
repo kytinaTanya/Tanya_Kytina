@@ -7,16 +7,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.R
-import com.example.myapplication.databinding.ItemBackdropTitleBinding
-import com.example.myapplication.databinding.ItemPersonBinding
-import com.example.myapplication.databinding.ItemPosterBinding
+import com.example.myapplication.databinding.*
 import com.example.myapplication.models.movies.*
 import com.example.myapplication.utils.setImage
-import java.util.*
 
 class MovieRecyclerAdapter(private val listener: MovieClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
 
-    var mMoviesList: MutableList<Movie> = arrayListOf()
+    var mMoviesList: MutableList<BaseItem> = arrayListOf()
 
     class PosterViewHolder(val binding: ItemPosterBinding): RecyclerView.ViewHolder(binding.root) {
 
@@ -48,14 +45,61 @@ class MovieRecyclerAdapter(private val listener: MovieClickListener) : RecyclerV
     class PersonViewHolder(val binding: ItemPersonBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(person: Person) {
-            binding.profileImage.setImage(buildImageUrl(person))
+            binding.profileImage.setImage(buildImageUrl(person.profilePath))
             binding.name.text = person.name
         }
 
-        fun buildImageUrl(person: Person): String {
-            val imageUrl = BuildConfig.BASE_PROFILE_URL + person.profilePath
+        fun bind(crew: Crew) {
+            binding.profileImage.setImage(buildImageUrl(crew.profile))
+            binding.name.text = crew.name
+        }
+
+        fun bind(cast: Cast) {
+            if(cast.profile == null) {
+                binding.profileImage.setImage(buildImageUrl(""))
+            } else {
+                binding.profileImage.setImage(buildImageUrl(cast.profile))
+            }
+            binding.name.text = cast.name
+        }
+
+        fun buildImageUrl(profilePath: String): String {
+            val imageUrl = BuildConfig.BASE_PROFILE_URL + profilePath
             Log.d("initImage", imageUrl)
             return imageUrl
+        }
+    }
+
+    class CompanyViewHolder(val binding: ItemLogoBinding): RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(company: ProductionCompanies) {
+            binding.logo.text = company.name
+        }
+    }
+
+    class SeasonViewHolder(val binding: ItemSeasonBinding): RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(season: Season) {
+            if(season.posterPath == null) {
+                binding.poster.visibility = View.GONE
+            } else {
+                binding.poster.setImage(BuildConfig.BASE_POSTER_URL + season.posterPath)
+            }
+            binding.seasonName.text = season.name
+            if(season.number == 0) {
+                binding.numEpisodes.visibility = View.GONE
+            } else {
+                binding.numEpisodes.text = "Сезон ${season.number} \nКоличество эпизодов ${season.episodes}\nДата выхода " + season?.airDate ?: "неизвестна"
+            }
+        }
+    }
+
+    class EpisodeViewHolder(val binding: ItemEpisodesBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(episode: Episode) {
+            binding.movieImage.setImage(BuildConfig.BASE_STILL_URL + episode.stillPath)
+            binding.nameEpisode.text = episode.name
+            binding.rating.text = "Рейтинг: " + episode.rating.toString()
+            binding.overview.text = episode.overview
         }
     }
 
@@ -85,12 +129,28 @@ class MovieRecyclerAdapter(private val listener: MovieClickListener) : RecyclerV
                 binding.root.setOnClickListener(this)
                 PersonViewHolder(binding)
             }
+            R.layout.item_season -> {
+                val binding =
+                    ItemSeasonBinding.inflate(LayoutInflater.from(parent.context),
+                        parent,
+                        false)
+                binding.root.setOnClickListener(this)
+                SeasonViewHolder(binding)
+            }
+            R.layout.item_episodes -> {
+                val binding =
+                    ItemEpisodesBinding.inflate(LayoutInflater.from(parent.context),
+                        parent,
+                        false)
+                binding.root.setOnClickListener(this)
+                EpisodeViewHolder(binding)
+            }
             else -> {
                 val binding =
-                    ItemPosterBinding.inflate(LayoutInflater.from(parent.context),
+                    ItemLogoBinding.inflate(LayoutInflater.from(parent.context),
                         parent, false)
                 binding.root.setOnClickListener(this)
-                PosterViewHolder(binding)
+                CompanyViewHolder(binding)
             }
         }
     }
@@ -100,7 +160,16 @@ class MovieRecyclerAdapter(private val listener: MovieClickListener) : RecyclerV
         when(holder) {
             is PosterViewHolder -> holder.bind(mMoviesList[position] as Film)
             is BackdropAndTitleViewHolder -> holder.bind(mMoviesList[position] as TV)
-            is PersonViewHolder -> holder.bind(mMoviesList[position] as Person)
+            is PersonViewHolder -> {
+                when(mMoviesList[position]) {
+                    is Person -> holder.bind(mMoviesList[position] as Person)
+                    is Crew -> holder.bind(mMoviesList[position] as Crew)
+                    is Cast -> holder.bind(mMoviesList[position] as Cast)
+                }
+            }
+            is SeasonViewHolder -> holder.bind(mMoviesList[position] as Season)
+            is EpisodeViewHolder -> holder.bind(mMoviesList[position] as Episode)
+            is CompanyViewHolder -> holder.bind(mMoviesList[position] as ProductionCompanies)
         }
     }
 
@@ -111,22 +180,30 @@ class MovieRecyclerAdapter(private val listener: MovieClickListener) : RecyclerV
             is Film -> R.layout.item_poster
             is TV -> R.layout.item_backdrop_title
             is Person -> R.layout.item_person
-            is Episode -> R.layout.item_poster
+            is Crew -> R.layout.item_person
+            is Cast -> R.layout.item_person
+            is Season -> R.layout.item_season
+            is Episode -> R.layout.item_episodes
+            else  -> R.layout.item_logo
         }
     }
 
-    fun appendMovies(movies: List<Movie>) {
+    fun appendMovies(baseItems: List<BaseItem>) {
         mMoviesList.clear()
-        mMoviesList.addAll(movies)
+        mMoviesList.addAll(baseItems)
         notifyDataSetChanged()
     }
 
     override fun onClick(v: View?) {
-        val movie = v?.tag as Movie
+        val movie = v?.tag as BaseItem
         when(movie) {
             is Film -> listener.onOpenMovie(movie.id)
             is TV -> listener.onOpenTV(movie.id)
             is Person -> listener.onOpenPerson(movie.id)
+            is Crew -> listener.onOpenPerson(movie.id)
+            is Cast -> listener.onOpenPerson(movie.id)
+            is Season -> listener.onOpenSeason(movie.showId, movie.number)
+            is Episode -> listener.onOpenEpisode(movie.showId, movie.seasonNum, movie.episodeNum)
         }
     }
 }

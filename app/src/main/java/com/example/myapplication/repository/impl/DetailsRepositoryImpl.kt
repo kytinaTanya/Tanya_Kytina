@@ -1,53 +1,174 @@
 package com.example.myapplication.repository.impl
 
+import android.media.Image
 import com.example.myapplication.models.history.PostResponseStatus
 import com.example.myapplication.models.marks.AccountStates
 import com.example.myapplication.models.marks.AddToWatchlistMovie
 import com.example.myapplication.models.marks.MarkAsFavouriteMovie
 import com.example.myapplication.models.marks.RatingValue
-import com.example.myapplication.models.movies.Episode
-import com.example.myapplication.models.movies.Film
-import com.example.myapplication.models.movies.Person
-import com.example.myapplication.models.movies.TV
+import com.example.myapplication.models.movies.*
 import com.example.myapplication.repository.repositories.DetailsRepository
 import com.example.myapplication.repository.services.TmdbService
 import com.google.gson.GsonBuilder
 
 
 class DetailsRepositoryImpl(val service: TmdbService): DetailsRepository {
-    override suspend fun getMovieDetails(id: Long): Film {
+    override suspend fun getMovieDetails(id: Long): FilmDetails {
         val response = service.getMovieDetails(id = id, language = "ru-RU")
         return if(response.isSuccessful) {
-            response.body() ?: Film()
+            response.body() ?: FilmDetails()
         } else {
-            Film()
+            FilmDetails()
         }
     }
 
-    override suspend fun getTVDetails(id: Long): TV {
+    override suspend fun getMoviesImages(id: Long): ImageData {
+        val response = service.getMovieImages(id = id)
+        return if(response.isSuccessful) {
+            response.body() ?: ImageData()
+        } else {
+            ImageData()
+        }
+    }
+
+    override suspend fun getMoviesCredits(id: Long): CreditsResponse {
+        val response = service.getMovieCredits(id = id)
+        return if(response.isSuccessful) {
+            response.body() ?: CreditsResponse()
+        } else {
+            CreditsResponse()
+        }
+    }
+
+    override suspend fun getMovieVideos(id: Long): List<VideoResult> {
+        val response = service.getMovieVideos(id = id)
+        return if(response.isSuccessful) {
+            response.body()?.results ?: emptyList()
+        } else {
+            emptyList()
+        }
+    }
+
+    override suspend fun getRecommendationMovies(id: Long): List<Film> {
+        val response = service.getRecommendationMovies(id = id)
+        return if(response.isSuccessful) {
+            response.body()?.movies ?: emptyList()
+        } else { emptyList() }
+    }
+
+    override suspend fun getSimilarMovies(id: Long): List<Film> {
+        val response = service.getSimilarMovies(id = id)
+        return if(response.isSuccessful) {
+            response.body()?.movies ?: emptyList()
+        } else { emptyList() }
+    }
+
+    override suspend fun getTVDetails(id: Long): TvDetails {
         val response = service.getTvDetails(id = id, language = "ru-RU")
         return if(response.isSuccessful) {
-            response.body() ?: TV()
+            val responseBody = response.body()
+            if(responseBody != null) {
+                val seasons: MutableList<Season> = arrayListOf()
+                responseBody.seasons.forEach {
+                    it.showId = responseBody.id
+                    seasons.add(it)
+                }
+                responseBody.seasons = seasons
+                responseBody.lastEpisode.showId = responseBody.id
+                responseBody
+            } else {
+                TvDetails()
+            }
         } else {
-            TV()
+            TvDetails()
         }
     }
 
-    override suspend fun getPersonDetails(id: Long): Person {
+    override suspend fun getTvsImages(id: Long): ImageData {
+        val response = service.getTvImages(id = id)
+        return if(response.isSuccessful) {
+            response.body() ?: ImageData()
+        } else {
+            ImageData()
+        }
+    }
+
+    override suspend fun getTvsCredits(id: Long): CreditsResponse {
+        val response = service.getTvCredits(id = id)
+        return if(response.isSuccessful) {
+            response.body() ?: CreditsResponse()
+        } else {
+            CreditsResponse()
+        }
+    }
+
+    override suspend fun getTvVideos(id: Long): List<VideoResult> {
+        val response = service.getTvVideos(id = id)
+        return if(response.isSuccessful) {
+            response.body()?.results ?: emptyList()
+        } else {
+            emptyList()
+        }
+    }
+
+    override suspend fun getRecommendationTvs(id: Long): List<TV> {
+        val response = service.getRecommendationTvs(id = id)
+        return if(response.isSuccessful) {
+            response.body()?.movies ?: emptyList()
+        } else { emptyList() }
+    }
+
+    override suspend fun getSimilarTvs(id: Long): List<TV> {
+        val response = service.getSimilarTvs(id = id)
+        return if(response.isSuccessful) {
+            response.body()?.movies ?: emptyList()
+        } else { emptyList() }
+    }
+
+    override suspend fun getPersonDetails(id: Long): PersonDetails {
         val response = service.getPersonDetails(id = id, language = "ru-RU")
         return if(response.isSuccessful) {
-            response.body() ?: Person()
+            response.body() ?: PersonDetails()
         } else {
-            Person()
+            PersonDetails()
         }
     }
 
-    override suspend fun getEpisodeDetails(tvId: Long, seasonNum: Int, episodeNum: Int): Episode {
+    override suspend fun getPersonsImages(id: Long): List<ImageUrlPath> {
+        val response = service.getPersonImages(id = id)
+        return if(response.isSuccessful) {
+            response.body()?.profiles ?: emptyList()
+        } else {
+            emptyList()
+        }
+    }
+
+    override suspend fun getSeasonDetails(tvId: Long, seasonNum: Int): SeasonDetails {
+        val response = service.getSeasonDetails(tvId = tvId, seasonNum = seasonNum)
+        return if(response.isSuccessful) {
+            val responseBody = response.body()
+            if(responseBody != null) {
+                val episodes: MutableList<Episode> = arrayListOf()
+                responseBody.episodes.forEach {
+                    it.showId = tvId
+                    episodes.add(it)
+                }
+                responseBody.episodes = episodes
+                responseBody
+            } else {
+                SeasonDetails()
+            }
+        } else {
+            SeasonDetails()
+        }
+    }
+
+    override suspend fun getEpisodeDetails(tvId: Long, seasonNum: Int, episodeNum: Int): EpisodeDetails {
         val response = service.getEpisodeDetails(tvId = tvId, seasonNum = seasonNum, episodeNum = episodeNum)
         return if (response.isSuccessful) {
-            response.body() ?: Episode()
+            response.body() ?: EpisodeDetails()
         } else {
-            Episode()
+            EpisodeDetails()
         }
     }
 
