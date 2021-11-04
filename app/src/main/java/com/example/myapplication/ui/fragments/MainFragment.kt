@@ -5,11 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.*
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.ui.recyclerview.adapters.MovieClickListener
 import com.example.myapplication.ui.recyclerview.adapters.MovieRecyclerAdapter
 import com.example.myapplication.databinding.FragmentMainBinding
 import com.example.myapplication.ui.activities.MainActivity
+import com.example.myapplication.ui.activities.MainActivity.Companion.MOVIE_TYPE
+import com.example.myapplication.ui.activities.MainActivity.Companion.PERSON_TYPE
+import com.example.myapplication.ui.activities.MainActivity.Companion.TV_TYPE
 import com.example.myapplication.ui.recyclerview.DividerItemDecoration
 import com.example.myapplication.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -187,14 +192,17 @@ class MainFragment : Fragment(), MovieClickListener {
     }
 
     override fun onOpenMovie(id: Long) {
-        MainActivity.openMovie(id, MainActivity.MOVIE_TYPE, requireActivity())
+        val action = MainFragmentDirections.actionMainFragmentToItemInfoFragment(id, MOVIE_TYPE, 0, 0)
+        view?.findNavController()?.navigate(action)
     }
 
     override fun onOpenTV(id: Long) {
-        MainActivity.openMovie(id, MainActivity.TV_TYPE, requireActivity())
+        val action = MainFragmentDirections.actionMainFragmentToItemInfoFragment(id, TV_TYPE, 0, 0)
+        view?.findNavController()?.navigate(action)
     }
 
     override fun onOpenPerson(id: Long) {
-        MainActivity.openMovie(id, MainActivity.PERSON_TYPE, requireActivity())
+        val action = MainFragmentDirections.actionMainFragmentToItemInfoFragment(id, PERSON_TYPE, 0, 0)
+        view?.findNavController()?.navigate(action)
     }
 }

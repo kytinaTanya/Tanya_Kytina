@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentAccountBinding
 import com.example.myapplication.firebase.AUTH
@@ -70,12 +71,7 @@ class AccountFragment : Fragment() {
             ProfileImageActionsFragment().show(
                 childFragmentManager, ProfileImageActionsFragment.TAG
             )
-            //openGalleryForImage()
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
     }
 
     override fun onResume() {
@@ -104,11 +100,8 @@ class AccountFragment : Fragment() {
     }
 
     fun openPhoto() {
-        parentFragmentManager.commit {
-            addToBackStack("photo")
-            setReorderingAllowed(true)
-            replace<PhotoFragment>(R.id.fragment_container_view)
-        }
+        val action = AccountFragmentDirections.actionAccountFragmentToPhotoFragment()
+        view?.findNavController()?.navigate(action)
     }
 
     fun checkDecision() {

@@ -21,9 +21,9 @@ fun EditText.getStringText(): String {
 }
 
 fun AppCompatActivity.replaceFragment(fragment: Fragment, comment: String) {
-    supportFragmentManager.commit {
-        setReorderingAllowed(true)
-        replace(R.id.fragment_container_view, fragment)
-        addToBackStack(comment)
-    }
+//    supportFragmentManager.commit {
+//        setReorderingAllowed(true)
+//        replace(R.id.fragment_container_view, fragment)
+//        addToBackStack(comment)
+//    }
 }

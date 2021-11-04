@@ -2,21 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:icon="@drawable/ic_baseline_movie"
-        android:id="@+id/main"
+        android:id="@+id/main_page"
         android:title="Главная"/>
 
     <item
         android:icon="@drawable/ic_baseline_bookmark"
-        android:id="@+id/favorite"
+        android:id="@+id/favorite_page"
         android:title="Закладки" />
 
     <item
         android:icon="@drawable/ic_baseline_search"
-        android:id="@+id/history"
+        android:id="@+id/search_page"
         android:title="Поиск" />
 
     <item
         android:icon="@drawable/ic_baseline_account"
-        android:id="@+id/account"
+        android:id="@+id/account_page"
         android:title="Профиль" />
 </menu>

@@ -118,7 +118,9 @@
         app:layout_constraintTop_toBottomOf="@+id/rated_movies"
         tools:listitem="@layout/item_movie_history"
         android:orientation="horizontal"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        tools:orientation="horizontal"
+        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     <TextView
         android:id="@+id/rated_tvs"
@@ -140,7 +142,9 @@
         app:layout_constraintTop_toBottomOf="@+id/rated_tvs"
         tools:listitem="@layout/item_movie_history"
         android:orientation="horizontal"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        tools:orientation="horizontal"
+        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     <TextView
         android:id="@+id/rated_episodes"
@@ -162,6 +166,8 @@
         app:layout_constraintTop_toBottomOf="@+id/rated_episodes"
         tools:listitem="@layout/item_movie_history"
         android:orientation="horizontal"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        tools:orientation="horizontal"
+        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

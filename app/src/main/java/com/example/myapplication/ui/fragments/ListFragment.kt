@@ -7,12 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.databinding.FragmentListBinding
 import com.example.myapplication.firebase.USER
 import com.example.myapplication.models.movies.Film
 import com.example.myapplication.models.movies.TV
 import com.example.myapplication.ui.activities.MainActivity
+import com.example.myapplication.ui.activities.MainActivity.Companion.MOVIE_TYPE
+import com.example.myapplication.ui.activities.MainActivity.Companion.TV_TYPE
 import com.example.myapplication.ui.recyclerview.adapters.CollectionRecyclerAdapter
 import com.example.myapplication.ui.recyclerview.adapters.MovieClickListener
 import com.example.myapplication.viewmodel.ListsViewModel
@@ -119,11 +122,12 @@ class ListFragment : Fragment(), MovieClickListener {
     }
 
     override fun onOpenMovie(id: Long) {
-        MainActivity.openMovie(id, MainActivity.MOVIE_TYPE, requireActivity())
+        val action = FavoriteFragmentDirections.actionFavoriteFragmentToItemInfoFragment2(id, MOVIE_TYPE, 0, 0)
+        view?.findNavController()?.navigate(action)
     }
 
     override fun onOpenTV(id: Long) {
-        Log.d("TAG", "TAG")
-        MainActivity.openMovie(id, MainActivity.TV_TYPE, requireActivity())
+        val action = FavoriteFragmentDirections.actionFavoriteFragmentToItemInfoFragment2(id, TV_TYPE, 0, 0)
+        view?.findNavController()?.navigate(action)
     }
 }

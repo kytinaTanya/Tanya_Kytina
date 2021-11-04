@@ -5,7 +5,15 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.models.User
@@ -20,6 +28,7 @@ import com.example.myapplication.ui.fragments.AccountFragment
 import com.example.myapplication.ui.fragments.FavoriteFragment
 import com.example.myapplication.ui.fragments.HistoryFragment
 import com.example.myapplication.ui.fragments.MainFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 @AndroidEntryPoint
@@ -42,36 +51,12 @@ class MainActivity : AppCompatActivity() {
         if (currentUser == null) {
             startActivity(Intent(this, SingInActivity::class.java))
             finish()
-        } else {
-            if (savedInstanceState == null) {
-                supportFragmentManager.commit {
-                    setReorderingAllowed(true)
-                    add(R.id.fragment_container_view, mainFragment)
-                }
-            }
         }
 
-        binding.navigationBar.setOnItemSelectedListener { item ->
-            when(item.itemId) {
-                R.id.main -> {
-                    replaceFragment(mainFragment, "main")
-                    true
-                }
-                R.id.favorite -> {
-                    replaceFragment(favFragment, "favorite")
-                    true
-                }
-                R.id.history -> {
-                    replaceFragment(hisFragment, "history")
-                    true
-                }
-                R.id.account -> {
-                    replaceFragment(accFragment, "account")
-                    true
-                }
-                else -> false
-            }
-        }
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        binding.navigationBar.setupWithNavController(navController)
     }
 
     override fun onStart() {
@@ -96,10 +81,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val MEDIA_ID = "media_id"
-        const val ITEM_TYPE = "item_type"
-        const val SEASON = "season_number"
-        const val EPISODE = "episode_number"
+        const val MEDIA_ID = "id"
+        const val ITEM_TYPE = "type"
+        const val SEASON = "season"
+        const val EPISODE = "episode"
         const val MOVIE_TYPE = 1
         const val TV_TYPE = 2
         const val PERSON_TYPE = 3

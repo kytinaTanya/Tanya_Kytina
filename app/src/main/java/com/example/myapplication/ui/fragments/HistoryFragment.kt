@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.*
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentHistoryBinding
@@ -34,7 +35,6 @@ class HistoryFragment : Fragment(), MovieClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("USER LIST ID", "${USER.historyListID} AND SESSION ID ${USER.sessionKey}")
-        //viewModel.loadHistory(USER.historyListID, USER.sessionKey)
         viewModel.loadRatedFilms(USER.sessionKey)
         viewModel.loadRatedTVs(USER.sessionKey)
         viewModel.loadRatedEpisodes(USER.sessionKey)
@@ -63,12 +63,8 @@ class HistoryFragment : Fragment(), MovieClickListener {
         }
         binding.searchBtn.setOnClickListener {
             val result = binding.search.text.toString().trim().replace(" ", "+")
-            setFragmentResult("requestKey", bundleOf("bundleKey" to result))
-            parentFragmentManager.commit {
-                addToBackStack("Search")
-                setReorderingAllowed(true)
-                replace<SearchResultFragment>(R.id.fragment_container_view)
-            }
+            val action = HistoryFragmentDirections.actionHistoryFragmentToSearchResultFragment(result)
+            view?.findNavController()?.navigate(action)
         }
     }
 

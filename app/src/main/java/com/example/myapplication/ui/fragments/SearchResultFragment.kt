@@ -27,9 +27,8 @@ class SearchResultFragment : Fragment(), MovieClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setFragmentResultListener("requestKey") { requestKey, bundle ->
-            val result = bundle.getString("bundleKey")
-
+        arguments?.let {
+            val result = it.getString("searchRequest").toString()
             if (result != null) {
                 Log.d("TAG", result)
                 viewModel.searchMovie(result)
