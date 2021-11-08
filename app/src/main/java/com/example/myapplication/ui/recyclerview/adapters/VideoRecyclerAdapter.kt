@@ -16,14 +16,14 @@ class VideoRecyclerAdapter() : RecyclerView.Adapter<VideoRecyclerAdapter.VideoVi
 
     class VideoViewHolder(private val binding: ItemVideoBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(video: VideoResult) {
-//            Glide.with(context)
-//                .asBitmap()
-//                .load("https://youtu.be/${video.key}.mp4")
-//                .into(binding.videoPlayer)
+            binding.videoPlayer.setImage("https://i.ytimg.com/vi/${video.key}/maxresdefault.jpg")
+            binding.root.setOnClickListener {
+                binding.web.loadUrl("https://www.youtube.com/watch?v=${video.key}")
+            }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoViewHolder {2
         val binding = ItemVideoBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,

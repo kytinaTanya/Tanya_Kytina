@@ -150,6 +150,13 @@ interface TmdbService {
         @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE
     ): Response<EpisodeDetails>
 
+    @GET("collection/{collection_id}")
+    suspend fun getCollectionDetails(
+        @Path("collection_id") id: Int,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE
+    ): Response<MovieCollection>
+
     @GET("authentication/token/new")
     suspend fun getRequestToken(
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH

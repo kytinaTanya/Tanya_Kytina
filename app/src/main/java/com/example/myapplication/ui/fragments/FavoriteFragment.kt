@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.navigation.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentFavoriteBinding
+import com.example.myapplication.ui.activities.MainActivity
+import com.example.myapplication.ui.recyclerview.adapters.MovieClickListener
 import com.example.myapplication.ui.viewpager.MoviesCollectionAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,7 +35,7 @@ class FavoriteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         movieCollectionAdapter = MoviesCollectionAdapter(
-            parentFragmentManager,
+            childFragmentManager,
             lifecycle
         )
         binding.pager.adapter = movieCollectionAdapter
@@ -52,4 +55,5 @@ class FavoriteFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

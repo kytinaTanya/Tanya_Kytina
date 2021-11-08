@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.databinding.FragmentSearchResultBinding
 import com.example.myapplication.ui.activities.MainActivity
+import com.example.myapplication.ui.activities.MainActivity.Companion.MOVIE_TYPE
 import com.example.myapplication.ui.recyclerview.adapters.CollectionRecyclerAdapter
 import com.example.myapplication.ui.recyclerview.adapters.MovieClickListener
 import com.example.myapplication.viewmodel.HistoryViewModel
@@ -69,6 +71,7 @@ class SearchResultFragment : Fragment(), MovieClickListener {
     }
 
     override fun onOpenMovie(id: Long) {
-        MainActivity.openMovie(id, MainActivity.MOVIE_TYPE, requireActivity())
+        val action = SearchResultFragmentDirections.actionSearchResultFragmentToItemInfoFragment(id, MOVIE_TYPE, 0, 0)
+        view?.findNavController()?.navigate(action)
     }
 }

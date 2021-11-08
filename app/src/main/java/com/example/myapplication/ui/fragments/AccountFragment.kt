@@ -100,7 +100,7 @@ class AccountFragment : Fragment() {
     }
 
     fun openPhoto() {
-        val action = AccountFragmentDirections.actionAccountFragmentToPhotoFragment()
+        val action = AccountFragmentDirections.actionAccountPageToPhotoFragment(USER.profileUrl)
         view?.findNavController()?.navigate(action)
     }
 

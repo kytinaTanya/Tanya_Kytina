@@ -36,10 +36,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var currentUser: FirebaseUser? = null
-    private val mainFragment = MainFragment()
-    private val favFragment = FavoriteFragment()
-    private val hisFragment = HistoryFragment()
-    private val accFragment = AccountFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,33 +86,7 @@ class MainActivity : AppCompatActivity() {
         const val PERSON_TYPE = 3
         const val SEASON_TYPE = 4
         const val EPISODE_TYPE = 5
-
-        fun openMovie(id: Long, itemType: Int, context: Context) {
-            val intent = Intent(context, ItemInfoActivity::class.java).apply {
-                putExtra(MEDIA_ID, id)
-                putExtra(ITEM_TYPE, itemType)
-            }
-            context.startActivity(intent)
-        }
-
-        fun openMovie(tvId: Long, season: Int, itemType: Int, context: Context) {
-            val intent = Intent(context, ItemInfoActivity::class.java).apply {
-                putExtra(MEDIA_ID, tvId)
-                putExtra(ITEM_TYPE, itemType)
-                putExtra(SEASON, season)
-            }
-            context.startActivity(intent)
-        }
-
-        fun openMovie(tvId: Long, season: Int, episode: Int, itemType: Int, context: Context) {
-            val intent = Intent(context, ItemInfoActivity::class.java).apply {
-                putExtra(MEDIA_ID, tvId)
-                putExtra(ITEM_TYPE, itemType)
-                putExtra(SEASON, season)
-                putExtra(EPISODE, episode)
-            }
-            context.startActivity(intent)
-        }
+        const val COLLECTION_TYPE = 6
 
         fun setProfileImage(url: String) {
             REF_DATABASE_ROOT.child("users").child(UID).child("profileUrl").setValue("https://$url").addOnCompleteListener {

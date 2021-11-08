@@ -16,4 +16,7 @@ interface MovieClickListener {
     fun onOpenEpisode(tvId: Long, season: Int, episode: Int) {
         println("Open episode")
     }
+    fun onOpenCollection(id: Int) {
+        println("Open collection")
+    }
 }

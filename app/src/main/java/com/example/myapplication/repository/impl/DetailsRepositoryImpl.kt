@@ -172,6 +172,15 @@ class DetailsRepositoryImpl(val service: TmdbService): DetailsRepository {
         }
     }
 
+    override suspend fun getCollectionsDetails(id: Int): MovieCollection {
+        val response = service.getCollectionDetails(id)
+        return if(response.isSuccessful) {
+            response.body() ?: MovieCollection(0, "", "", "", emptyList())
+        } else {
+            MovieCollection(0, "", "", "", emptyList())
+        }
+    }
+
     override suspend fun markAsFavorite(id: Long,
                                         type: String,
                                         mark: Boolean,

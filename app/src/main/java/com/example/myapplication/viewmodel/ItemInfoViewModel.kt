@@ -13,7 +13,6 @@ import com.example.myapplication.models.movies.ImageUrlPath
 import com.example.myapplication.models.movies.VideoResult
 import com.example.myapplication.repository.repositories.DetailsRepository
 import com.example.myapplication.repository.repositories.HistoryRepository
-import com.example.myapplication.ui.activities.ItemInfoActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,7 +23,7 @@ class ItemInfoViewModel @Inject constructor(
     private val historyRepository: HistoryRepository
 ) : ViewModel() {
 
-    private val tag = ItemInfoActivity::class.java.simpleName
+    private val tag = ItemInfoViewModel::class.java.simpleName
 
     private var _baseItemDetails: MutableLiveData<BaseItem> = MutableLiveData()
     val baseItemDetails: LiveData<BaseItem>
@@ -191,6 +190,13 @@ class ItemInfoViewModel @Inject constructor(
         _baseItemDetails = MutableLiveData()
         viewModelScope.launch {
             _baseItemDetails.value = detailsRepository.getEpisodeDetails(showId, season, episode)
+        }
+    }
+
+    fun loadCollectionDetails(id: Int) {
+        _baseItemDetails = MutableLiveData()
+        viewModelScope.launch {
+            _baseItemDetails.value = detailsRepository.getCollectionsDetails(id)
         }
     }
 

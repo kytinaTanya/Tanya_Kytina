@@ -5,9 +5,91 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/main_page">
 
-    <include app:graph="@navigation/main_page"/>
-    <include app:graph="@navigation/favorite_page"/>
-    <include app:graph="@navigation/search_page"/>
-    <include app:graph="@navigation/account_page"/>
+    <fragment
+        android:id="@+id/main_page"
+        android:name="com.example.myapplication.ui.fragments.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_main_page_to_itemInfoFragment"
+            app:destination="@id/itemInfoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/favorite_page"
+        android:name="com.example.myapplication.ui.fragments.FavoriteFragment"
+        android:label="fragment_favorite"
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_favorite_page_to_itemInfoFragment"
+            app:destination="@id/itemInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/search_page"
+        android:name="com.example.myapplication.ui.fragments.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_search_page_to_searchResultFragment"
+            app:destination="@id/searchResultFragment" />
+        <action
+            android:id="@+id/action_search_page_to_itemInfoFragment"
+            app:destination="@id/itemInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/account_page"
+        android:name="com.example.myapplication.ui.fragments.AccountFragment"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/action_account_page_to_photoFragment"
+            app:destination="@id/photoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchResultFragment"
+        android:name="com.example.myapplication.ui.fragments.SearchResultFragment"
+        android:label="fragment_search_result"
+        tools:layout="@layout/fragment_search_result" >
+        <argument
+            android:name="searchRequest"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_searchResultFragment_to_itemInfoFragment"
+            app:destination="@id/itemInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoFragment"
+        android:name="com.example.myapplication.ui.fragments.PhotoFragment"
+        android:label="fragment_photo"
+        tools:layout="@layout/fragment_photo" >
+        <argument
+            android:name="photoUrl"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemInfoFragment"
+        android:name="com.example.myapplication.ui.fragments.ItemInfoFragment"
+        android:label="fragment_item_info"
+        tools:layout="@layout/fragment_item_info" >
+        <argument
+            android:name="id"
+            app:argType="long" />
+        <argument
+            android:name="type"
+            app:argType="integer" />
+        <argument
+            android:name="season"
+            app:argType="integer" />
+        <argument
+            android:name="episode"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_itemInfoFragment_self"
+            app:destination="@id/itemInfoFragment" />
+        <action
+            android:id="@+id/action_itemInfoFragment_to_photoFragment"
+            app:destination="@id/photoFragment" />
+    </fragment>
+
 
 </navigation>

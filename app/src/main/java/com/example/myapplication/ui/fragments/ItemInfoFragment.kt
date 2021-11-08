@@ -1,6 +1,5 @@
 package com.example.myapplication.ui.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,8 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +18,7 @@ import com.example.myapplication.firebase.AUTH
 import com.example.myapplication.firebase.USER
 import com.example.myapplication.models.movies.*
 import com.example.myapplication.ui.activities.MainActivity
+import com.example.myapplication.ui.activities.MainActivity.Companion.COLLECTION_TYPE
 import com.example.myapplication.ui.activities.MainActivity.Companion.EPISODE
 import com.example.myapplication.ui.activities.MainActivity.Companion.EPISODE_TYPE
 import com.example.myapplication.ui.activities.MainActivity.Companion.ITEM_TYPE
@@ -30,7 +28,6 @@ import com.example.myapplication.ui.activities.MainActivity.Companion.PERSON_TYP
 import com.example.myapplication.ui.activities.MainActivity.Companion.SEASON
 import com.example.myapplication.ui.activities.MainActivity.Companion.SEASON_TYPE
 import com.example.myapplication.ui.activities.MainActivity.Companion.TV_TYPE
-import com.example.myapplication.ui.activities.PictureActivity
 import com.example.myapplication.ui.recyclerview.DividerItemDecoration
 import com.example.myapplication.ui.recyclerview.adapters.*
 import com.example.myapplication.utils.setImage
@@ -81,7 +78,7 @@ class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
             id = it.getLong(MEDIA_ID)
             type = it.getInt(ITEM_TYPE)
             when (type) {
-                MainActivity.MOVIE_TYPE -> {
+                MOVIE_TYPE -> {
                     viewModel.loadFilmDetails(id)
                     viewModel.loadMovieImages(id)
                     viewModel.loadMovieCast(id)
@@ -90,7 +87,7 @@ class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
                     viewModel.loadMovieSimilar(id)
                     viewModel.loadMovieStates(id, USER.sessionKey)
                 }
-                MainActivity.TV_TYPE -> {
+                TV_TYPE -> {
                     viewModel.loadTVDetails(id)
                     viewModel.loadTvImages(id)
                     viewModel.loadTvCast(id)
@@ -99,7 +96,7 @@ class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
                     viewModel.loadTvSimilar(id)
                     viewModel.loadTvStates(id, USER.sessionKey)
                 }
-                MainActivity.PERSON_TYPE -> {
+                PERSON_TYPE -> {
                     viewModel.loadPersonDetails(id)
                     viewModel.loadPersonImages(id)
                 }
@@ -111,6 +108,9 @@ class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
                     season = it.getInt(SEASON)
                     episode = it.getInt(EPISODE)
                     viewModel.loadEpisodeDetails(id, season!!, episode!!)
+                }
+                COLLECTION_TYPE -> {
+                    viewModel.loadCollectionDetails(id.toInt())
                 }
             }
         }
@@ -250,6 +250,32 @@ class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
                         emptyList(),
                         true
                     )
+                }
+                is MovieCollection -> {
+                    initUiData(
+                        item.backdrop,
+                        item.name,
+                        "",
+                        0.0,
+                        item.overview,
+                        "",
+                        emptyList(),
+                        "",
+                        "",
+                        null,
+                        emptyList(),
+                        emptyList(),
+                        "",
+                        "",
+                        emptyList(),
+                        emptyList(),
+                        true
+                    )
+                    initEpisodeRecyclerView()
+                    binding.posterText.visibility = View.VISIBLE
+                    binding.posterRecyclerview.visibility = View.VISIBLE
+                    episodeAdapter.appendMovies(item.parts)
+                    binding.posterText.text = "Состав коллекции"
                 }
             }
         }
@@ -545,8 +571,14 @@ class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
             binding.movieImage.visibility = View.GONE
             binding.stillImage.visibility = View.VISIBLE
             binding.stillImage.setImage(BuildConfig.BASE_STILL_URL + posterPath)
+            binding.stillImage.setOnClickListener {
+                onOpenPicture(BuildConfig.BASE_STILL_URL + posterPath)
+            }
         } else {
             binding.movieImage.setImage(BuildConfig.BASE_POSTER_URL + posterPath)
+            binding.movieImage.setOnClickListener {
+                onOpenPicture(BuildConfig.BASE_POSTER_URL + posterPath)
+            }
         }
         setIfIsNotEmpty(title, binding.movieTitle)
         setIfIsNotEmpty(releaseDate, binding.yearOfMovie)
@@ -570,6 +602,9 @@ class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
                         "Коллекция",
                         "${BuildConfig.BASE_BACKDROP_URL}${collection?.backdrop}",
                         collection.name)
+                    binding.collection.setOnClickListener {
+                        onOpenCollection(collection.id)
+                    }
                 }
                 is Episode -> {
                     if(collection.stillPath == "null" || collection.name == "") {
@@ -714,18 +749,18 @@ class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
 
     override fun onOpenEpisode(tvId: Long, seasonNum: Int, episode: Int) {
         val action = ItemInfoFragmentDirections.actionItemInfoFragmentSelf(id,
-            SEASON_TYPE, seasonNum, episode)
+            EPISODE_TYPE, seasonNum, episode)
+        view?.findNavController()?.navigate(action)
+    }
+
+    override fun onOpenCollection(id: Int) {
+        val action = ItemInfoFragmentDirections.actionItemInfoFragmentSelf(id.toLong(),
+            COLLECTION_TYPE, 0, 0)
         view?.findNavController()?.navigate(action)
     }
 
     override fun onOpenPicture(url: String) {
-//        val intent = Intent(this, PictureActivity::class.java).apply {
-//            putExtra(PICTURE_URL, url)
-//        }
-//        startActivity(intent)
-    }
-
-    companion object {
-        const val PICTURE_URL = "picture"
+        val action = ItemInfoFragmentDirections.actionItemInfoFragmentToPhotoFragment(url)
+        view?.findNavController()?.navigate(action)
     }
 }

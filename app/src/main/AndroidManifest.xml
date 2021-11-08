@@ -14,12 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication.NoActionBar">
         <activity
-            android:name=".ui.activities.PictureActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activities.ItemInfoActivity"
-            android:exported="true" />
-        <activity
             android:name=".ui.activities.SingInActivity"
             android:exported="true" />
         <activity

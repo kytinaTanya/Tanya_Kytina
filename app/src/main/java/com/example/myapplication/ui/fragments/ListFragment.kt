@@ -122,12 +122,14 @@ class ListFragment : Fragment(), MovieClickListener {
     }
 
     override fun onOpenMovie(id: Long) {
-        val action = FavoriteFragmentDirections.actionFavoriteFragmentToItemInfoFragment2(id, MOVIE_TYPE, 0, 0)
+        val action = FavoriteFragmentDirections.actionFavoritePageToItemInfoFragment(id,
+            MainActivity.MOVIE_TYPE, 0, 0)
         view?.findNavController()?.navigate(action)
     }
 
     override fun onOpenTV(id: Long) {
-        val action = FavoriteFragmentDirections.actionFavoriteFragmentToItemInfoFragment2(id, TV_TYPE, 0, 0)
+        val action = FavoriteFragmentDirections.actionFavoritePageToItemInfoFragment(id,
+            MainActivity.TV_TYPE, 0, 0)
         view?.findNavController()?.navigate(action)
     }
 }

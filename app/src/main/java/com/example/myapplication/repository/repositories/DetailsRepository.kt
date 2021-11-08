@@ -22,6 +22,7 @@ interface DetailsRepository {
     suspend fun getPersonsImages(id: Long): List<ImageUrlPath>
     suspend fun getSeasonDetails(tvId: Long, seasonNum: Int): SeasonDetails
     suspend fun getEpisodeDetails(tvId: Long, seasonNum: Int, episodeNum: Int): EpisodeDetails
+    suspend fun getCollectionsDetails(id: Int): MovieCollection
     suspend fun markAsFavorite(id: Long, type: String, mark: Boolean, sessionId: String): PostResponseStatus
     suspend fun addToWatchlist(id: Long, type: String, add: Boolean, sessionId: String): PostResponseStatus
     suspend fun rateMovie(id: Long, sessionId: String, rating: Float): PostResponseStatus

@@ -192,17 +192,17 @@ class MainFragment : Fragment(), MovieClickListener {
     }
 
     override fun onOpenMovie(id: Long) {
-        val action = MainFragmentDirections.actionMainFragmentToItemInfoFragment(id, MOVIE_TYPE, 0, 0)
+        val action = MainFragmentDirections.actionMainPageToItemInfoFragment(id, MOVIE_TYPE, 0, 0)
         view?.findNavController()?.navigate(action)
     }
 
     override fun onOpenTV(id: Long) {
-        val action = MainFragmentDirections.actionMainFragmentToItemInfoFragment(id, TV_TYPE, 0, 0)
+        val action = MainFragmentDirections.actionMainPageToItemInfoFragment(id, TV_TYPE, 0, 0)
         view?.findNavController()?.navigate(action)
     }
 
     override fun onOpenPerson(id: Long) {
-        val action = MainFragmentDirections.actionMainFragmentToItemInfoFragment(id, PERSON_TYPE, 0, 0)
+        val action = MainFragmentDirections.actionMainPageToItemInfoFragment(id, PERSON_TYPE, 0, 0)
         view?.findNavController()?.navigate(action)
     }
 }

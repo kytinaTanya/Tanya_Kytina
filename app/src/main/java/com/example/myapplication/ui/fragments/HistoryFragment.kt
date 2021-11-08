@@ -63,7 +63,7 @@ class HistoryFragment : Fragment(), MovieClickListener {
         }
         binding.searchBtn.setOnClickListener {
             val result = binding.search.text.toString().trim().replace(" ", "+")
-            val action = HistoryFragmentDirections.actionHistoryFragmentToSearchResultFragment(result)
+            val action = HistoryFragmentDirections.actionSearchPageToSearchResultFragment(result)
             view?.findNavController()?.navigate(action)
         }
     }
@@ -110,14 +110,20 @@ class HistoryFragment : Fragment(), MovieClickListener {
     }
 
     override fun onOpenMovie(id: Long) {
-        MainActivity.openMovie(id, MainActivity.MOVIE_TYPE, requireActivity())
+        val action = HistoryFragmentDirections.actionSearchPageToItemInfoFragment(id,
+            MainActivity.MOVIE_TYPE, 0, 0)
+        view?.findNavController()?.navigate(action)
     }
 
     override fun onOpenTV(id: Long) {
-        MainActivity.openMovie(id, MainActivity.TV_TYPE, requireActivity())
+        val action = HistoryFragmentDirections.actionSearchPageToItemInfoFragment(id,
+            MainActivity.TV_TYPE, 0, 0)
+        view?.findNavController()?.navigate(action)
     }
 
     override fun onOpenEpisode(tvId: Long, season: Int, episode: Int) {
-        MainActivity.openMovie(tvId, season, episode, EPISODE_TYPE, requireActivity())
+        val action = HistoryFragmentDirections.actionSearchPageToItemInfoFragment(tvId,
+            MainActivity.EPISODE_TYPE, season, episode)
+        view?.findNavController()?.navigate(action)
     }
 }
