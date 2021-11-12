@@ -9,16 +9,24 @@ import com.example.myapplication.BuildConfig
 import com.example.myapplication.R
 import com.example.myapplication.databinding.*
 import com.example.myapplication.models.movies.*
+import com.example.myapplication.ui.recyclerview.listeners.*
 import com.example.myapplication.utils.setImage
 
-class MovieRecyclerAdapter(private val listener: MovieClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
+class MovieRecyclerAdapter(
+    private val listener: AllSpecificListener
+    ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
 
     var mMoviesList: MutableList<BaseItem> = arrayListOf()
 
-    class PosterViewHolder(val binding: ItemPosterBinding): RecyclerView.ViewHolder(binding.root) {
+    class PosterViewHolder(val binding: ItemMovieBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Film){
-            binding.posterImage.setImage(buildImageUrl(movie))
+            binding.apply {
+                movieImage.setImage(buildImageUrl(movie))
+                movieTitle.text = movie.title
+                yearOfMovie.text = movie.releaseYear()
+                movieAnnotation.text = movie.overview
+            }
         }
 
         private fun buildImageUrl(movie: Film): String {
@@ -105,9 +113,9 @@ class MovieRecyclerAdapter(private val listener: MovieClickListener) : RecyclerV
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType) {
-            R.layout.item_poster -> {
+            R.layout.item_movie -> {
                 val binding =
-                    ItemPosterBinding.inflate(LayoutInflater.from(parent.context),
+                    ItemMovieBinding.inflate(LayoutInflater.from(parent.context),
                         parent, false)
                 binding.root.setOnClickListener(this)
                 PosterViewHolder(binding)
@@ -177,7 +185,7 @@ class MovieRecyclerAdapter(private val listener: MovieClickListener) : RecyclerV
 
     override fun getItemViewType(position: Int): Int {
         return when(mMoviesList[position]) {
-            is Film -> R.layout.item_poster
+            is Film -> R.layout.item_movie
             is TV -> R.layout.item_backdrop_title
             is Person -> R.layout.item_person
             is Crew -> R.layout.item_person

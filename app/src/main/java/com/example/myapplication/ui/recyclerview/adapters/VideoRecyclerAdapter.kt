@@ -1,16 +1,13 @@
 package com.example.myapplication.ui.recyclerview.adapters
 
-import android.content.Context
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.myapplication.databinding.ItemVideoBinding
 import com.example.myapplication.models.movies.VideoResult
 import com.example.myapplication.utils.setImage
 
-class VideoRecyclerAdapter() : RecyclerView.Adapter<VideoRecyclerAdapter.VideoViewHolder>() {
+class VideoRecyclerAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val videos: MutableList<VideoResult> = arrayListOf()
 
@@ -31,8 +28,10 @@ class VideoRecyclerAdapter() : RecyclerView.Adapter<VideoRecyclerAdapter.VideoVi
         return VideoViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: VideoViewHolder, position: Int) {
-        holder.bind(videos[position])
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if(holder is VideoViewHolder) {
+            holder.bind(videos[position])
+        }
     }
 
     override fun getItemCount(): Int = videos.size

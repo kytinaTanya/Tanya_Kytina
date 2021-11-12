@@ -9,6 +9,7 @@ import com.example.myapplication.databinding.ItemMovieBinding
 import com.example.myapplication.models.movies.Film
 import com.example.myapplication.models.movies.BaseItem
 import com.example.myapplication.models.movies.TV
+import com.example.myapplication.ui.recyclerview.listeners.MovieClickListener
 import com.example.myapplication.utils.setImage
 
 

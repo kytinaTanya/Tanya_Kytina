@@ -17,7 +17,6 @@ import com.example.myapplication.databinding.FragmentItemInfoBinding
 import com.example.myapplication.firebase.AUTH
 import com.example.myapplication.firebase.USER
 import com.example.myapplication.models.movies.*
-import com.example.myapplication.ui.activities.MainActivity
 import com.example.myapplication.ui.activities.MainActivity.Companion.COLLECTION_TYPE
 import com.example.myapplication.ui.activities.MainActivity.Companion.EPISODE
 import com.example.myapplication.ui.activities.MainActivity.Companion.EPISODE_TYPE
@@ -30,6 +29,8 @@ import com.example.myapplication.ui.activities.MainActivity.Companion.SEASON_TYP
 import com.example.myapplication.ui.activities.MainActivity.Companion.TV_TYPE
 import com.example.myapplication.ui.recyclerview.DividerItemDecoration
 import com.example.myapplication.ui.recyclerview.adapters.*
+import com.example.myapplication.ui.recyclerview.listeners.*
+import com.example.myapplication.utils.setConfigHorizontalLinearWithDiv
 import com.example.myapplication.utils.setImage
 import com.example.myapplication.viewmodel.ItemInfoViewModel
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -37,10 +38,9 @@ import com.google.android.flexbox.JustifyContent
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
-import kotlin.properties.Delegates
 
 @AndroidEntryPoint
-class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
+class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
 
     private var _binding: FragmentItemInfoBinding? = null
     private val binding get() = _binding!!
@@ -451,61 +451,6 @@ class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
             addItemDecoration(DividerItemDecoration(8))
         }
 
-        posterAdapter = ImagesRecyclerAdapter(this)
-        binding.posterRecyclerview.apply {
-            layoutManager = LinearLayoutManager(
-                context,
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
-            adapter = posterAdapter
-            addItemDecoration(DividerItemDecoration(16))
-        }
-
-        backdropAdapter = ImagesRecyclerAdapter(this)
-        binding.backdropRecyclerview.apply {
-            layoutManager = LinearLayoutManager(
-                context,
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
-            adapter = backdropAdapter
-            addItemDecoration(DividerItemDecoration(16))
-        }
-
-        videoAdapter = VideoRecyclerAdapter()
-        binding.videoRecyclerview.apply {
-            layoutManager = LinearLayoutManager(
-                context,
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
-            adapter = videoAdapter
-            addItemDecoration(DividerItemDecoration(16))
-        }
-
-        recommendationAdapter = RecommendationRecyclerAdapter(this)
-        binding.recommendationRecyclerview.apply {
-            layoutManager = LinearLayoutManager(
-                context,
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
-            adapter = recommendationAdapter
-            addItemDecoration(DividerItemDecoration(16))
-        }
-
-        similarAdapter = RecommendationRecyclerAdapter(this)
-        binding.similarRecyclerview.apply {
-            layoutManager = LinearLayoutManager(
-                context,
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
-            adapter = similarAdapter
-            addItemDecoration(DividerItemDecoration(8))
-        }
-
         companiesAdapter = MovieRecyclerAdapter(this)
         val companiesLayoutManager = FlexboxLayoutManager(requireContext())
         companiesLayoutManager.justifyContent = JustifyContent.FLEX_START
@@ -515,26 +460,22 @@ class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
             addItemDecoration(DividerItemDecoration(8))
         }
 
+        posterAdapter = ImagesRecyclerAdapter(this)
+        backdropAdapter = ImagesRecyclerAdapter(this)
+        videoAdapter = VideoRecyclerAdapter()
+        recommendationAdapter = RecommendationRecyclerAdapter(this)
+        similarAdapter = RecommendationRecyclerAdapter(this)
         seasonAdapter = MovieRecyclerAdapter(this)
-        binding.seasons.apply {
-            layoutManager = LinearLayoutManager(
-                context,
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
-            adapter = seasonAdapter
-            addItemDecoration(DividerItemDecoration(16))
-        }
-
         castAdapter = MovieRecyclerAdapter(this)
-        binding.mainRoles.apply {
-            layoutManager = LinearLayoutManager(
-                context,
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
-            adapter = castAdapter
-            addItemDecoration(DividerItemDecoration(16))
+
+        binding.apply {
+            posterRecyclerview.setConfigHorizontalLinearWithDiv(posterAdapter, requireContext(), 16)
+            backdropRecyclerview.setConfigHorizontalLinearWithDiv(backdropAdapter, requireContext(), 16)
+            videoRecyclerview.setConfigHorizontalLinearWithDiv(videoAdapter, requireContext(), 16)
+            recommendationRecyclerview.setConfigHorizontalLinearWithDiv(recommendationAdapter, requireContext(), 16)
+            similarRecyclerview.setConfigHorizontalLinearWithDiv(similarAdapter, requireContext(), 16)
+            seasons.setConfigHorizontalLinearWithDiv(seasonAdapter, requireContext(), 16)
+            mainRoles.setConfigHorizontalLinearWithDiv(castAdapter, requireContext(), 16)
         }
     }
 

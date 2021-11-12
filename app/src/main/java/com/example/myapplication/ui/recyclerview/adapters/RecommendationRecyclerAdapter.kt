@@ -9,10 +9,11 @@ import com.example.myapplication.databinding.ItemBackdropTitleBinding
 import com.example.myapplication.models.movies.BaseItem
 import com.example.myapplication.models.movies.Film
 import com.example.myapplication.models.movies.TV
+import com.example.myapplication.ui.recyclerview.listeners.MovieClickListener
 import com.example.myapplication.utils.setImage
 
 class RecommendationRecyclerAdapter(val listener: MovieClickListener):
-    RecyclerView.Adapter<RecommendationRecyclerAdapter.RecommendationViewHolder>(), View.OnClickListener {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
 
     private val recommendations: MutableList<BaseItem> = arrayListOf()
 
@@ -34,11 +35,13 @@ class RecommendationRecyclerAdapter(val listener: MovieClickListener):
         return RecommendationViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: RecommendationViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.tag = recommendations[position]
-        when(recommendations[position]) {
-            is Film -> holder.bind(recommendations[position] as Film)
-            is TV -> holder.bind(recommendations[position] as TV)
+        if(holder is RecommendationViewHolder) {
+            when (recommendations[position]) {
+                is Film -> holder.bind(recommendations[position] as Film)
+                is TV -> holder.bind(recommendations[position] as TV)
+            }
         }
     }
 

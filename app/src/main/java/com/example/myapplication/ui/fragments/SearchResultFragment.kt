@@ -6,15 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.databinding.FragmentSearchResultBinding
-import com.example.myapplication.ui.activities.MainActivity
 import com.example.myapplication.ui.activities.MainActivity.Companion.MOVIE_TYPE
 import com.example.myapplication.ui.recyclerview.adapters.CollectionRecyclerAdapter
-import com.example.myapplication.ui.recyclerview.adapters.MovieClickListener
+import com.example.myapplication.ui.recyclerview.listeners.MovieClickListener
+import com.example.myapplication.utils.setConfigVerticalLinear
 import com.example.myapplication.viewmodel.HistoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,10 +29,8 @@ class SearchResultFragment : Fragment(), MovieClickListener {
         super.onCreate(savedInstanceState)
         arguments?.let {
             val result = it.getString("searchRequest").toString()
-            if (result != null) {
-                Log.d("TAG", result)
-                viewModel.searchMovie(result)
-            }
+            Log.d("TAG", result)
+            viewModel.searchMovie(result)
         }
     }
 
@@ -59,10 +55,7 @@ class SearchResultFragment : Fragment(), MovieClickListener {
 
     private fun initRecyclerView() {
         searchListAdapter = CollectionRecyclerAdapter(this)
-        binding.searchList.apply {
-            adapter = searchListAdapter
-            layoutManager = LinearLayoutManager(requireContext())
-        }
+        binding.searchList.setConfigVerticalLinear(searchListAdapter, requireContext())
     }
 
     override fun onDestroy() {
@@ -73,5 +66,9 @@ class SearchResultFragment : Fragment(), MovieClickListener {
     override fun onOpenMovie(id: Long) {
         val action = SearchResultFragmentDirections.actionSearchResultFragmentToItemInfoFragment(id, MOVIE_TYPE, 0, 0)
         view?.findNavController()?.navigate(action)
+    }
+
+    override fun onOpenTV(id: Long) {
+        TODO("Not yet implemented")
     }
 }

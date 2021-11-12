@@ -8,16 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.databinding.FragmentListBinding
 import com.example.myapplication.firebase.USER
 import com.example.myapplication.models.movies.Film
 import com.example.myapplication.models.movies.TV
 import com.example.myapplication.ui.activities.MainActivity
-import com.example.myapplication.ui.activities.MainActivity.Companion.MOVIE_TYPE
-import com.example.myapplication.ui.activities.MainActivity.Companion.TV_TYPE
 import com.example.myapplication.ui.recyclerview.adapters.CollectionRecyclerAdapter
-import com.example.myapplication.ui.recyclerview.adapters.MovieClickListener
+import com.example.myapplication.ui.recyclerview.listeners.MovieClickListener
+import com.example.myapplication.utils.setConfigVerticalLinear
 import com.example.myapplication.viewmodel.ListsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -115,10 +113,7 @@ class ListFragment : Fragment(), MovieClickListener {
 
     private fun initRecyclerView() {
         mAdapter = CollectionRecyclerAdapter(this)
-        binding.movieList.apply {
-            adapter = mAdapter
-            layoutManager = LinearLayoutManager(requireContext())
-        }
+        binding.movieList.setConfigVerticalLinear(mAdapter = mAdapter, context = requireContext())
     }
 
     override fun onOpenMovie(id: Long) {

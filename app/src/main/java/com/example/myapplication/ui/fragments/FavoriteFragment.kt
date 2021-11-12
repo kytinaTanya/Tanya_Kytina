@@ -5,13 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
-import androidx.navigation.findNavController
-import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentFavoriteBinding
-import com.example.myapplication.ui.activities.MainActivity
-import com.example.myapplication.ui.recyclerview.adapters.MovieClickListener
 import com.example.myapplication.ui.viewpager.MoviesCollectionAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint

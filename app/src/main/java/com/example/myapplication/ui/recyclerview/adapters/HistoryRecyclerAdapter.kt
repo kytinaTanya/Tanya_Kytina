@@ -7,13 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.databinding.ItemMovieHistoryBinding
+import com.example.myapplication.models.movies.BaseItem
 import com.example.myapplication.models.movies.Episode
 import com.example.myapplication.models.movies.Film
-import com.example.myapplication.models.movies.BaseItem
 import com.example.myapplication.models.movies.TV
+import com.example.myapplication.ui.recyclerview.listeners.MovieAndEpisodeListener
 import com.example.myapplication.utils.setImage
 
-class HistoryRecyclerAdapter(val listener: MovieClickListener) : Adapter<HistoryRecyclerAdapter.HistoryViewHolder>(), View.OnClickListener {
+class HistoryRecyclerAdapter(val listener: MovieAndEpisodeListener) : Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
 
     private val filmList: MutableList<BaseItem> = arrayListOf()
 
@@ -47,14 +48,15 @@ class HistoryRecyclerAdapter(val listener: MovieClickListener) : Adapter<History
         return HistoryViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.tag = filmList[position]
-        when(filmList[position]) {
-            is Film -> holder.bind(filmList[position] as Film)
-            is TV -> holder.bind(filmList[position] as TV)
-            is Episode -> holder.bind(filmList[position] as Episode)
+        if(holder is HistoryViewHolder) {
+            when(filmList[position]) {
+                is Film -> holder.bind(filmList[position] as Film)
+                is TV -> holder.bind(filmList[position] as TV)
+                is Episode -> holder.bind(filmList[position] as Episode)
+            }
         }
-
     }
 
     override fun getItemCount(): Int = filmList.size
