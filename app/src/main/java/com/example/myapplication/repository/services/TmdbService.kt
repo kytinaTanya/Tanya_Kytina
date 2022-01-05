@@ -5,7 +5,7 @@ import com.example.myapplication.models.*
 import com.example.myapplication.models.history.*
 import com.example.myapplication.models.lists.*
 import com.example.myapplication.models.marks.*
-import com.example.myapplication.models.movies.*
+import com.example.myapplication.models.pojo.*
 import com.google.gson.JsonElement
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

@@ -1,8 +1,8 @@
 package com.example.myapplication.repository.repositories
 
-import com.example.myapplication.models.movies.Film
-import com.example.myapplication.models.movies.Person
-import com.example.myapplication.models.movies.TV
+import com.example.myapplication.models.pojo.Film
+import com.example.myapplication.models.pojo.Person
+import com.example.myapplication.models.pojo.TV
 
 interface Repository {
     suspend fun getListOfPopularMovies() : List<Film>

@@ -11,11 +11,9 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.databinding.FragmentListBinding
 import com.example.myapplication.firebase.USER
-import com.example.myapplication.models.movies.Film
-import com.example.myapplication.models.movies.TV
+import com.example.myapplication.models.pojo.Film
+import com.example.myapplication.models.pojo.TV
 import com.example.myapplication.ui.activities.MainActivity
-import com.example.myapplication.ui.activities.MainActivity.Companion.MOVIE_TYPE
-import com.example.myapplication.ui.activities.MainActivity.Companion.TV_TYPE
 import com.example.myapplication.ui.recyclerview.adapters.CollectionRecyclerAdapter
 import com.example.myapplication.ui.recyclerview.adapters.MovieClickListener
 import com.example.myapplication.viewmodel.ListsViewModel

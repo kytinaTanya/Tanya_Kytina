@@ -1,6 +1,5 @@
 package com.example.myapplication.models.lists
 
-import com.example.myapplication.models.movies.TV
 import com.google.gson.annotations.SerializedName
 
 data class ListResponse(

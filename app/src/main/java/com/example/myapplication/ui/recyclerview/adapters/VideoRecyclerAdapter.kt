@@ -1,13 +1,10 @@
 package com.example.myapplication.ui.recyclerview.adapters
 
-import android.content.Context
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.myapplication.databinding.ItemVideoBinding
-import com.example.myapplication.models.movies.VideoResult
+import com.example.myapplication.models.pojo.VideoResult
 import com.example.myapplication.utils.setImage
 
 class VideoRecyclerAdapter() : RecyclerView.Adapter<VideoRecyclerAdapter.VideoViewHolder>() {

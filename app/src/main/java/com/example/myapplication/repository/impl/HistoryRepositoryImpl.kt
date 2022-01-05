@@ -4,9 +4,9 @@ import android.util.Log
 import com.example.myapplication.models.history.CreatedListBody
 import com.example.myapplication.models.history.MediaBody
 import com.example.myapplication.models.history.PostResponseStatus
-import com.example.myapplication.models.movies.Episode
-import com.example.myapplication.models.movies.Film
-import com.example.myapplication.models.movies.TV
+import com.example.myapplication.models.pojo.Episode
+import com.example.myapplication.models.pojo.Film
+import com.example.myapplication.models.pojo.TV
 import com.example.myapplication.repository.repositories.HistoryRepository
 import com.example.myapplication.repository.services.TmdbService
 

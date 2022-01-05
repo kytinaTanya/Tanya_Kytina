@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.databinding.ItemMovieHistoryBinding
-import com.example.myapplication.models.movies.Episode
-import com.example.myapplication.models.movies.Film
-import com.example.myapplication.models.movies.BaseItem
-import com.example.myapplication.models.movies.TV
+import com.example.myapplication.models.pojo.Episode
+import com.example.myapplication.models.pojo.Film
+import com.example.myapplication.models.pojo.BaseItem
+import com.example.myapplication.models.pojo.TV
 import com.example.myapplication.utils.setImage
 
 class HistoryRecyclerAdapter(val listener: MovieClickListener) : Adapter<HistoryRecyclerAdapter.HistoryViewHolder>(), View.OnClickListener {

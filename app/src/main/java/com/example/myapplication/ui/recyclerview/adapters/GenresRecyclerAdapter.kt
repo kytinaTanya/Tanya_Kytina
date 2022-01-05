@@ -4,8 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.ItemGenreBinding
-import com.example.myapplication.models.movies.BaseItem
-import com.example.myapplication.models.movies.MovieGenres
+import com.example.myapplication.models.pojo.MovieGenres
 
 class GenresRecyclerAdapter : RecyclerView.Adapter<GenresRecyclerAdapter.GenresViewHolder>() {
 

@@ -1,7 +1,7 @@
 package com.example.myapplication.models.lists
 
-import com.example.myapplication.models.movies.Film
-import com.example.myapplication.models.movies.TV
+import com.example.myapplication.models.pojo.Film
+import com.example.myapplication.models.pojo.TV
 import com.google.gson.annotations.SerializedName
 
 sealed class MovieList

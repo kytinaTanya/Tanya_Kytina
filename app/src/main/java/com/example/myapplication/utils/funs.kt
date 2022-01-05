@@ -1,10 +1,11 @@
 package com.example.myapplication.utils
 
+import android.view.View
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
+import android.widget.TextView
+import androidx.annotation.DrawableRes
 import com.example.myapplication.R
 import com.squareup.picasso.Picasso
 
@@ -20,10 +21,22 @@ fun EditText.getStringText(): String {
     return this.text.toString()
 }
 
-fun AppCompatActivity.replaceFragment(fragment: Fragment, comment: String) {
-//    supportFragmentManager.commit {
-//        setReorderingAllowed(true)
-//        replace(R.id.fragment_container_view, fragment)
-//        addToBackStack(comment)
-//    }
+fun ImageButton.setCurrentResource(condition: () -> Boolean, @DrawableRes whenConditionRight: Int, @DrawableRes whenConditionWrong: Int) {
+    if(condition.invoke()) {
+        setBackgroundResource(whenConditionRight)
+    } else {
+        setBackgroundResource(whenConditionWrong)
+    }
+}
+
+class Utils {
+    companion object {
+        fun setIfIsNotEmpty(text: String, view: TextView) {
+            if(text == "") {
+                view.visibility = View.GONE
+            } else {
+                view.text = text
+            }
+        }
+    }
 }

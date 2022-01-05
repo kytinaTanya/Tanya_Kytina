@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myapplication.models.movies.Episode
-import com.example.myapplication.models.movies.Film
-import com.example.myapplication.models.movies.TV
+import com.example.myapplication.models.pojo.Episode
+import com.example.myapplication.models.pojo.Film
+import com.example.myapplication.models.pojo.TV
 import com.example.myapplication.repository.repositories.HistoryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

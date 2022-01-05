@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.databinding.ItemBackdropTitleBinding
-import com.example.myapplication.models.movies.BaseItem
-import com.example.myapplication.models.movies.Film
-import com.example.myapplication.models.movies.TV
+import com.example.myapplication.models.pojo.BaseItem
+import com.example.myapplication.models.pojo.Film
+import com.example.myapplication.models.pojo.TV
 import com.example.myapplication.utils.setImage
 
 class RecommendationRecyclerAdapter(val listener: MovieClickListener):

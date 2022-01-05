@@ -1,6 +1,6 @@
 package com.example.myapplication.models.history
 
-import com.example.myapplication.models.movies.Film
+import com.example.myapplication.models.pojo.Film
 import com.google.gson.annotations.SerializedName
 
 data class HistoryResponse(

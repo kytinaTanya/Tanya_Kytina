@@ -1,11 +1,11 @@
 package com.example.myapplication.repository.impl
 
 import android.util.Log
-import com.example.myapplication.models.movies.Film
+import com.example.myapplication.models.pojo.Film
 import com.example.myapplication.models.RetrofitPostToken
 import com.example.myapplication.models.lists.*
-import com.example.myapplication.models.movies.Person
-import com.example.myapplication.models.movies.TV
+import com.example.myapplication.models.pojo.Person
+import com.example.myapplication.models.pojo.TV
 import com.example.myapplication.repository.repositories.AuthRepository
 import com.example.myapplication.repository.repositories.ListRepository
 import com.example.myapplication.repository.repositories.Repository

@@ -7,9 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ItemBackdropBinding
-import com.example.myapplication.databinding.ItemGenreBinding
 import com.example.myapplication.databinding.ItemPosterBinding
-import com.example.myapplication.models.movies.ImageUrlPath
+import com.example.myapplication.models.pojo.ImageUrlPath
 import com.example.myapplication.utils.setImage
 
 class ImagesRecyclerAdapter(private val listener: PhotoClickListener) :

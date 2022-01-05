@@ -1,9 +1,9 @@
 package com.example.myapplication.repository.repositories
 
 import com.example.myapplication.models.history.PostResponseStatus
-import com.example.myapplication.models.movies.Episode
-import com.example.myapplication.models.movies.Film
-import com.example.myapplication.models.movies.TV
+import com.example.myapplication.models.pojo.Episode
+import com.example.myapplication.models.pojo.Film
+import com.example.myapplication.models.pojo.TV
 
 interface HistoryRepository {
     suspend fun getDetailsAboutHistoryList(id: Int, sessionId: String): List<Film>

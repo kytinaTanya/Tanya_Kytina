@@ -2,12 +2,11 @@ package com.example.myapplication.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,8 +15,7 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentItemInfoBinding
 import com.example.myapplication.firebase.AUTH
 import com.example.myapplication.firebase.USER
-import com.example.myapplication.models.movies.*
-import com.example.myapplication.ui.activities.MainActivity
+import com.example.myapplication.models.pojo.*
 import com.example.myapplication.ui.activities.MainActivity.Companion.COLLECTION_TYPE
 import com.example.myapplication.ui.activities.MainActivity.Companion.EPISODE
 import com.example.myapplication.ui.activities.MainActivity.Companion.EPISODE_TYPE
@@ -30,6 +28,8 @@ import com.example.myapplication.ui.activities.MainActivity.Companion.SEASON_TYP
 import com.example.myapplication.ui.activities.MainActivity.Companion.TV_TYPE
 import com.example.myapplication.ui.recyclerview.DividerItemDecoration
 import com.example.myapplication.ui.recyclerview.adapters.*
+import com.example.myapplication.utils.Utils.Companion.setIfIsNotEmpty
+import com.example.myapplication.utils.setCurrentResource
 import com.example.myapplication.utils.setImage
 import com.example.myapplication.viewmodel.ItemInfoViewModel
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -37,7 +37,6 @@ import com.google.android.flexbox.JustifyContent
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
-import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
@@ -46,8 +45,8 @@ class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
     private val binding get() = _binding!!
 
     private val viewModel: ItemInfoViewModel by viewModels()
-    private var film: FilmDetails? = null
-    private var tv: TvDetails? = null
+    private var filmId: Long? = null
+    private var tvID: Long? = null
     private var currentUser: FirebaseUser? = null
     private var isFavorite: Boolean = false
     private var isInWatchlist: Boolean = false
@@ -79,26 +78,13 @@ class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
             type = it.getInt(ITEM_TYPE)
             when (type) {
                 MOVIE_TYPE -> {
-                    viewModel.loadFilmDetails(id)
-                    viewModel.loadMovieImages(id)
-                    viewModel.loadMovieCast(id)
-                    viewModel.loadMovieVideos(id)
-                    viewModel.loadMovieRecommendations(id)
-                    viewModel.loadMovieSimilar(id)
-                    viewModel.loadMovieStates(id, USER.sessionKey)
+                    viewModel.loadFilmDetails(id, USER.sessionKey)
                 }
                 TV_TYPE -> {
-                    viewModel.loadTVDetails(id)
-                    viewModel.loadTvImages(id)
-                    viewModel.loadTvCast(id)
-                    viewModel.loadTvVideos(id)
-                    viewModel.loadTvRecommendations(id)
-                    viewModel.loadTvSimilar(id)
-                    viewModel.loadTvStates(id, USER.sessionKey)
+                    viewModel.loadTVDetails(id, USER.sessionKey)
                 }
                 PERSON_TYPE -> {
                     viewModel.loadPersonDetails(id)
-                    viewModel.loadPersonImages(id)
                 }
                 SEASON_TYPE -> {
                     season = it.getInt(SEASON)
@@ -135,75 +121,152 @@ class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
     }
 
     private fun setObservers() {
+        viewModel.movieDetails.observe(viewLifecycleOwner) { movie ->
+            filmId = movie.id
+            initUiData(
+                movie.posterPath,
+                movie.title,
+                movie.releaseDate,
+                movie.rating,
+                movie.overview,
+                movie.tagline,
+                movie.genres,
+                formatBudget(movie.budget, "Бюджет: "),
+                formatBudget(movie.revenue, "Сборы: "),
+                movie.collection,
+                movie.companies,
+                movie.countries,
+                "${movie.originalTitle} (${movie.runtime} m)",
+                movie.homepage,
+                emptyList(),
+                emptyList(),
+                false
+            )
+            binding.createdBy.visibility = View.GONE
+            isFavorite = movie.favorite
+            isInWatchlist = movie.watchlist
+            rating = movie.myRating
+            binding.starBtn.visibility = View.VISIBLE
+            binding.watchlistBtn.visibility = View.VISIBLE
+            binding.loveBtn.visibility = View.VISIBLE
+            setStates()
+            if(movie.videos.isNotEmpty()) {
+                binding.videoText.visibility = View.VISIBLE
+                binding.videoRecyclerview.visibility = View.VISIBLE
+                videoAdapter.setVideos(movie.videos)
+            }
+            if(movie.recommendations.isNotEmpty()) {
+                binding.recommendationText.visibility = View.VISIBLE
+                binding.recommendationRecyclerview.visibility = View.VISIBLE
+                recommendationAdapter.setItems(movie.recommendations)
+            }
+            if(movie.similar.isNotEmpty()) {
+                binding.similarText.visibility = View.VISIBLE
+                binding.similarRecyclerview.visibility = View.VISIBLE
+                similarAdapter.setItems(movie.similar)
+            }
+            if(movie.cast.isNotEmpty()) {
+                binding.mainRolesTitle.visibility = View.VISIBLE
+                binding.mainRoles.visibility = View.VISIBLE
+                castAdapter.appendMovies(movie.cast)
+            }
+            if(movie.posters.isNotEmpty()) {
+                binding.posterText.visibility = View.VISIBLE
+                binding.posterRecyclerview.visibility = View.VISIBLE
+                posterAdapter.setImages(movie.posters)
+            }
+            if(movie.backdrops.isNotEmpty()) {
+                binding.backdropText.visibility = View.VISIBLE
+                binding.backdropRecyclerview.visibility = View.VISIBLE
+                backdropAdapter.setImages(movie.backdrops)
+            }
+        }
+
+        viewModel.tvDetails.observe(viewLifecycleOwner) { tv ->
+            tvID = tv.id
+            initUiData(
+                tv.posterPath,
+                tv.name,
+                tv.firstAirDate,
+                tv.rating,
+                tv.overview,
+                tv.tagline,
+                tv.genres,
+                formatSeasons(tv.numOfSeasons, "Количество сезонов: "),
+                formatSeasons(tv.episodes, "Количество серий: "),
+                tv.lastEpisode,
+                tv.companies,
+                tv.countries,
+                "${tv.originalName} (${tv.runtime} m)",
+                tv.homepage,
+                tv.createdBy,
+                tv.seasons,
+                false
+            )
+            binding.createdBy.visibility = View.GONE
+            isFavorite = tv.favorite
+            isInWatchlist = tv.watchlist
+            rating = tv.myRating
+            binding.starBtn.visibility = View.VISIBLE
+            binding.watchlistBtn.visibility = View.VISIBLE
+            binding.loveBtn.visibility = View.VISIBLE
+            setStates()
+            if(tv.videos.isNotEmpty()) {
+                binding.videoText.visibility = View.VISIBLE
+                binding.videoRecyclerview.visibility = View.VISIBLE
+                videoAdapter.setVideos(tv.videos)
+            }
+            if(tv.recommendations.isNotEmpty()) {
+                binding.recommendationText.visibility = View.VISIBLE
+                binding.recommendationRecyclerview.visibility = View.VISIBLE
+                recommendationAdapter.setItems(tv.recommendations)
+            }
+            if(tv.similar.isNotEmpty()) {
+                binding.similarText.visibility = View.VISIBLE
+                binding.similarRecyclerview.visibility = View.VISIBLE
+                similarAdapter.setItems(tv.similar)
+            }
+            if(tv.cast.isNotEmpty()) {
+                binding.mainRolesTitle.visibility = View.VISIBLE
+                binding.mainRoles.visibility = View.VISIBLE
+                castAdapter.appendMovies(tv.cast)
+            }
+            if(tv.posters.isNotEmpty()) {
+                binding.posterText.visibility = View.VISIBLE
+                binding.posterRecyclerview.visibility = View.VISIBLE
+                posterAdapter.setImages(tv.posters)
+            }
+            if(tv.backdrops.isNotEmpty()) {
+                binding.backdropText.visibility = View.VISIBLE
+                binding.backdropRecyclerview.visibility = View.VISIBLE
+                backdropAdapter.setImages(tv.backdrops)
+            }
+        }
+
+        viewModel.personDetails.observe(viewLifecycleOwner) { person ->
+            initUiData(
+                person.profilePath,
+                person.name,
+                "",
+                person.popularity,
+                person.biography,
+                person.birthday,
+                emptyList(),
+                formatGender(person.gender),
+                person.placeOfBirth,
+                null,
+                emptyList(),
+                emptyList(),
+                "",
+                person.homepage,
+                emptyList(),
+                emptyList(),
+                false
+            )
+        }
+
         viewModel.baseItemDetails.observe(viewLifecycleOwner) { item ->
             when (item) {
-                is FilmDetails -> {
-                    film = item
-                    Log.d("InitImage", "${BuildConfig.BASE_POSTER_URL}${item.posterPath}")
-                    initUiData(
-                        item.posterPath,
-                        item.title,
-                        item.releaseDate,
-                        item.rating,
-                        item.overview,
-                        item.tagline,
-                        item.genres,
-                        formatBudget(item.budget, "Бюджет: "),
-                        formatBudget(item.revenue, "Сборы: "),
-                        item.collection,
-                        item.companies,
-                        item.countries,
-                        "${item.originalTitle} (${item.runtime} m)",
-                        item.homepage,
-                        emptyList(),
-                        emptyList(),
-                        false
-                    )
-                    binding.createdBy.visibility = View.GONE
-                }
-                is TvDetails -> {
-                    tv = item
-                    initUiData(
-                        item.posterPath,
-                        item.name,
-                        item.firstAirDate,
-                        item.rating,
-                        item.overview,
-                        item.tagline,
-                        item.genres,
-                        formatSeasons(item.numOfSeasons, "Количество сезовонов: "),
-                        formatSeasons(item.episodes, "Количество серий: "),
-                        item.lastEpisode,
-                        item.companies,
-                        item.countries,
-                        "${item.originalName} (${item.runtime} m)",
-                        item.homepage,
-                        item.createdBy,
-                        item.seasons,
-                        false
-                    )
-                }
-                is PersonDetails -> {
-                    initUiData(
-                        item.profilePath,
-                        item.name,
-                        "",
-                        item.popularity,
-                        item.biography,
-                        item.birthday,
-                        emptyList(),
-                        formatGender(item.gender),
-                        item.placeOfBirth,
-                        null,
-                        emptyList(),
-                        emptyList(),
-                        "",
-                        item.homepage,
-                        emptyList(),
-                        emptyList(),
-                        false
-                    )
-                }
                 is SeasonDetails -> {
                     initUiData(
                         item.posterPath,
@@ -280,30 +343,6 @@ class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
             }
         }
 
-        viewModel.movieStates.observe(viewLifecycleOwner) { movie ->
-            isFavorite = movie.favorite
-            isInWatchlist = movie.watchlist
-            rating = movie.rating.rating
-            binding.starBtn.visibility = View.VISIBLE
-            binding.watchlistBtn.visibility = View.VISIBLE
-            binding.loveBtn.visibility = View.VISIBLE
-            if (isInWatchlist) {
-                binding.watchlistBtn.setBackgroundResource(R.drawable.ic_bookmark_marked)
-            } else {
-                binding.watchlistBtn.setBackgroundResource(R.drawable.ic_turned_in)
-            }
-            if (isFavorite) {
-                binding.loveBtn.setBackgroundResource(R.drawable.ic_favorite_marked)
-            } else {
-                binding.loveBtn.setBackgroundResource(R.drawable.ic_favorite)
-            }
-            if (rating > 0.0) {
-                binding.starBtn.setBackgroundResource(R.drawable.ic_baseline_star_marked)
-            } else {
-                binding.starBtn.setBackgroundResource(R.drawable.ic_star)
-            }
-        }
-
         viewModel.addToWatchlistState.observe(viewLifecycleOwner) { status ->
             if (status.status == 1 || status.status == 12 || status.status == 13) {
                 isInWatchlist = !isInWatchlist
@@ -341,22 +380,6 @@ class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
             binding.ratingBar.rating = rating / 2
         }
 
-        viewModel.posterPaths.observe(viewLifecycleOwner) { posters ->
-            if(posters.isNotEmpty()) {
-                binding.posterText.visibility = View.VISIBLE
-                binding.posterRecyclerview.visibility = View.VISIBLE
-                posterAdapter.setImages(posters)
-            }
-        }
-
-        viewModel.backdropPaths.observe(viewLifecycleOwner) { backdrops ->
-            if(backdrops.isNotEmpty()) {
-                binding.backdropText.visibility = View.VISIBLE
-                binding.backdropRecyclerview.visibility = View.VISIBLE
-                backdropAdapter.setImages(backdrops)
-            }
-        }
-
         viewModel.profilePaths.observe(viewLifecycleOwner) { profiles ->
             if(profiles.isNotEmpty()) {
                 binding.posterText.visibility = View.VISIBLE
@@ -365,56 +388,24 @@ class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
                 posterAdapter.setImages(profiles)
             }
         }
-
-        viewModel.movieVideos.observe(viewLifecycleOwner) { videos ->
-            if(videos.isNotEmpty()) {
-                binding.videoText.visibility = View.VISIBLE
-                binding.videoRecyclerview.visibility = View.VISIBLE
-                videoAdapter.setVideos(videos)
-            }
-        }
-
-        viewModel.recommendations.observe(viewLifecycleOwner) { recs ->
-            if(recs.isNotEmpty()) {
-                binding.recommendationText.visibility = View.VISIBLE
-                binding.recommendationRecyclerview.visibility = View.VISIBLE
-                recommendationAdapter.setItems(recs)
-            }
-        }
-
-        viewModel.similar.observe(viewLifecycleOwner) { similars ->
-            if(similars.isNotEmpty()) {
-                binding.similarText.visibility = View.VISIBLE
-                binding.similarRecyclerview.visibility = View.VISIBLE
-                similarAdapter.setItems(similars)
-            }
-        }
-
-        viewModel.cast.observe(viewLifecycleOwner) { cast ->
-            if(cast.isNotEmpty()) {
-                binding.mainRolesTitle.visibility = View.VISIBLE
-                binding.mainRoles.visibility = View.VISIBLE
-                castAdapter.appendMovies(cast)
-            }
-        }
     }
 
     private fun initComponents() {
         initRecyclerViews()
 
         binding.loveBtn.setOnClickListener {
-            if (film != null) {
-                viewModel.markAsFavorite(film!!.id, "movie", !isFavorite, USER.sessionKey)
-            } else if (tv != null) {
-                viewModel.markAsFavorite(tv!!.id, "tv", !isFavorite, USER.sessionKey)
+            if (filmId != null) {
+                viewModel.markAsFavorite(filmId!!, "movie", !isFavorite, USER.sessionKey)
+            } else if (tvID != null) {
+                viewModel.markAsFavorite(tvID!!, "tv", !isFavorite, USER.sessionKey)
             }
         }
 
         binding.watchlistBtn.setOnClickListener {
-            if (film != null) {
-                viewModel.addToWatchlist(film!!.id, "movie", !isInWatchlist, USER.sessionKey)
-            } else if (tv != null) {
-                viewModel.addToWatchlist(tv!!.id, "tv", !isInWatchlist, USER.sessionKey)
+            if (filmId != null) {
+                viewModel.addToWatchlist(filmId!!, "movie", !isInWatchlist, USER.sessionKey)
+            } else if (tvID != null) {
+                viewModel.addToWatchlist(tvID!!, "tv", !isInWatchlist, USER.sessionKey)
             }
         }
 
@@ -429,12 +420,12 @@ class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
 
         binding.ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
             if (fromUser) {
-                if (film != null) {
-                    viewModel.rateMovie(film!!.id, USER.sessionKey, rating * 2)
+                if (filmId != null) {
+                    viewModel.rateMovie(filmId!!, USER.sessionKey, rating * 2)
                 }
 
-                if (tv != null) {
-                    viewModel.rateTv(tv!!.id, USER.sessionKey, rating * 2)
+                if (tvID != null) {
+                    viewModel.rateTv(tvID!!, USER.sessionKey, rating * 2)
                 }
                 currentRating = rating * 2
             }
@@ -561,7 +552,7 @@ class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
         companies: List<ProductionCompanies>,
         countries: List<ProductionCounties>,
         subtitle: String,
-        homepage: String,
+        homepage: String?,
         createdBy: List<TvProducer>,
         seasons: List<Season>,
         isAlbumPath: Boolean
@@ -650,14 +641,6 @@ class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
         }
     }
 
-    private fun setIfIsNotEmpty(text: String, view: TextView) {
-        if(text == "") {
-            view.visibility = View.GONE
-        } else {
-            view.text = text
-        }
-    }
-
     private fun initCollectionWidget(type: String, image: String, name: String) {
         binding.isCollection.text = type
         binding.collectionImage.setImage(image)
@@ -721,6 +704,16 @@ class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
 
     private fun formatCost(budget: Int): String {
         return format.format(budget).toString()
+    }
+
+    private fun setStates() {
+        binding.apply {
+            if (isInWatchlist != null && isFavorite != null) {
+                watchlistBtn.setCurrentResource({ isInWatchlist }, R.drawable.ic_bookmark_marked, R.drawable.ic_turned_in)
+                loveBtn.setCurrentResource({ isFavorite }, R.drawable.ic_favorite_marked, R.drawable.ic_favorite)
+            }
+            starBtn.setCurrentResource({ rating > 0.0 }, R.drawable.ic_baseline_star_marked, R.drawable.ic_star)
+        }
     }
 
     override fun onOpenMovie(id: Long) {
