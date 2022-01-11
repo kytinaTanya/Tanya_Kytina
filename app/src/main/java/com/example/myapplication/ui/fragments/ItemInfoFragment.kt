@@ -67,7 +67,7 @@ class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
     private lateinit var similarAdapter: RecommendationRecyclerAdapter
     private lateinit var companiesAdapter: MovieRecyclerAdapter
     private lateinit var seasonAdapter: MovieRecyclerAdapter
-    private lateinit var episodeAdapter: MovieRecyclerAdapter
+    private lateinit var episodeAdapter: EpisodeRecyclerAdapter
     private lateinit var castAdapter: MovieRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -530,7 +530,7 @@ class ItemInfoFragment : Fragment(), MovieClickListener, PhotoClickListener {
     }
 
     private fun initEpisodeRecyclerView() {
-        episodeAdapter = MovieRecyclerAdapter(this)
+        episodeAdapter = EpisodeRecyclerAdapter(this)
         binding.posterRecyclerview.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = episodeAdapter

@@ -2,15 +2,16 @@ package com.example.myapplication.repository.services
 
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.models.images.ImageRequest
-import com.example.myapplication.models.images.UploadeModel
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.*
+import retrofit2.http.Multipart
+import retrofit2.http.POST
+import retrofit2.http.Part
+import retrofit2.http.Query
 
 interface ImageService {
     companion object {
@@ -33,14 +34,8 @@ interface ImageService {
 
     @Multipart
     @POST("images")
-    fun uploadImage(
+    suspend fun uploadImage(
         @Part file: MultipartBody.Part,
         @Query("api_key") key: String = BuildConfig.IMAGE_API_KEY
     ): Call<ImageRequest>
-
-    @GET("images/{id}")
-    fun getImage(
-        @Path("id") id: String,
-        @Query("api_key") key: String = BuildConfig.IMAGE_API_KEY
-    )
 }

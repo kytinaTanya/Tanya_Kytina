@@ -48,7 +48,7 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideAccountRepository(service: ImageService) : AccountRepository {
-        return AccountRepositoryImpl(service)
+    fun provideAccountRepository(imageService: ImageService) : AccountRepository {
+        return AccountRepositoryImpl(imageService)
     }
 }

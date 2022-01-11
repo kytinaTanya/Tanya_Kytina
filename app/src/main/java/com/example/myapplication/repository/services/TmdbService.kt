@@ -1,10 +1,14 @@
 package com.example.myapplication.repository.services
 
 import com.example.myapplication.BuildConfig
-import com.example.myapplication.models.*
+import com.example.myapplication.models.RequestToken
+import com.example.myapplication.models.RetrofitPostToken
+import com.example.myapplication.models.SessionId
 import com.example.myapplication.models.history.*
 import com.example.myapplication.models.lists.*
-import com.example.myapplication.models.marks.*
+import com.example.myapplication.models.marks.AddToWatchlistMovie
+import com.example.myapplication.models.marks.MarkAsFavouriteMovie
+import com.example.myapplication.models.marks.RatingValue
 import com.example.myapplication.models.pojo.*
 import com.google.gson.JsonElement
 import okhttp3.OkHttpClient
@@ -419,6 +423,6 @@ interface TmdbService {
         @Path("tv_id") id: Long,
         @Header("Content-Type") contextType: String = BuildConfig.HEADER,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Query("session_id") sessionId: String,
+        @Query("session_id") sessionId: String
     ): Response<PostResponseStatus>
 }
