@@ -7,7 +7,7 @@ import com.example.myapplication.databinding.ItemVideoBinding
 import com.example.myapplication.models.pojo.VideoResult
 import com.example.myapplication.utils.setImage
 
-class VideoRecyclerAdapter() : RecyclerView.Adapter<VideoRecyclerAdapter.VideoViewHolder>() {
+class VideoRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val videos: MutableList<VideoResult> = arrayListOf()
 
@@ -28,8 +28,10 @@ class VideoRecyclerAdapter() : RecyclerView.Adapter<VideoRecyclerAdapter.VideoVi
         return VideoViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: VideoViewHolder, position: Int) {
-        holder.bind(videos[position])
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if(holder is VideoViewHolder) {
+            holder.bind(videos[position])
+        }
     }
 
     override fun getItemCount(): Int = videos.size

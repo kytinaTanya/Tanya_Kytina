@@ -4,35 +4,33 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.*
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myapplication.ui.recyclerview.adapters.MovieClickListener
-import com.example.myapplication.ui.recyclerview.adapters.MovieRecyclerAdapter
 import com.example.myapplication.databinding.FragmentMainBinding
-import com.example.myapplication.ui.activities.MainActivity
 import com.example.myapplication.ui.activities.MainActivity.Companion.MOVIE_TYPE
 import com.example.myapplication.ui.activities.MainActivity.Companion.PERSON_TYPE
 import com.example.myapplication.ui.activities.MainActivity.Companion.TV_TYPE
-import com.example.myapplication.ui.recyclerview.DividerItemDecoration
+import com.example.myapplication.ui.recyclerview.adapters.FeedRecyclerAdapter
+import com.example.myapplication.ui.recyclerview.listeners.MovieAndPersonListener
+import com.example.myapplication.utils.setConfigHorizontalLinearWithDiv
 import com.example.myapplication.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainFragment : Fragment(), MovieClickListener {
+class MainFragment : Fragment(), MovieAndPersonListener {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var filmsInTrendAdapter: MovieRecyclerAdapter
-    private lateinit var filmsUpcomingAdapter: MovieRecyclerAdapter
-    private lateinit var tvPopularAdapter: MovieRecyclerAdapter
-    private lateinit var filmsNowPlayingAdapter: MovieRecyclerAdapter
-    lateinit var tvBestAdapter: MovieRecyclerAdapter
-    lateinit var tvNowOnAirAdapter: MovieRecyclerAdapter
-    lateinit var tvTodayOnAirAdapter: MovieRecyclerAdapter
-    lateinit var filmsBestAdapter: MovieRecyclerAdapter
-    lateinit var personPopularAdapter: MovieRecyclerAdapter
+    private lateinit var filmsInTrendAdapter: FeedRecyclerAdapter
+    private lateinit var filmsUpcomingAdapter: FeedRecyclerAdapter
+    private lateinit var tvPopularAdapter: FeedRecyclerAdapter
+    private lateinit var filmsNowPlayingAdapter: FeedRecyclerAdapter
+    lateinit var tvBestAdapter: FeedRecyclerAdapter
+    lateinit var tvNowOnAirAdapter: FeedRecyclerAdapter
+    lateinit var tvTodayOnAirAdapter: FeedRecyclerAdapter
+    lateinit var filmsBestAdapter: FeedRecyclerAdapter
+    lateinit var personPopularAdapter: FeedRecyclerAdapter
 
     private val viewModel: MainViewModel by activityViewModels()
 
@@ -109,86 +107,32 @@ class MainFragment : Fragment(), MovieClickListener {
     }
 
     private fun initRecyclerViews() {
-        filmsInTrendAdapter = MovieRecyclerAdapter(this)
-        binding.popularMovies.apply {
-            layoutManager = LinearLayoutManager(requireContext(),
-                LinearLayoutManager.HORIZONTAL,
-                false)
-            adapter = filmsInTrendAdapter
-            addItemDecoration(DividerItemDecoration(16))
-        }
+        filmsInTrendAdapter = FeedRecyclerAdapter(this)
+        binding.popularMovies.setConfigHorizontalLinearWithDiv(filmsInTrendAdapter, requireContext(), 16)
 
-        filmsUpcomingAdapter = MovieRecyclerAdapter(this)
-        binding.upcomingMovies.apply {
-            layoutManager = LinearLayoutManager(requireContext(),
-                LinearLayoutManager.HORIZONTAL,
-                false)
-            adapter = filmsUpcomingAdapter
-            addItemDecoration(DividerItemDecoration(16))
-        }
+        filmsUpcomingAdapter = FeedRecyclerAdapter(this)
+        binding.upcomingMovies.setConfigHorizontalLinearWithDiv(filmsUpcomingAdapter, requireContext(), 16)
 
-        tvPopularAdapter = MovieRecyclerAdapter(this)
-        binding.popularTv.apply {
-            layoutManager = LinearLayoutManager(requireContext(),
-                LinearLayoutManager.HORIZONTAL,
-                false)
-            adapter = tvPopularAdapter
-            addItemDecoration(DividerItemDecoration(16))
-        }
+        tvPopularAdapter = FeedRecyclerAdapter(this)
+        binding.popularTv.setConfigHorizontalLinearWithDiv(tvPopularAdapter, requireContext(), 16)
 
-        filmsNowPlayingAdapter = MovieRecyclerAdapter(this)
-        binding.nowPlayingMovies.apply {
-            layoutManager = LinearLayoutManager(requireContext(),
-                LinearLayoutManager.HORIZONTAL,
-                false)
-            adapter = filmsNowPlayingAdapter
-            addItemDecoration(DividerItemDecoration(16))
-        }
+        filmsNowPlayingAdapter = FeedRecyclerAdapter(this)
+        binding.nowPlayingMovies.setConfigHorizontalLinearWithDiv(filmsNowPlayingAdapter, requireContext(), 16)
 
-        tvBestAdapter = MovieRecyclerAdapter(this)
-        binding.topRatedTv.apply {
-            layoutManager = LinearLayoutManager(requireContext(),
-                LinearLayoutManager.HORIZONTAL,
-                false)
-            adapter = tvBestAdapter
-            addItemDecoration(DividerItemDecoration(16))
-        }
+        tvBestAdapter = FeedRecyclerAdapter(this)
+        binding.topRatedTv.setConfigHorizontalLinearWithDiv(tvBestAdapter, requireContext(), 16)
 
-        tvNowOnAirAdapter = MovieRecyclerAdapter(this)
-        binding.nowOnAirTv.apply {
-            layoutManager = LinearLayoutManager(requireContext(),
-                LinearLayoutManager.HORIZONTAL,
-                false)
-            adapter = tvNowOnAirAdapter
-            addItemDecoration(DividerItemDecoration(16))
-        }
+        tvNowOnAirAdapter = FeedRecyclerAdapter(this)
+        binding.nowOnAirTv.setConfigHorizontalLinearWithDiv(tvNowOnAirAdapter, requireContext(), 16)
 
-        tvTodayOnAirAdapter = MovieRecyclerAdapter(this)
-        binding.onAirTodayTv.apply {
-            layoutManager = LinearLayoutManager(requireContext(),
-                LinearLayoutManager.HORIZONTAL,
-                false)
-            adapter = tvTodayOnAirAdapter
-            addItemDecoration(DividerItemDecoration(16))
-        }
+        tvTodayOnAirAdapter = FeedRecyclerAdapter(this)
+        binding.onAirTodayTv.setConfigHorizontalLinearWithDiv(tvTodayOnAirAdapter, requireContext(), 16)
 
-        filmsBestAdapter = MovieRecyclerAdapter(this)
-        binding.topRatedMovies.apply {
-            layoutManager = LinearLayoutManager(requireContext(),
-                LinearLayoutManager.HORIZONTAL,
-                false)
-            adapter = filmsBestAdapter
-            addItemDecoration(DividerItemDecoration(16))
-        }
+        filmsBestAdapter = FeedRecyclerAdapter(this)
+        binding.topRatedMovies.setConfigHorizontalLinearWithDiv(filmsBestAdapter, requireContext(), 16)
 
-        personPopularAdapter = MovieRecyclerAdapter(this)
-        binding.popularPersons.apply {
-            layoutManager = LinearLayoutManager(requireContext(),
-                LinearLayoutManager.HORIZONTAL,
-                false)
-            adapter = personPopularAdapter
-            addItemDecoration(DividerItemDecoration(16))
-        }
+        personPopularAdapter = FeedRecyclerAdapter(this)
+        binding.popularPersons.setConfigHorizontalLinearWithDiv(personPopularAdapter, requireContext(), 16)
     }
 
     override fun onOpenMovie(id: Long) {

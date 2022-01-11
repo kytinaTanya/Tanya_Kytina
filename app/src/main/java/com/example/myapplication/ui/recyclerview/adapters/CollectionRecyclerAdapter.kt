@@ -9,6 +9,7 @@ import com.example.myapplication.databinding.ItemMovieBinding
 import com.example.myapplication.models.pojo.Film
 import com.example.myapplication.models.pojo.BaseItem
 import com.example.myapplication.models.pojo.TV
+import com.example.myapplication.ui.recyclerview.listeners.MovieClickListener
 import com.example.myapplication.utils.setImage
 
 

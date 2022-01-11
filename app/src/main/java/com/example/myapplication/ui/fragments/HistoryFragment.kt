@@ -5,24 +5,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.*
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentHistoryBinding
 import com.example.myapplication.firebase.USER
 import com.example.myapplication.ui.activities.MainActivity
-import com.example.myapplication.ui.activities.MainActivity.Companion.EPISODE_TYPE
-import com.example.myapplication.ui.recyclerview.DividerItemDecoration
 import com.example.myapplication.ui.recyclerview.adapters.HistoryRecyclerAdapter
-import com.example.myapplication.ui.recyclerview.adapters.MovieClickListener
+import com.example.myapplication.ui.recyclerview.listeners.MovieAndEpisodeListener
+import com.example.myapplication.utils.setConfigHorizontalLinearWithDiv
 import com.example.myapplication.viewmodel.HistoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HistoryFragment : Fragment(), MovieClickListener {
+class HistoryFragment : Fragment(), MovieAndEpisodeListener {
 
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
@@ -83,25 +80,13 @@ class HistoryFragment : Fragment(), MovieClickListener {
 
     private fun initRecyclerView() {
         ratedMoviesAdapter = HistoryRecyclerAdapter(this)
-        binding.ratedMoviesList.apply {
-            adapter = ratedMoviesAdapter
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            addItemDecoration(DividerItemDecoration(32))
-        }
+        binding.ratedMoviesList.setConfigHorizontalLinearWithDiv(ratedMoviesAdapter, requireContext(), 32)
 
         ratedTvsAdapter = HistoryRecyclerAdapter(this)
-        binding.ratedTvsList.apply {
-            adapter = ratedTvsAdapter
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            addItemDecoration(DividerItemDecoration(32))
-        }
+        binding.ratedTvsList.setConfigHorizontalLinearWithDiv(ratedTvsAdapter, requireContext(), 32)
 
         ratedEpisodesAdapter = HistoryRecyclerAdapter(this)
-        binding.ratedEpisodesList.apply {
-            adapter = ratedEpisodesAdapter
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            addItemDecoration(DividerItemDecoration(32))
-        }
+        binding.ratedEpisodesList.setConfigHorizontalLinearWithDiv(ratedEpisodesAdapter, requireContext(), 32)
     }
 
     override fun onDestroyView() {

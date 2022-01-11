@@ -12,9 +12,10 @@ import com.example.myapplication.databinding.ItemEpisodesBinding
 import com.example.myapplication.models.pojo.BaseItem
 import com.example.myapplication.models.pojo.Episode
 import com.example.myapplication.models.pojo.Film
+import com.example.myapplication.ui.recyclerview.listeners.MovieAndEpisodeListener
 import com.example.myapplication.utils.setImage
 
-class EpisodeRecyclerAdapter(private val listener: MovieClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
+class EpisodeRecyclerAdapter(private val listener: MovieAndEpisodeListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
 
     var mMoviesList: MutableList<BaseItem> = arrayListOf()
 
