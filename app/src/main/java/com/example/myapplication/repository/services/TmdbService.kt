@@ -359,6 +359,15 @@ interface TmdbService {
         @Query("include_adult") include: Boolean = false
     ): Response<MoviesResponse<Film>>
 
+    @GET("search/tv")
+    suspend fun searchTvs(
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
+        @Query("query") query: String = "",
+        @Query("page") page: Int = 1,
+        @Query("include_adult") include: Boolean = false
+    ): Response<MoviesResponse<TV>>
+
     @POST("account/{account_id}/favorite")
     suspend fun markAsFavourite(
         @Path("account_id") id: Int = BuildConfig.MY_ID.toInt(),

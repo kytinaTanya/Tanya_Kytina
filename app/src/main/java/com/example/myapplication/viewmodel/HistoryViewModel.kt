@@ -14,9 +14,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(private val historyRepository: HistoryRepository) : ViewModel() {
-    private var _filmsHistory: MutableLiveData<List<Film>> = MutableLiveData()
-    val filmsHistory: LiveData<List<Film>>
-        get() = _filmsHistory
 
     private var _ratedFilms: MutableLiveData<List<Film>> = MutableLiveData()
     val ratedFilms: LiveData<List<Film>>
@@ -34,11 +31,9 @@ class HistoryViewModel @Inject constructor(private val historyRepository: Histor
     val searchMovies: LiveData<List<Film>>
         get() = _searchMovies
 
-    fun loadHistory(id: Int, sessionId: String) {
-        viewModelScope.launch {
-            _filmsHistory.value = historyRepository.getDetailsAboutHistoryList(id, sessionId)
-        }
-    }
+    private var _searchTvs: MutableLiveData<List<TV>> = MutableLiveData()
+    val searchTvs: LiveData<List<TV>>
+        get() = _searchTvs
 
     fun loadRatedFilms(sessionId: String) {
         viewModelScope.launch {
@@ -61,6 +56,12 @@ class HistoryViewModel @Inject constructor(private val historyRepository: Histor
     fun searchMovie(query: String) {
         viewModelScope.launch {
             _searchMovies.value = historyRepository.searchMovie(query)
+        }
+    }
+
+    fun searchTV(query: String) {
+        viewModelScope.launch {
+            _searchTvs.value = historyRepository.searchTV(query)
         }
     }
 }

@@ -84,4 +84,13 @@ class HistoryRepositoryImpl(val service: TmdbService): HistoryRepository {
             emptyList()
         }
     }
+
+    override suspend fun searchTV(query: String): List<TV> {
+        val response = service.searchTvs(query = query)
+        return if(response.isSuccessful) {
+            response.body()?.movies ?: emptyList()
+        } else {
+            emptyList()
+        }
+    }
 }

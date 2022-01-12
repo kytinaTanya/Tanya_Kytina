@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.myapplication.databinding.FragmentSearchResultBinding
 import com.example.myapplication.ui.activities.MainActivity.Companion.MOVIE_TYPE
+import com.example.myapplication.ui.activities.MainActivity.Companion.TV_TYPE
 import com.example.myapplication.ui.recyclerview.adapters.CollectionRecyclerAdapter
 import com.example.myapplication.ui.recyclerview.listeners.MovieClickListener
 import com.example.myapplication.utils.setConfigVerticalLinear
@@ -69,6 +70,7 @@ class SearchResultFragment : Fragment(), MovieClickListener {
     }
 
     override fun onOpenTV(id: Long) {
-        TODO("Not yet implemented")
+        val action = SearchResultFragmentDirections.actionSearchResultFragmentToItemInfoFragment(id, TV_TYPE, 0, 0)
+        view?.findNavController()?.navigate(action)
     }
 }

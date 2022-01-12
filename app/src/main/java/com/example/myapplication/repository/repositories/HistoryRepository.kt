@@ -14,4 +14,5 @@ interface HistoryRepository {
     suspend fun getRatedTvs(sessionId: String): List<TV>
     suspend fun getRatedEpisodes(sessionId: String): List<Episode>
     suspend fun searchMovie(query: String): List<Film>
+    suspend fun searchTV(query: String): List<TV>
 }
