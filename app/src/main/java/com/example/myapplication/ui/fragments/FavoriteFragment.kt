@@ -27,7 +27,7 @@ class FavoriteFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        showProgress(true)
         movieCollectionAdapter = MoviesCollectionAdapter(
             childFragmentManager,
             lifecycle
@@ -43,11 +43,26 @@ class FavoriteFragment : Fragment() {
                 else -> ""
             }
         }.attach()
+        showProgress(false)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun showProgress(show: Boolean) {
+        if (show) {
+            binding.apply {
+                loaded.visibility = View.GONE
+                loading.visibility = View.VISIBLE
+            }
+        } else {
+            binding.apply {
+                loaded.visibility = View.VISIBLE
+                loading.visibility = View.GONE
+            }
+        }
     }
 
 }

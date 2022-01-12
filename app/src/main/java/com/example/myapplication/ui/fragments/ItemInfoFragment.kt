@@ -28,10 +28,11 @@ import com.example.myapplication.ui.activities.MainActivity.Companion.SEASON_TYP
 import com.example.myapplication.ui.activities.MainActivity.Companion.TV_TYPE
 import com.example.myapplication.ui.recyclerview.DividerItemDecoration
 import com.example.myapplication.ui.recyclerview.adapters.*
+import com.example.myapplication.ui.recyclerview.listeners.AllSpecificListener
+import com.example.myapplication.ui.recyclerview.listeners.PhotoClickListener
 import com.example.myapplication.utils.Utils.Companion.setIfIsNotEmpty
-import com.example.myapplication.utils.setCurrentResource
-import com.example.myapplication.ui.recyclerview.listeners.*
 import com.example.myapplication.utils.setConfigHorizontalLinearWithDiv
+import com.example.myapplication.utils.setCurrentResource
 import com.example.myapplication.utils.setImage
 import com.example.myapplication.viewmodel.ItemInfoViewModel
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -113,6 +114,7 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        showProgress(true)
         initComponents()
         setObservers()
     }
@@ -182,6 +184,7 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
                 binding.backdropRecyclerview.visibility = View.VISIBLE
                 backdropAdapter.setImages(movie.backdrops)
             }
+            showProgress(false)
         }
 
         viewModel.tvDetails.observe(viewLifecycleOwner) { tv ->
@@ -243,6 +246,7 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
                 binding.backdropRecyclerview.visibility = View.VISIBLE
                 backdropAdapter.setImages(tv.backdrops)
             }
+            showProgress(false)
         }
 
         viewModel.personDetails.observe(viewLifecycleOwner) { person ->
@@ -265,6 +269,7 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
                 emptyList(),
                 false
             )
+            showProgress(false)
         }
 
         viewModel.baseItemDetails.observe(viewLifecycleOwner) { item ->
@@ -343,6 +348,7 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
                     binding.posterText.text = "Состав коллекции"
                 }
             }
+            showProgress(false)
         }
 
         viewModel.addToWatchlistState.observe(viewLifecycleOwner) { status ->
@@ -656,6 +662,20 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
                 loveBtn.setCurrentResource({ isFavorite }, R.drawable.ic_favorite_marked, R.drawable.ic_favorite)
             }
             starBtn.setCurrentResource({ rating > 0.0 }, R.drawable.ic_baseline_star_marked, R.drawable.ic_star)
+        }
+    }
+
+    private fun showProgress(show: Boolean) {
+        if (show) {
+            binding.apply {
+                loaded.visibility = View.GONE
+                loading.visibility = View.VISIBLE
+            }
+        } else {
+            binding.apply {
+                loaded.visibility = View.VISIBLE
+                loading.visibility = View.GONE
+            }
         }
     }
 

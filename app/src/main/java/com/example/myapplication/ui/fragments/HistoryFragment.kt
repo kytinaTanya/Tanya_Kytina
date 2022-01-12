@@ -27,6 +27,7 @@ class HistoryFragment : Fragment(), MovieAndEpisodeListener {
     private lateinit var ratedMoviesAdapter: HistoryRecyclerAdapter
     private lateinit var ratedTvsAdapter: HistoryRecyclerAdapter
     private lateinit var ratedEpisodesAdapter: HistoryRecyclerAdapter
+    private var loaded: Int = 0
     private val viewModel: HistoryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +47,7 @@ class HistoryFragment : Fragment(), MovieAndEpisodeListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        showProgress(true)
         initRecyclerView()
         initUI()
     }
@@ -67,14 +69,17 @@ class HistoryFragment : Fragment(), MovieAndEpisodeListener {
 
     override fun onResume() {
         super.onResume()
-        viewModel.ratedFilms.observe(this) { films ->
+        viewModel.ratedFilms.observe(viewLifecycleOwner) { films ->
             ratedMoviesAdapter.appendFilms(films)
+            showProgress(!isAllLoaded())
         }
-        viewModel.ratedTVs.observe(this) { tvs ->
+        viewModel.ratedTVs.observe(viewLifecycleOwner) { tvs ->
             ratedTvsAdapter.appendFilms(tvs)
+            showProgress(!isAllLoaded())
         }
-        viewModel.ratedEpisodes.observe(this) { eps ->
+        viewModel.ratedEpisodes.observe(viewLifecycleOwner) { eps ->
             ratedEpisodesAdapter.appendFilms(eps)
+            showProgress(!isAllLoaded())
         }
     }
 
@@ -110,5 +115,24 @@ class HistoryFragment : Fragment(), MovieAndEpisodeListener {
         val action = HistoryFragmentDirections.actionSearchPageToItemInfoFragment(tvId,
             MainActivity.EPISODE_TYPE, season, episode)
         view?.findNavController()?.navigate(action)
+    }
+
+    private fun showProgress(show: Boolean) {
+        if (show) {
+            binding.apply {
+                loaded.visibility = View.GONE
+                loading.visibility = View.VISIBLE
+            }
+        } else {
+            binding.apply {
+                loaded.visibility = View.VISIBLE
+                loading.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun isAllLoaded() : Boolean {
+        loaded++
+        return loaded >= 3
     }
 }

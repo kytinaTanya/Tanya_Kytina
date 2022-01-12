@@ -1,507 +1,521 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.ItemInfoFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/loaded"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/top_line"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="16dp" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/left_line"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="16dp" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/right_line"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintGuide_end="16dp" />
-
-        <ImageView
-            android:id="@+id/movieImage"
-            android:layout_width="150dp"
-            android:layout_height="225dp"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toTopOf="@id/top_line"
-            android:scaleType="centerCrop"
-            tools:src="@drawable/poster_placeholder" />
-
-        <ImageView
-            android:id="@+id/still_image"
-            android:layout_width="225dp"
-            android:layout_height="150dp"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toTopOf="@id/top_line"
-            android:scaleType="centerCrop"
-            tools:src="@drawable/poster_placeholder"
-            android:visibility="gone"/>
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/end_barrier"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:barrierDirection="end"
-            app:constraint_referenced_ids="movieImage, still_image"/>
-
-        <TextView
-            android:id="@+id/movieTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/end_barrier"
-            app:layout_constraintTop_toTopOf="@+id/top_line"
-            tools:text="Name" />
-
-        <TextView
-            android:id="@+id/original_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/movieTitle"
-            app:layout_constraintTop_toBottomOf="@+id/movieTitle"
-            tools:text="Name" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/genres"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/original_title"
-            app:layout_constraintTop_toBottomOf="@+id/original_title"
-            app:layout_constrainedWidth="true"
-            tools:listitem="@layout/item_genre"
-            android:layout_marginTop="8dp"/>
-
-        <TextView
-            android:id="@+id/yearOfMovie"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:maxWidth="238dp"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/genres"
-            app:layout_constraintTop_toBottomOf="@+id/genres"
-            tools:text="2000" />
-
-        <TextView
-            android:id="@+id/movieRating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/yearOfMovie"
-            app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
-            android:layout_marginTop="16dp"
-            tools:text="10.0" />
-
-        <ImageButton
-            android:id="@+id/love_btn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/ic_favorite"
-            app:layout_constraintStart_toEndOf="@id/movieRating"
-            app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="8dp"
-            android:visibility="gone"/>
-
-        <ImageButton
-            android:id="@+id/watchlist_btn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/ic_turned_in"
-            app:layout_constraintStart_toEndOf="@id/love_btn"
-            app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="8dp"
-            android:visibility="gone"/>
-
-        <ImageButton
-            android:id="@+id/star_btn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/ic_star"
-            app:layout_constraintStart_toEndOf="@id/watchlist_btn"
-            app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="8dp"
-            android:visibility="gone"/>
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/bottom_barrier"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="movieImage, still_image, end_barrier, movieTitle, genres, yearOfMovie, movieRating, love_btn, watchlist_btn, star_btn"/>
-
-        <RatingBar
-            android:id="@+id/rating_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:numStars="5"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/bottom_barrier"
-            app:layout_constrainedWidth="true"
-            android:layout_marginTop="16dp"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/tagline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold|italic"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/rating_bar"
-            app:layout_constrainedWidth="true"
-            android:layout_marginTop="16dp"
-            android:textSize="16sp"
-            tools:text="tagline" />
-
-        <TextView
-            android:id="@+id/movieAnnotation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constrainedWidth="true"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/tagline"
-            android:textSize="16sp"
-            tools:text="Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation" />
-
-        <TextView
-            android:id="@+id/main_roles_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/movieAnnotation"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginTop="16dp"
-            android:text="В главных ролях"
-            android:visibility="gone"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/main_roles"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/main_roles_title"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginTop="8dp"
-            tools:listitem="@layout/item_person"
-            android:visibility="gone"/>
-
-        <LinearLayout
-            android:id="@+id/collection"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/main_roles"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical">
+            android:layout_height="match_parent" >
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/top_line"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="16dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/left_line"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="16dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/right_line"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="16dp" />
+
+            <ImageView
+                android:id="@+id/movieImage"
+                android:layout_width="150dp"
+                android:layout_height="225dp"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toTopOf="@id/top_line"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/poster_placeholder" />
+
+            <ImageView
+                android:id="@+id/still_image"
+                android:layout_width="225dp"
+                android:layout_height="150dp"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toTopOf="@id/top_line"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/poster_placeholder"
+                android:visibility="gone"/>
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/end_barrier"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:barrierDirection="end"
+                app:constraint_referenced_ids="movieImage, still_image"/>
 
             <TextView
-                android:id="@+id/is_collection"
+                android:id="@+id/movieTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Collection"
-                android:textSize="20sp"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:textStyle="bold"/>
+                android:layout_marginStart="16dp"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/end_barrier"
+                app:layout_constraintTop_toTopOf="@+id/top_line"
+                tools:text="Name" />
 
-            <androidx.cardview.widget.CardView
+            <TextView
+                android:id="@+id/original_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/movieTitle"
+                app:layout_constraintTop_toBottomOf="@+id/movieTitle"
+                tools:text="Name" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/genres"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/original_title"
+                app:layout_constraintTop_toBottomOf="@+id/original_title"
+                app:layout_constrainedWidth="true"
+                tools:listitem="@layout/item_genre"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/yearOfMovie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:maxWidth="238dp"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/genres"
+                app:layout_constraintTop_toBottomOf="@+id/genres"
+                tools:text="2000" />
+
+            <TextView
+                android:id="@+id/movieRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/yearOfMovie"
+                app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
+                android:layout_marginTop="16dp"
+                tools:text="10.0" />
+
+            <ImageButton
+                android:id="@+id/love_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_favorite"
+                app:layout_constraintStart_toEndOf="@id/movieRating"
+                app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:visibility="gone"/>
+
+            <ImageButton
+                android:id="@+id/watchlist_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_turned_in"
+                app:layout_constraintStart_toEndOf="@id/love_btn"
+                app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:visibility="gone"/>
+
+            <ImageButton
+                android:id="@+id/star_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_star"
+                app:layout_constraintStart_toEndOf="@id/watchlist_btn"
+                app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:visibility="gone"/>
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/bottom_barrier"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="movieImage, still_image, end_barrier, movieTitle, genres, yearOfMovie, movieRating, love_btn, watchlist_btn, star_btn"/>
+
+            <RatingBar
+                android:id="@+id/rating_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/bottom_barrier"
+                app:layout_constrainedWidth="true"
+                android:layout_marginTop="16dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tagline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold|italic"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/rating_bar"
+                app:layout_constrainedWidth="true"
+                android:layout_marginTop="16dp"
+                android:textSize="16sp"
+                tools:text="tagline" />
+
+            <TextView
+                android:id="@+id/movieAnnotation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constrainedWidth="true"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/tagline"
+                android:textSize="16sp"
+                tools:text="Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation" />
+
+            <TextView
+                android:id="@+id/main_roles_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/movieAnnotation"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginTop="16dp"
+                android:text="В главных ролях"
+                android:visibility="gone"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/main_roles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/main_roles_title"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginTop="8dp"
+                tools:listitem="@layout/item_person"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/collection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                android:elevation="2dp"
-                android:layout_marginTop="5dp">
-                <ImageView
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/main_roles"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/is_collection"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    tools:text="Collection"
+                    android:textSize="20sp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textStyle="bold"/>
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:id="@+id/collection_image"
-                    tools:background="@color/dark_blue"
-                    android:scaleType="centerCrop"/>
-            </androidx.cardview.widget.CardView>
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="12dp"
+                    android:elevation="2dp"
+                    android:layout_marginTop="5dp">
+                    <ImageView
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:id="@+id/collection_image"
+                        tools:background="@color/dark_blue"
+                        android:scaleType="centerCrop"/>
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/collection_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="33dp"
+                    android:layout_marginTop="5dp"
+                    tools:text="Collection"
+                    android:textSize="18sp"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/collection_title"
+                android:id="@+id/company_title"
                 android:layout_width="wrap_content"
-                android:layout_height="33dp"
-                android:layout_marginTop="5dp"
-                tools:text="Collection"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/collection"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:text="Производство"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/created_by"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/company_title"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constrainedWidth="true"/>
+
+            <TextView
+                android:id="@+id/countries"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constrainedWidth="true"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/created_by"
+                app:layout_constraintHorizontal_bias="0.0"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/companies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:listitem="@layout/item_logo"
+                app:layout_constrainedWidth="true"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/countries"
+                app:layout_constraintHorizontal_bias="0.0"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/seasons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/companies"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginTop="16dp"
+                tools:listitem="@layout/item_season"/>
+
+            <TextView
+                android:id="@+id/budget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Бюджет: $1.000.000,00"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/seasons"
+                android:textSize="16sp"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:id="@+id/revenue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Сборы: $1.000.000,00"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/budget"
+                android:textSize="16sp"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:id="@+id/poster_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Постеры"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/revenue"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/poster_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_poster"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/poster_text"
+                android:layout_marginTop="16dp"
+                app:layout_constrainedWidth="true"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/backdrop_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Задники"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/poster_recyclerview"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/backdrop_recyclerview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_backdrop"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/backdrop_text"
+                android:layout_marginTop="16dp"
+                app:layout_constrainedWidth="true"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/homepage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/backdrop_recyclerview"
+                android:layout_marginTop="16dp"
                 android:textSize="18sp"
-                android:maxLines="1"
-                android:ellipsize="end" />
-        </LinearLayout>
+                app:layout_constrainedWidth="true"
+                android:autoLink="web"/>
 
-        <TextView
-            android:id="@+id/company_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/collection"
-            app:layout_constraintHorizontal_bias="0.0"
-            android:text="Производство"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/video_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Видео"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/homepage"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/created_by"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/company_title"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constrainedWidth="true"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/video_recyclerview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_video"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/video_text"
+                android:layout_marginTop="16dp"
+                app:layout_constrainedWidth="true"
+                android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/countries"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constrainedWidth="true"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/created_by"
-            app:layout_constraintHorizontal_bias="0.0"/>
+            <TextView
+                android:id="@+id/recommendation_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Рекомендуем"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/video_recyclerview"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/companies"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:listitem="@layout/item_logo"
-            app:layout_constrainedWidth="true"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/countries"
-            app:layout_constraintHorizontal_bias="0.0"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recommendation_recyclerview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_backdrop_title"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/recommendation_text"
+                android:layout_marginTop="16dp"
+                app:layout_constrainedWidth="true"
+                android:visibility="gone"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/seasons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/companies"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginTop="16dp"
-            tools:listitem="@layout/item_season"/>
+            <TextView
+                android:id="@+id/similar_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Похожие фильмы"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/recommendation_recyclerview"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/budget"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Бюджет: $1.000.000,00"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/seasons"
-            android:textSize="16sp"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginTop="16dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/similar_recyclerview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_backdrop_title"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/similar_text"
+                android:layout_marginTop="16dp"
+                app:layout_constrainedWidth="true"
+                android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/revenue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Сборы: $1.000.000,00"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/budget"
-            android:textSize="16sp"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginTop="16dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/poster_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Постеры"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/revenue"
-            android:layout_marginTop="16dp"
-            android:visibility="gone"/>
+    </androidx.core.widget.NestedScrollView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/poster_recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/item_poster"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/poster_text"
-            android:layout_marginTop="16dp"
-            app:layout_constrainedWidth="true"
-            android:visibility="gone"/>
-
-        <TextView
-            android:id="@+id/backdrop_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Задники"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/poster_recyclerview"
-            android:layout_marginTop="16dp"
-            android:visibility="gone"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/backdrop_recyclerview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/item_backdrop"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/backdrop_text"
-            android:layout_marginTop="16dp"
-            app:layout_constrainedWidth="true"
-            android:visibility="gone"/>
-
-        <TextView
-            android:id="@+id/homepage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/backdrop_recyclerview"
-            android:layout_marginTop="16dp"
-            android:textSize="18sp"
-            app:layout_constrainedWidth="true"
-            android:autoLink="web"/>
-
-        <TextView
-            android:id="@+id/video_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Видео"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/homepage"
-            android:layout_marginTop="16dp"
-            android:visibility="gone"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/video_recyclerview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/item_video"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/video_text"
-            android:layout_marginTop="16dp"
-            app:layout_constrainedWidth="true"
-            android:visibility="gone"/>
-
-        <TextView
-            android:id="@+id/recommendation_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Рекомендуем"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/video_recyclerview"
-            android:layout_marginTop="16dp"
-            android:visibility="gone"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recommendation_recyclerview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/item_backdrop_title"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/recommendation_text"
-            android:layout_marginTop="16dp"
-            app:layout_constrainedWidth="true"
-            android:visibility="gone"/>
-
-        <TextView
-            android:id="@+id/similar_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Похожие фильмы"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/recommendation_recyclerview"
-            android:layout_marginTop="16dp"
-            android:visibility="gone"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/similar_recyclerview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/item_backdrop_title"
-            app:layout_constraintEnd_toStartOf="@+id/right_line"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/left_line"
-            app:layout_constraintTop_toBottomOf="@+id/similar_text"
-            android:layout_marginTop="16dp"
-            app:layout_constrainedWidth="true"
-            android:visibility="gone"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.core.widget.NestedScrollView>
+</FrameLayout>

@@ -40,7 +40,50 @@ class ListFragment : Fragment(), MovieClickListener {
         arguments?.takeIf { it.containsKey("object") }?.apply {
             list = getInt("object")
         }
-
+        viewModel.favoriteMoviesList.observe(viewLifecycleOwner) {
+            if(it.totalResults == 0) {
+                binding.movieList.visibility = View.GONE
+                binding.warning.visibility = View.VISIBLE
+            }
+            val list: List<Film> = it.result
+            Log.d("ListFragment","$list")
+            binding.movieList.visibility = View.VISIBLE
+            binding.warning.visibility = View.GONE
+            mAdapter.addMovies(list)
+        }
+        viewModel.favoriteTVsList.observe(viewLifecycleOwner) {
+            if(it.totalResults == 0) {
+                binding.movieList.visibility = View.GONE
+                binding.warning.visibility = View.VISIBLE
+            }
+            val list: List<TV> = it.result
+            Log.d("ListFragment","$list")
+            binding.movieList.visibility = View.VISIBLE
+            binding.warning.visibility = View.GONE
+            mAdapter.addMovies(list)
+        }
+        viewModel.movieWatchlist.observe(viewLifecycleOwner) {
+            if(it.totalResults == 0) {
+                binding.movieList.visibility = View.GONE
+                binding.warning.visibility = View.VISIBLE
+            }
+            val list: List<Film> = it.result
+            Log.d("ListFragment","$list")
+            binding.movieList.visibility = View.VISIBLE
+            binding.warning.visibility = View.GONE
+            mAdapter.addMovies(list)
+        }
+        viewModel.tvWatchlist.observe(viewLifecycleOwner) {
+            if(it.totalResults == 0) {
+                binding.movieList.visibility = View.GONE
+                binding.warning.visibility = View.VISIBLE
+            }
+            val list: List<TV> = it.result
+            Log.d("ListFragment","$list")
+            binding.movieList.visibility = View.VISIBLE
+            binding.warning.visibility = View.GONE
+            mAdapter.addMovies(list)
+        }
     }
 
     private fun loadData() {
@@ -49,54 +92,6 @@ class ListFragment : Fragment(), MovieClickListener {
             2 -> viewModel.loadFavoriteTVsList(USER.sessionKey)
             3 -> viewModel.loadMovieWatchlist(USER.sessionKey)
             4 -> viewModel.loadTVWatchlist(USER.sessionKey)
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.favoriteMoviesList.observe(this) {
-            if(it.totalResults == 0) {
-                binding.movieList.visibility = View.GONE
-                binding.warning.visibility = View.VISIBLE
-            }
-            val list: List<Film> = it.result
-            Log.d("ListFragment","$list")
-            binding.movieList.visibility = View.VISIBLE
-            binding.warning.visibility = View.GONE
-            mAdapter.addMovies(list)
-        }
-        viewModel.favoriteTVsList.observe(this) {
-            if(it.totalResults == 0) {
-                binding.movieList.visibility = View.GONE
-                binding.warning.visibility = View.VISIBLE
-            }
-            val list: List<TV> = it.result
-            Log.d("ListFragment","$list")
-            binding.movieList.visibility = View.VISIBLE
-            binding.warning.visibility = View.GONE
-            mAdapter.addMovies(list)
-        }
-        viewModel.movieWatchlist.observe(this) {
-            if(it.totalResults == 0) {
-                binding.movieList.visibility = View.GONE
-                binding.warning.visibility = View.VISIBLE
-            }
-            val list: List<Film> = it.result
-            Log.d("ListFragment","$list")
-            binding.movieList.visibility = View.VISIBLE
-            binding.warning.visibility = View.GONE
-            mAdapter.addMovies(list)
-        }
-        viewModel.tvWatchlist.observe(this) {
-            if(it.totalResults == 0) {
-                binding.movieList.visibility = View.GONE
-                binding.warning.visibility = View.VISIBLE
-            }
-            val list: List<TV> = it.result
-            Log.d("ListFragment","$list")
-            binding.movieList.visibility = View.VISIBLE
-            binding.warning.visibility = View.GONE
-            mAdapter.addMovies(list)
         }
     }
 

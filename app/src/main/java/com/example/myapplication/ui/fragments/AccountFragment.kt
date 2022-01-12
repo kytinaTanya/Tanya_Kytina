@@ -9,11 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentAccountBinding
 import com.example.myapplication.firebase.AUTH
 import com.example.myapplication.firebase.USER
@@ -54,6 +51,7 @@ class AccountFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        showProgress(true)
         binding.username.text = USER.username
         binding.email.text = USER.email
         val image = USER.profileUrl
@@ -72,6 +70,7 @@ class AccountFragment : Fragment() {
                 childFragmentManager, ProfileImageActionsFragment.TAG
             )
         }
+        showProgress(false)
     }
 
     override fun onResume() {
@@ -84,7 +83,7 @@ class AccountFragment : Fragment() {
             inputStream = null
         }
 
-        viewModel.profileImageUrl.observe(this) { url ->
+        viewModel.profileImageUrl.observe(viewLifecycleOwner) { url ->
             MainActivity.setProfileImage(url)
             dialog.dismiss()
         }
@@ -117,5 +116,19 @@ class AccountFragment : Fragment() {
 
     private fun setImage(url: String) {
         binding.profileImage.setImage(url)
+    }
+
+    private fun showProgress(show: Boolean) {
+        if (show) {
+            binding.apply {
+                loaded.visibility = View.GONE
+                loading.visibility = View.VISIBLE
+            }
+        } else {
+            binding.apply {
+                loaded.visibility = View.VISIBLE
+                loading.visibility = View.GONE
+            }
+        }
     }
 }

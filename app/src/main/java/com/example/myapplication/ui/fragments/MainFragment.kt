@@ -31,6 +31,7 @@ class MainFragment : Fragment(), MovieAndPersonListener {
     lateinit var tvTodayOnAirAdapter: FeedRecyclerAdapter
     lateinit var filmsBestAdapter: FeedRecyclerAdapter
     lateinit var personPopularAdapter: FeedRecyclerAdapter
+    private var loaded: Int = 0
 
     private val viewModel: MainViewModel by activityViewModels()
 
@@ -57,47 +58,56 @@ class MainFragment : Fragment(), MovieAndPersonListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        showProgress(true)
         initRecyclerViews()
     }
 
     override fun onResume() {
         super.onResume()
 
-        viewModel.moviesInTrend.observe(this) { movies ->
+        viewModel.moviesInTrend.observe(viewLifecycleOwner) { movies ->
             filmsInTrendAdapter.appendMovies(movies)
+            showProgress(!isAllLoaded())
         }
 
-        viewModel.moviesNowPlaying.observe(this) { movies ->
+        viewModel.moviesNowPlaying.observe(viewLifecycleOwner) { movies ->
             filmsNowPlayingAdapter.appendMovies(movies)
+            showProgress(!isAllLoaded())
         }
 
-        viewModel.moviesUpcoming.observe(this) { movies ->
+        viewModel.moviesUpcoming.observe(viewLifecycleOwner) { movies ->
             filmsUpcomingAdapter.appendMovies(movies)
+            showProgress(!isAllLoaded())
         }
 
-        viewModel.popularTV.observe(this) { tv ->
+        viewModel.popularTV.observe(viewLifecycleOwner) { tv ->
             tvPopularAdapter.appendMovies(tv)
+            showProgress(!isAllLoaded())
         }
 
-        viewModel.topRatedTV.observe(this) { tv ->
+        viewModel.topRatedTV.observe(viewLifecycleOwner) { tv ->
             tvBestAdapter.appendMovies(tv)
+            showProgress(!isAllLoaded())
         }
 
-        viewModel.nowOnAirTV.observe(this) { tv ->
+        viewModel.nowOnAirTV.observe(viewLifecycleOwner) { tv ->
             tvNowOnAirAdapter.appendMovies(tv)
+            showProgress(!isAllLoaded())
         }
 
-        viewModel.onAirTodayTV.observe(this) { tv ->
+        viewModel.onAirTodayTV.observe(viewLifecycleOwner) { tv ->
             tvTodayOnAirAdapter.appendMovies(tv)
+            showProgress(!isAllLoaded())
         }
 
-        viewModel.moviesTopRated.observe(this) { movies ->
+        viewModel.moviesTopRated.observe(viewLifecycleOwner) { movies ->
             filmsBestAdapter.appendMovies(movies)
+            showProgress(!isAllLoaded())
         }
 
-        viewModel.popularPersons.observe(this) { persons ->
+        viewModel.popularPersons.observe(viewLifecycleOwner) { persons ->
             personPopularAdapter.appendMovies(persons)
+            showProgress(!isAllLoaded())
         }
     }
 
@@ -148,5 +158,24 @@ class MainFragment : Fragment(), MovieAndPersonListener {
     override fun onOpenPerson(id: Long) {
         val action = MainFragmentDirections.actionMainPageToItemInfoFragment(id, PERSON_TYPE, 0, 0)
         view?.findNavController()?.navigate(action)
+    }
+
+    private fun showProgress(show: Boolean) {
+        if (show) {
+            binding.apply {
+                loaded.visibility = View.GONE
+                loading.visibility = View.VISIBLE
+            }
+        } else {
+            binding.apply {
+                loaded.visibility = View.VISIBLE
+                loading.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun isAllLoaded() : Boolean {
+        loaded++
+        return loaded >= 8
     }
 }

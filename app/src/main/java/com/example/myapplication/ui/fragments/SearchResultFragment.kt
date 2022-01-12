@@ -48,7 +48,7 @@ class SearchResultFragment : Fragment(), MovieClickListener {
 
     override fun onResume() {
         super.onResume()
-        viewModel.searchMovies.observe(this) { result ->
+        viewModel.searchMovies.observe(viewLifecycleOwner) { result ->
             searchListAdapter.addMovies(result)
         }
     }

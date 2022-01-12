@@ -1,173 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.HistoryFragment">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/top_line"
+    <ProgressBar
+        android:id="@+id/loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="8dp"/>
+        android:layout_gravity="center" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/start_line"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="8dp"/>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/end_line"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="8dp"/>
-
-    <EditText
-        android:id="@+id/search"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@id/loaded"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/custom_search"
-        android:drawableLeft="@drawable/ic_baseline_search"
-        android:drawablePadding="6dp"
-        android:hint="Поиск фильмов"
-        android:padding="6dp"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintEnd_toStartOf="@+id/search_btn"
-        app:layout_constraintStart_toStartOf="@+id/start_line"
-        app:layout_constraintTop_toTopOf="@+id/top_line" />
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
-    <Button
-        android:id="@+id/search_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Поиск"
-        app:layout_constraintEnd_toStartOf="@+id/end_line"
-        app:layout_constraintTop_toTopOf="@+id/top_line"
-        android:visibility="gone"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/top_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="8dp"/>
 
-    <TextView
-        android:id="@+id/history_film"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Фильмы, которые вы искали"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/end_line"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/start_line"
-        app:layout_constraintTop_toBottomOf="@+id/search"
-        android:visibility="gone"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/start_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="8dp"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/history_list_films"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/history_film"
-        tools:listitem="@layout/item_movie_history"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp"
-        android:visibility="gone"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/end_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="8dp"/>
 
-    <TextView
-        android:id="@+id/history_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Сериалы, которые вы искали"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/end_line"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/start_line"
-        app:layout_constraintTop_toBottomOf="@+id/history_list_films"
-        android:visibility="gone"/>
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_search"
+            android:drawableLeft="@drawable/ic_baseline_search"
+            android:drawablePadding="6dp"
+            android:hint="Поиск фильмов"
+            android:padding="6dp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toStartOf="@+id/search_btn"
+            app:layout_constraintStart_toStartOf="@+id/start_line"
+            app:layout_constraintTop_toTopOf="@+id/top_line" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/history_list_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/history_tv"
-        tools:listitem="@layout/item_movie_history"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp"
-        android:visibility="gone"/>
+        <Button
+            android:id="@+id/search_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Поиск"
+            app:layout_constraintEnd_toStartOf="@+id/end_line"
+            app:layout_constraintTop_toTopOf="@+id/top_line"
+            android:visibility="gone"/>
 
-    <TextView
-        android:id="@+id/rated_movies"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Фильмы, которые вы оценили"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/end_line"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/start_line"
-        app:layout_constraintTop_toBottomOf="@id/search"/>
+        <TextView
+            android:id="@+id/history_film"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Фильмы, которые вы искали"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/end_line"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/start_line"
+            app:layout_constraintTop_toBottomOf="@+id/search"
+            android:visibility="gone"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rated_movies_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/rated_movies"
-        tools:listitem="@layout/item_movie_history"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp"
-        tools:orientation="horizontal"
-        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/history_list_films"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/history_film"
+            tools:listitem="@layout/item_movie_history"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"/>
 
-    <TextView
-        android:id="@+id/rated_tvs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Сериалы, которые вы оценили"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/end_line"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/start_line"
-        app:layout_constraintTop_toBottomOf="@id/rated_movies_list"/>
+        <TextView
+            android:id="@+id/history_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Сериалы, которые вы искали"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/end_line"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/start_line"
+            app:layout_constraintTop_toBottomOf="@+id/history_list_films"
+            android:visibility="gone"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rated_tvs_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/rated_tvs"
-        tools:listitem="@layout/item_movie_history"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp"
-        tools:orientation="horizontal"
-        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/history_list_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/history_tv"
+            tools:listitem="@layout/item_movie_history"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"/>
 
-    <TextView
-        android:id="@+id/rated_episodes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Серии, которые вы оценили"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/end_line"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/start_line"
-        app:layout_constraintTop_toBottomOf="@id/rated_tvs_list"/>
+        <TextView
+            android:id="@+id/rated_movies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Фильмы, которые вы оценили"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/end_line"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/start_line"
+            app:layout_constraintTop_toBottomOf="@id/search"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rated_episodes_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/rated_episodes"
-        tools:listitem="@layout/item_movie_history"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp"
-        tools:orientation="horizontal"
-        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rated_movies_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/rated_movies"
+            tools:listitem="@layout/item_movie_history"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            tools:orientation="horizontal"
+            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/rated_tvs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Сериалы, которые вы оценили"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/end_line"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/start_line"
+            app:layout_constraintTop_toBottomOf="@id/rated_movies_list"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rated_tvs_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/rated_tvs"
+            tools:listitem="@layout/item_movie_history"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            tools:orientation="horizontal"
+            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+        <TextView
+            android:id="@+id/rated_episodes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Серии, которые вы оценили"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/end_line"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/start_line"
+            app:layout_constraintTop_toBottomOf="@id/rated_tvs_list"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rated_episodes_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/rated_episodes"
+            tools:listitem="@layout/item_movie_history"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            tools:orientation="horizontal"
+            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
