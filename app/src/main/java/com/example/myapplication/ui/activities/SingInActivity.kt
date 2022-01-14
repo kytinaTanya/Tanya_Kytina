@@ -1,9 +1,10 @@
 package com.example.myapplication.ui.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivitySingInBinding
 import com.example.myapplication.firebase.AUTH
 import com.example.myapplication.firebase.initFirebase
@@ -17,6 +18,7 @@ class SingInActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_MyApplication_NoActionBar)
         binding = ActivitySingInBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initFirebase()

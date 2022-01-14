@@ -3,6 +3,10 @@ package com.example.myapplication.models.pojo
 import com.google.gson.annotations.SerializedName
 
 sealed class BaseItem()
+
+    data class HeaderItem(
+        val text: String
+    ) : BaseItem()
 /* Реализации классов
 * для получения
 * информации о фильмах

@@ -1,7 +1,7 @@
 package com.example.myapplication.utils
 
-import android.view.View
 import android.content.Context
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.ui.recyclerview.DividerItemDecoration
-import com.example.myapplication.ui.recyclerview.adapters.CollectionRecyclerAdapter
 import com.squareup.picasso.Picasso
 
 fun ImageView.setImage(imageUrl: String){
@@ -59,7 +58,7 @@ fun RecyclerView.setConfigHorizontalLinearWithDiv(mAdapter: RecyclerView.Adapter
 }
 
 fun RecyclerView.setConfigVerticalLinear(
-    mAdapter: CollectionRecyclerAdapter,
+    mAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>,
     context: Context) {
     this.apply {
         layoutManager = LinearLayoutManager(context)

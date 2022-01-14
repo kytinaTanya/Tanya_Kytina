@@ -11,7 +11,7 @@ import androidx.navigation.findNavController
 import com.example.myapplication.databinding.FragmentSearchResultBinding
 import com.example.myapplication.ui.activities.MainActivity.Companion.MOVIE_TYPE
 import com.example.myapplication.ui.activities.MainActivity.Companion.TV_TYPE
-import com.example.myapplication.ui.recyclerview.adapters.CollectionRecyclerAdapter
+import com.example.myapplication.ui.recyclerview.adapters.SearchResultRecyclerAdapter
 import com.example.myapplication.ui.recyclerview.listeners.MovieClickListener
 import com.example.myapplication.utils.setConfigVerticalLinear
 import com.example.myapplication.viewmodel.HistoryViewModel
@@ -23,7 +23,7 @@ class SearchResultFragment : Fragment(), MovieClickListener {
     private var _binding: FragmentSearchResultBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var searchListAdapter: CollectionRecyclerAdapter
+    private lateinit var searchListAdapter: SearchResultRecyclerAdapter
     private val viewModel: HistoryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +32,7 @@ class SearchResultFragment : Fragment(), MovieClickListener {
             val result = it.getString("searchRequest").toString()
             Log.d("TAG", result)
             viewModel.searchMovie(result)
+            viewModel.searchTV(result)
         }
     }
 
@@ -45,17 +46,16 @@ class SearchResultFragment : Fragment(), MovieClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initRecyclerView()
-    }
-
-    override fun onResume() {
-        super.onResume()
         viewModel.searchMovies.observe(viewLifecycleOwner) { result ->
-            searchListAdapter.addMovies(result)
+            searchListAdapter.addMovies(result, SearchResultRecyclerAdapter.HeaderViewHolder.MOVIE)
+        }
+        viewModel.searchTvs.observe(viewLifecycleOwner) { result ->
+            searchListAdapter.addMovies(result, SearchResultRecyclerAdapter.HeaderViewHolder.TV)
         }
     }
 
     private fun initRecyclerView() {
-        searchListAdapter = CollectionRecyclerAdapter(this)
+        searchListAdapter = SearchResultRecyclerAdapter(this)
         binding.searchList.setConfigVerticalLinear(searchListAdapter, requireContext())
     }
 

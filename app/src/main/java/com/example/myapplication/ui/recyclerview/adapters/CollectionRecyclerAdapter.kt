@@ -6,15 +6,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.databinding.ItemMovieBinding
-import com.example.myapplication.models.pojo.Film
 import com.example.myapplication.models.pojo.BaseItem
+import com.example.myapplication.models.pojo.Film
 import com.example.myapplication.models.pojo.TV
 import com.example.myapplication.ui.recyclerview.listeners.MovieClickListener
 import com.example.myapplication.utils.setImage
 
 
 class CollectionRecyclerAdapter(val listener: MovieClickListener):
-    RecyclerView.Adapter<CollectionRecyclerAdapter.MovieViewHolder>(),
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(),
     View.OnClickListener {
 
     private var baseItemList: MutableList<BaseItem> = arrayListOf()
@@ -34,17 +34,17 @@ class CollectionRecyclerAdapter(val listener: MovieClickListener):
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         binding.root.setOnClickListener(this)
         return MovieViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.tag = baseItemList[position]
         when(baseItemList[position]) {
-            is Film -> holder.bindFilm(baseItemList[position] as Film)
-            is TV -> holder.bindTV(baseItemList[position] as TV)
+            is Film -> (holder as MovieViewHolder).bindFilm(baseItemList[position] as Film)
+            is TV -> (holder as MovieViewHolder).bindTV(baseItemList[position] as TV)
         }
     }
 

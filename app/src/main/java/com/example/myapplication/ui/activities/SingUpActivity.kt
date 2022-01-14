@@ -2,12 +2,13 @@ package com.example.myapplication.ui.activities
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivitySingUpBinding
 import com.example.myapplication.firebase.AUTH
 import com.example.myapplication.firebase.REF_DATABASE_ROOT
@@ -28,6 +29,7 @@ class SingUpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_MyApplication_NoActionBar)
         binding = ActivitySingUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initFirebase()
