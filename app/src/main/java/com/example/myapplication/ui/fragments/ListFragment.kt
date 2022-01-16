@@ -41,48 +41,52 @@ class ListFragment : Fragment(), MovieClickListener {
             list = getInt("object")
         }
         viewModel.favoriteMoviesList.observe(viewLifecycleOwner) {
-            if(it.totalResults == 0) {
-                binding.movieList.visibility = View.GONE
-                binding.warning.visibility = View.VISIBLE
-            }
             val list: List<Film> = it.result
             Log.d("ListFragment","$list")
-            binding.movieList.visibility = View.VISIBLE
-            binding.warning.visibility = View.GONE
-            mAdapter.addMovies(list)
+            if (list.isEmpty()) {
+                binding.movieList.visibility = View.GONE
+                binding.warning.visibility = View.VISIBLE
+            } else {
+                binding.movieList.visibility = View.VISIBLE
+                binding.warning.visibility = View.GONE
+                mAdapter.addMovies(list)
+            }
         }
         viewModel.favoriteTVsList.observe(viewLifecycleOwner) {
-            if(it.totalResults == 0) {
-                binding.movieList.visibility = View.GONE
-                binding.warning.visibility = View.VISIBLE
-            }
             val list: List<TV> = it.result
             Log.d("ListFragment","$list")
-            binding.movieList.visibility = View.VISIBLE
-            binding.warning.visibility = View.GONE
-            mAdapter.addMovies(list)
+            if (list.isEmpty()) {
+                binding.movieList.visibility = View.GONE
+                binding.warning.visibility = View.VISIBLE
+            } else {
+                binding.movieList.visibility = View.VISIBLE
+                binding.warning.visibility = View.GONE
+                mAdapter.addMovies(list)
+            }
         }
         viewModel.movieWatchlist.observe(viewLifecycleOwner) {
-            if(it.totalResults == 0) {
-                binding.movieList.visibility = View.GONE
-                binding.warning.visibility = View.VISIBLE
-            }
             val list: List<Film> = it.result
             Log.d("ListFragment","$list")
-            binding.movieList.visibility = View.VISIBLE
-            binding.warning.visibility = View.GONE
-            mAdapter.addMovies(list)
-        }
-        viewModel.tvWatchlist.observe(viewLifecycleOwner) {
-            if(it.totalResults == 0) {
+            if (list.isEmpty()) {
                 binding.movieList.visibility = View.GONE
                 binding.warning.visibility = View.VISIBLE
+            } else {
+                binding.movieList.visibility = View.VISIBLE
+                binding.warning.visibility = View.GONE
+                mAdapter.addMovies(list)
             }
+        }
+        viewModel.tvWatchlist.observe(viewLifecycleOwner) {
             val list: List<TV> = it.result
             Log.d("ListFragment","$list")
-            binding.movieList.visibility = View.VISIBLE
-            binding.warning.visibility = View.GONE
-            mAdapter.addMovies(list)
+            if (list.isEmpty()) {
+                binding.movieList.visibility = View.GONE
+                binding.warning.visibility = View.VISIBLE
+            } else {
+                binding.movieList.visibility = View.VISIBLE
+                binding.warning.visibility = View.GONE
+                mAdapter.addMovies(list)
+            }
         }
     }
 

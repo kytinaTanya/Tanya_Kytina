@@ -10,15 +10,15 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.ItemBackdropTitleBinding
 import com.example.myapplication.databinding.ItemPersonBinding
 import com.example.myapplication.databinding.ItemPosterBinding
-import com.example.myapplication.models.pojo.BaseItem
-import com.example.myapplication.models.pojo.Film
-import com.example.myapplication.models.pojo.Person
-import com.example.myapplication.models.pojo.TV
+import com.example.myapplication.databinding.ItemViewMoreBinding
+import com.example.myapplication.models.pojo.*
 import com.example.myapplication.ui.recyclerview.listeners.MovieAndPersonListener
 import com.example.myapplication.utils.setImage
+import com.example.myapplication.viewmodel.MainScreenRequest
 
 class FeedRecyclerAdapter(
-    private val listener: MovieAndPersonListener
+    private val listener: MovieAndPersonListener,
+    private val request: MainScreenRequest
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
 
     var mMoviesList: MutableList<BaseItem> = arrayListOf()
@@ -57,10 +57,16 @@ class FeedRecyclerAdapter(
             binding.name.text = person.name
         }
 
-        fun buildImageUrl(profilePath: String): String {
-            val imageUrl = BuildConfig.BASE_PROFILE_URL + profilePath
+        fun buildImageUrl(profilePath: String?): String {
+            val imageUrl = BuildConfig.BASE_PROFILE_URL + (profilePath ?: "")
             Log.d("initImage", imageUrl)
             return imageUrl
+        }
+    }
+
+    class ViewMoreViewHolder(val binding: ItemViewMoreBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(title: String) {
+            binding.title.text = title
         }
     }
 
@@ -83,7 +89,7 @@ class FeedRecyclerAdapter(
                 binding.root.setOnClickListener(this)
                 BackdropAndTitleViewHolder(binding)
             }
-            else -> {
+            R.layout.item_person -> {
                 val binding =
                     ItemPersonBinding.inflate(
                         LayoutInflater.from(parent.context),
@@ -91,6 +97,15 @@ class FeedRecyclerAdapter(
                         false)
                 binding.root.setOnClickListener(this)
                 PersonViewHolder(binding)
+            }
+            else -> {
+                val binding =
+                    ItemViewMoreBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false)
+                binding.root.setOnClickListener(this)
+                ViewMoreViewHolder(binding)
             }
         }
     }
@@ -101,6 +116,7 @@ class FeedRecyclerAdapter(
             is PosterViewHolder -> holder.bind(mMoviesList[position] as Film)
             is BackdropAndTitleViewHolder -> holder.bind(mMoviesList[position] as TV)
             is PersonViewHolder -> holder.bind(mMoviesList[position] as Person)
+            is ViewMoreViewHolder -> holder.bind((mMoviesList[position] as HeaderItem).text)
         }
     }
 
@@ -110,13 +126,15 @@ class FeedRecyclerAdapter(
         return when(mMoviesList[position]) {
             is Film -> R.layout.item_poster
             is TV -> R.layout.item_backdrop_title
-            else  ->  R.layout.item_person
+            is Person -> R.layout.item_person
+            else  -> R.layout.item_view_more
         }
     }
 
     fun appendMovies(baseItems: List<BaseItem>) {
         mMoviesList.clear()
         mMoviesList.addAll(baseItems)
+        mMoviesList.add(HeaderItem("Смотреть ещё"))
         notifyDataSetChanged()
     }
 
@@ -126,6 +144,7 @@ class FeedRecyclerAdapter(
             is Film -> listener.onOpenMovie(movie.id)
             is TV -> listener.onOpenTV(movie.id)
             is Person -> listener.onOpenPerson(movie.id)
+            is HeaderItem -> listener.onOpenMore(request)
         }
     }
 }

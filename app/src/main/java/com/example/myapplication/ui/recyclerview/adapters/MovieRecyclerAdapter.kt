@@ -9,7 +9,7 @@ import com.example.myapplication.BuildConfig
 import com.example.myapplication.R
 import com.example.myapplication.databinding.*
 import com.example.myapplication.models.pojo.*
-import com.example.myapplication.ui.recyclerview.listeners.*
+import com.example.myapplication.ui.recyclerview.listeners.AllSpecificListener
 import com.example.myapplication.utils.setImage
 
 class MovieRecyclerAdapter(
@@ -71,8 +71,8 @@ class MovieRecyclerAdapter(
             binding.name.text = cast.name
         }
 
-        fun buildImageUrl(profilePath: String): String {
-            val imageUrl = BuildConfig.BASE_PROFILE_URL + profilePath
+        fun buildImageUrl(profilePath: String?): String {
+            val imageUrl = BuildConfig.BASE_PROFILE_URL + (profilePath ?: "")
             Log.d("initImage", imageUrl)
             return imageUrl
         }

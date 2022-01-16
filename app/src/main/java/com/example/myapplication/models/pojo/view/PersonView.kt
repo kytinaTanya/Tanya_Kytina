@@ -13,7 +13,7 @@ data class PersonView(
     val biography: String,
     val popularity: Number,
     val placeOfBirth: String,
-    val profilePath: String,
+    val profilePath: String?,
     val adult: Boolean,
     val imdbId: String,
     val homepage: String?,

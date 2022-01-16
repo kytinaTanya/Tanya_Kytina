@@ -47,7 +47,7 @@ class DetailsRepositoryImpl(val service: TmdbService): DetailsRepository {
             posters = images.posters,
             cast = credits.cast,
             crew = credits.crew,
-            videos = getMovieVideos(id),
+            trailers = getMovieVideos(id),
             recommendations = getRecommendationMovies(id),
             similar = getSimilarMovies(id),
             favorite = states.favorite,
@@ -228,7 +228,7 @@ class DetailsRepositoryImpl(val service: TmdbService): DetailsRepository {
         }
     }
 
-    private suspend fun getMovieVideos(id: Long): List<VideoResult> {
+    private suspend fun getMovieVideos(id: Long): List<TrailerResult> {
         val response = service.getMovieVideos(id = id)
         return if(response.isSuccessful) {
             response.body()?.results ?: emptyList()
@@ -301,7 +301,7 @@ class DetailsRepositoryImpl(val service: TmdbService): DetailsRepository {
         }
     }
 
-    private suspend fun getTvVideos(id: Long): List<VideoResult> {
+    private suspend fun getTvVideos(id: Long): List<TrailerResult> {
         val response = service.getTvVideos(id = id)
         return if(response.isSuccessful) {
             response.body()?.results ?: emptyList()

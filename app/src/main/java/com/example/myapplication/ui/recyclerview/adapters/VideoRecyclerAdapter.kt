@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.ItemVideoBinding
-import com.example.myapplication.models.pojo.VideoResult
+import com.example.myapplication.models.pojo.TrailerResult
 import com.example.myapplication.utils.setImage
 
 class VideoRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val videos: MutableList<VideoResult> = arrayListOf()
+    private val videos: MutableList<TrailerResult> = arrayListOf()
 
     class VideoViewHolder(private val binding: ItemVideoBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(video: VideoResult) {
+        fun bind(video: TrailerResult) {
             binding.videoPlayer.setImage("https://i.ytimg.com/vi/${video.key}/maxresdefault.jpg")
             binding.root.setOnClickListener {
                 binding.web.loadUrl("https://www.youtube.com/watch?v=${video.key}")
@@ -36,7 +36,7 @@ class VideoRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int = videos.size
 
-    fun setVideos(list: List<VideoResult>) {
+    fun setVideos(list: List<TrailerResult>) {
         videos.clear()
         videos.addAll(list)
         notifyDataSetChanged()

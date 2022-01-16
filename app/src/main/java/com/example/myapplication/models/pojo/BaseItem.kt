@@ -499,7 +499,7 @@ data class Person(
         val name: String,
 
         @SerializedName("profile_path")
-        val profilePath: String,
+        val profilePath: String?,
 
         @SerializedName("adult")
         val adult: Boolean,
@@ -552,7 +552,7 @@ data class Person(
         val placeOfBirth: String,
 
         @SerializedName("profile_path")
-        val profilePath: String,
+        val profilePath: String?,
 
         @SerializedName("adult")
         val adult: Boolean,

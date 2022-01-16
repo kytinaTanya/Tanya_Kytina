@@ -29,7 +29,7 @@ data class MovieView(
     val posters: List<ImageUrlPath>,
     val cast: List<Cast>,
     val crew: List<Crew>,
-    val videos: List<VideoResult>,
+    val trailers: List<TrailerResult>,
     val recommendations: List<Film>,
     val similar: List<Film>,
     val favorite: Boolean,

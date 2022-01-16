@@ -79,7 +79,7 @@ interface TmdbService {
         @Path("movie_id") id: Long,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE
-    ): Response<VideoData>
+    ): Response<TrailerData>
 
     @GET("tv/{tv_id}")
     suspend fun getTvDetails(
@@ -122,7 +122,7 @@ interface TmdbService {
         @Path("tv_id") id: Long,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE
-    ): Response<VideoData>
+    ): Response<TrailerData>
 
     @GET("person/{person_id}")
     suspend fun getPersonDetails(

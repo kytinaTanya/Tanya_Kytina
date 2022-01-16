@@ -154,10 +154,10 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
             binding.watchlistBtn.visibility = View.VISIBLE
             binding.loveBtn.visibility = View.VISIBLE
             setStates()
-            if(movie.videos.isNotEmpty()) {
+            if(movie.trailers.isNotEmpty()) {
                 binding.videoText.visibility = View.VISIBLE
                 binding.videoRecyclerview.visibility = View.VISIBLE
-                videoAdapter.setVideos(movie.videos)
+                videoAdapter.setVideos(movie.trailers)
             }
             if(movie.recommendations.isNotEmpty()) {
                 binding.recommendationText.visibility = View.VISIBLE
@@ -488,7 +488,7 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
     }
 
     private fun initUiData(
-        posterPath: String,
+        posterPath: String?,
         title: String,
         releaseDate: String,
         rating: Number,

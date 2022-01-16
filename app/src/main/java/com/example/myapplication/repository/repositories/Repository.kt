@@ -3,6 +3,7 @@ package com.example.myapplication.repository.repositories
 import com.example.myapplication.models.pojo.Film
 import com.example.myapplication.models.pojo.Person
 import com.example.myapplication.models.pojo.TV
+import com.example.myapplication.repository.States
 
 interface Repository {
     suspend fun getListOfPopularMovies() : List<Film>

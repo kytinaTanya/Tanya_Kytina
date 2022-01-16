@@ -36,7 +36,7 @@ data class TvView (
     val posters: List<ImageUrlPath>,
     val cast: List<Cast>,
     val crew: List<Crew>,
-    val videos: List<VideoResult>,
+    val videos: List<TrailerResult>,
     val recommendations: List<TV>,
     val similar: List<TV>,
     val favorite: Boolean,

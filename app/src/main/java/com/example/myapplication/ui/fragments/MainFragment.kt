@@ -14,6 +14,7 @@ import com.example.myapplication.ui.activities.MainActivity.Companion.TV_TYPE
 import com.example.myapplication.ui.recyclerview.adapters.FeedRecyclerAdapter
 import com.example.myapplication.ui.recyclerview.listeners.MovieAndPersonListener
 import com.example.myapplication.utils.setConfigHorizontalLinearWithDiv
+import com.example.myapplication.viewmodel.MainScreenRequest
 import com.example.myapplication.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -60,11 +61,6 @@ class MainFragment : Fragment(), MovieAndPersonListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         showProgress(true)
         initRecyclerViews()
-    }
-
-    override fun onResume() {
-        super.onResume()
-
         viewModel.moviesInTrend.observe(viewLifecycleOwner) { movies ->
             filmsInTrendAdapter.appendMovies(movies)
             showProgress(!isAllLoaded())
@@ -117,31 +113,31 @@ class MainFragment : Fragment(), MovieAndPersonListener {
     }
 
     private fun initRecyclerViews() {
-        filmsInTrendAdapter = FeedRecyclerAdapter(this)
+        filmsInTrendAdapter = FeedRecyclerAdapter(this, MainScreenRequest.POPULAR_MOVIES)
         binding.popularMovies.setConfigHorizontalLinearWithDiv(filmsInTrendAdapter, requireContext(), 16)
 
-        filmsUpcomingAdapter = FeedRecyclerAdapter(this)
+        filmsUpcomingAdapter = FeedRecyclerAdapter(this, MainScreenRequest.UPCOMING_MOVIES)
         binding.upcomingMovies.setConfigHorizontalLinearWithDiv(filmsUpcomingAdapter, requireContext(), 16)
 
-        tvPopularAdapter = FeedRecyclerAdapter(this)
+        tvPopularAdapter = FeedRecyclerAdapter(this, MainScreenRequest.POPULAR_TVS)
         binding.popularTv.setConfigHorizontalLinearWithDiv(tvPopularAdapter, requireContext(), 16)
 
-        filmsNowPlayingAdapter = FeedRecyclerAdapter(this)
+        filmsNowPlayingAdapter = FeedRecyclerAdapter(this, MainScreenRequest.NOW_PLAYING_MOVIES)
         binding.nowPlayingMovies.setConfigHorizontalLinearWithDiv(filmsNowPlayingAdapter, requireContext(), 16)
 
-        tvBestAdapter = FeedRecyclerAdapter(this)
+        tvBestAdapter = FeedRecyclerAdapter(this, MainScreenRequest.TOP_RATED_TVS)
         binding.topRatedTv.setConfigHorizontalLinearWithDiv(tvBestAdapter, requireContext(), 16)
 
-        tvNowOnAirAdapter = FeedRecyclerAdapter(this)
+        tvNowOnAirAdapter = FeedRecyclerAdapter(this, MainScreenRequest.ON_THE_AIR_TVS)
         binding.nowOnAirTv.setConfigHorizontalLinearWithDiv(tvNowOnAirAdapter, requireContext(), 16)
 
-        tvTodayOnAirAdapter = FeedRecyclerAdapter(this)
+        tvTodayOnAirAdapter = FeedRecyclerAdapter(this, MainScreenRequest.AIRING_TODAY_TVS)
         binding.onAirTodayTv.setConfigHorizontalLinearWithDiv(tvTodayOnAirAdapter, requireContext(), 16)
 
-        filmsBestAdapter = FeedRecyclerAdapter(this)
+        filmsBestAdapter = FeedRecyclerAdapter(this, MainScreenRequest.TOP_RATED_MOVIES)
         binding.topRatedMovies.setConfigHorizontalLinearWithDiv(filmsBestAdapter, requireContext(), 16)
 
-        personPopularAdapter = FeedRecyclerAdapter(this)
+        personPopularAdapter = FeedRecyclerAdapter(this, MainScreenRequest.POPULAR_PERSONS)
         binding.popularPersons.setConfigHorizontalLinearWithDiv(personPopularAdapter, requireContext(), 16)
     }
 
@@ -158,6 +154,10 @@ class MainFragment : Fragment(), MovieAndPersonListener {
     override fun onOpenPerson(id: Long) {
         val action = MainFragmentDirections.actionMainPageToItemInfoFragment(id, PERSON_TYPE, 0, 0)
         view?.findNavController()?.navigate(action)
+    }
+
+    override fun onOpenMore(requestType: MainScreenRequest) {
+        TODO("Not yet implemented")
     }
 
     private fun showProgress(show: Boolean) {

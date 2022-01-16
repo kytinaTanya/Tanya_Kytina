@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myapplication.models.pojo.*
+import com.example.myapplication.models.pojo.Film
+import com.example.myapplication.models.pojo.Person
+import com.example.myapplication.models.pojo.TV
 import com.example.myapplication.repository.repositories.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -124,4 +126,16 @@ class MainViewModel @Inject constructor(
             _popularPersons.value = mainRepository.getListOfPopularPersons()
         }
     }
+}
+
+enum class MainScreenRequest {
+    TOP_RATED_MOVIES,
+    POPULAR_MOVIES,
+    NOW_PLAYING_MOVIES,
+    UPCOMING_MOVIES,
+    TOP_RATED_TVS,
+    AIRING_TODAY_TVS,
+    ON_THE_AIR_TVS,
+    POPULAR_TVS,
+    POPULAR_PERSONS
 }

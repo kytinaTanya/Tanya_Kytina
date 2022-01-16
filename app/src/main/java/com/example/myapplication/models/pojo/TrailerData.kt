@@ -2,15 +2,15 @@ package com.example.myapplication.models.pojo
 
 import com.google.gson.annotations.SerializedName
 
-data class VideoData(
+data class TrailerData(
     @SerializedName("id")
     val id: Long,
 
     @SerializedName("results")
-    val results: List<VideoResult>
+    val results: List<TrailerResult>
 )
 
-data class VideoResult(
+data class TrailerResult(
     @SerializedName("name")
     val name: String,
 
