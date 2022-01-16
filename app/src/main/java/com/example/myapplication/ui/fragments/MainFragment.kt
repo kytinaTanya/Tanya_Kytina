@@ -157,7 +157,8 @@ class MainFragment : Fragment(), MovieAndPersonListener {
     }
 
     override fun onOpenMore(requestType: MainScreenRequest) {
-        TODO("Not yet implemented")
+        val action = MainFragmentDirections.actionMainPageToTopListFragment(requestType)
+        view?.findNavController()?.navigate(action)
     }
 
     private fun showProgress(show: Boolean) {

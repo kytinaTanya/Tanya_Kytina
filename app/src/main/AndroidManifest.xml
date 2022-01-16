@@ -20,7 +20,8 @@
             android:name=".ui.activities.SingUpActivity"
             android:exported="true" />
         <activity android:name=".ui.activities.MainActivity"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

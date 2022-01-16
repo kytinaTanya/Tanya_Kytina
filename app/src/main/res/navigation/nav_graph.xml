@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_main_page_to_itemInfoFragment"
             app:destination="@id/itemInfoFragment" />
+        <action
+            android:id="@+id/action_main_page_to_topListFragment"
+            app:destination="@+id/topListFragment" />
     </fragment>
 
     <fragment
@@ -90,6 +93,14 @@
             android:id="@+id/action_itemInfoFragment_to_photoFragment"
             app:destination="@id/photoFragment" />
     </fragment>
-
+    <fragment
+        android:id="@+id/topListFragment"
+        android:name="com.example.myapplication.ui.fragments.TopListFragment"
+        android:label="fragment_top_list"
+        tools:layout="@layout/fragment_top_list" >
+        <argument
+            android:name="request"
+            app:argType="com.example.myapplication.viewmodel.MainScreenRequest" />
+    </fragment>
 
 </navigation>
