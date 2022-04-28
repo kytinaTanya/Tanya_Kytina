@@ -2,9 +2,12 @@ package com.example.myapplication.di
 
 import com.example.myapplication.repository.impl.AccountRepositoryImpl
 import com.example.myapplication.repository.impl.DetailsRepositoryImpl
-import com.example.myapplication.repository.impl.HistoryRepositoryImpl
 import com.example.myapplication.repository.impl.RepositoryImpl
+import com.example.myapplication.repository.impl.search_screen.RatedItemsRepositoryImpl
+import com.example.myapplication.repository.impl.search_screen.SearchRepositoryImpl
 import com.example.myapplication.repository.repositories.*
+import com.example.myapplication.repository.repositories.search_screen.RatedItemsRepository
+import com.example.myapplication.repository.repositories.search_screen.SearchRepository
 import com.example.myapplication.repository.services.ImageService
 import com.example.myapplication.repository.services.TmdbService
 import dagger.Module
@@ -42,8 +45,14 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideHistoryRepository(service: TmdbService) : HistoryRepository {
-        return HistoryRepositoryImpl(service)
+    fun provideHistoryRepository(service: TmdbService) : SearchRepository {
+        return SearchRepositoryImpl(service)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRatedItemsRepository(service: TmdbService) : RatedItemsRepository {
+        return RatedItemsRepositoryImpl(service)
     }
 
     @Provides

@@ -29,9 +29,9 @@
     </fragment>
     <fragment
         android:id="@+id/search_page"
-        android:name="com.example.myapplication.ui.fragments.HistoryFragment"
+        android:name="com.example.myapplication.ui.fragments.SearchFragment"
         android:label="fragment_history"
-        tools:layout="@layout/fragment_history" >
+        tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_search_page_to_searchResultFragment"
             app:destination="@id/searchResultFragment" />

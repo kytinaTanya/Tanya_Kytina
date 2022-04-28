@@ -1,11 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.SearchResultFragment"
-    android:orientation="vertical"
-    tools:listitem="@layout/item_movie"
-    android:id="@+id/search_list">
+    android:orientation="vertical">
 
-</androidx.recyclerview.widget.RecyclerView>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="@string/search_title"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center" />
+
+        <LinearLayout
+            android:id="@+id/error"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/messageText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="28sp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="156dp"
+                android:gravity="center"
+                android:textColor="@color/dark_blue" />
+
+            <Button
+                android:id="@+id/retryBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center_horizontal"
+                android:text="Перезагрузить"/>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:listitem="@layout/item_movie"
+            android:id="@+id/search_list"/>
+
+    </FrameLayout>
+
+</LinearLayout>

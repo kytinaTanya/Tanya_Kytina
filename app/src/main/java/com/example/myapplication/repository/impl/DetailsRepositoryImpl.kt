@@ -240,14 +240,14 @@ class DetailsRepositoryImpl(val service: TmdbService): DetailsRepository {
     private suspend fun getRecommendationMovies(id: Long): List<Film> {
         val response = service.getRecommendationMovies(id = id)
         return if(response.isSuccessful) {
-            response.body()?.movies ?: emptyList()
+            response.body()?.items ?: emptyList()
         } else { emptyList() }
     }
 
     private suspend fun getSimilarMovies(id: Long): List<Film> {
         val response = service.getSimilarMovies(id = id)
         return if(response.isSuccessful) {
-            response.body()?.movies ?: emptyList()
+            response.body()?.items ?: emptyList()
         } else { emptyList() }
     }
 
@@ -313,14 +313,14 @@ class DetailsRepositoryImpl(val service: TmdbService): DetailsRepository {
     private suspend fun getRecommendationTvs(id: Long): List<TV> {
         val response = service.getRecommendationTvs(id = id)
         return if(response.isSuccessful) {
-            response.body()?.movies ?: emptyList()
+            response.body()?.items ?: emptyList()
         } else { emptyList() }
     }
 
     private suspend fun getSimilarTvs(id: Long): List<TV> {
         val response = service.getSimilarTvs(id = id)
         return if(response.isSuccessful) {
-            response.body()?.movies ?: emptyList()
+            response.body()?.items ?: emptyList()
         } else { emptyList() }
     }
 

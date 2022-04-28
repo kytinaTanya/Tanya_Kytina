@@ -5,7 +5,7 @@ import com.example.myapplication.listeners.ActivityLifecycleListener
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class MyApplicationClass : Application() {
+class TMDBApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         registerActivityLifecycleCallbacks(ActivityLifecycleListener())

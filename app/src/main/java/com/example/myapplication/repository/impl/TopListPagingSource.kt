@@ -32,7 +32,7 @@ class TopListPagingSource (val service: TmdbService, private val request: MainSc
             }
             if (response.isSuccessful && response.body() != null) {
                 LoadResult.Page(
-                    data = response.body()!!.movies,
+                    data = response.body()!!.items,
                     prevKey = if(nextPageNumber == 1) null else nextPageNumber.minus(1),
                     nextKey = if (nextPageNumber < response.body()!!.pages) nextPageNumber.plus(1) else null
                 )

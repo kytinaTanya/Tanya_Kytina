@@ -104,6 +104,7 @@
             android:drawableLeft="@drawable/ic_baseline_settings"
             android:text="Настройки"
             android:textAlignment="textStart"
+            android:visibility="gone"
             style="@color/white"/>
 
         <Button

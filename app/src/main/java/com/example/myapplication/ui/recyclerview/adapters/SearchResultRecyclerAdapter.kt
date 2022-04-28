@@ -91,8 +91,10 @@ class SearchResultRecyclerAdapter(val listener: MovieClickListener):
     }
 
     fun addMovies(movies: List<BaseItem>, type: String) {
-        baseItemList.add(HeaderItem(type))
-        baseItemList.addAll(movies)
-        notifyDataSetChanged()
+        if (movies.isNotEmpty()) {
+            baseItemList.add(HeaderItem(type))
+            baseItemList.addAll(movies)
+            notifyDataSetChanged()
+        }
     }
 }
