@@ -27,5 +27,6 @@
         android:textSize="20sp"
         android:maxLines="1"
         android:ellipsize="end"
-        android:maxWidth="250dp"/>
+        android:maxWidth="250dp"
+        android:textColor="@color/light_gray"/>
 </LinearLayout>

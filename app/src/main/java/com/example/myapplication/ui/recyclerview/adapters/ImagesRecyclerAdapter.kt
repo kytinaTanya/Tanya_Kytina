@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ItemBackdropBinding
-import com.example.myapplication.databinding.ItemPosterBinding
+import com.example.myapplication.databinding.ItemPosterImageBinding
 import com.example.myapplication.models.pojo.ImageUrlPath
 import com.example.myapplication.ui.recyclerview.listeners.PhotoClickListener
 import com.example.myapplication.utils.setImage
@@ -17,7 +17,7 @@ class ImagesRecyclerAdapter(private val listener: PhotoClickListener) :
 
     private val images: MutableList<ImageUrlPath> = arrayListOf()
 
-    class PosterViewHolder(val binding: ItemPosterBinding) : RecyclerView.ViewHolder(binding.root) {
+    class PosterViewHolder(val binding: ItemPosterImageBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(image: ImageUrlPath) {
             binding.posterImage.setImage("${BuildConfig.BASE_POSTER_URL}${image.path}")
         }
@@ -32,9 +32,9 @@ class ImagesRecyclerAdapter(private val listener: PhotoClickListener) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            R.layout.item_poster -> {
+            R.layout.item_poster_image -> {
                 val binding =
-                    ItemPosterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                    ItemPosterImageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 binding.root.setOnClickListener(this)
                 PosterViewHolder(binding)
             }
@@ -59,7 +59,7 @@ class ImagesRecyclerAdapter(private val listener: PhotoClickListener) :
 
     override fun getItemViewType(position: Int): Int {
         return if (images[position].height > images[position].width) {
-            R.layout.item_poster
+            R.layout.item_poster_image
         } else {
             R.layout.item_backdrop
         }

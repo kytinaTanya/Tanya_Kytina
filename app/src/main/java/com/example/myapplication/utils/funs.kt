@@ -10,10 +10,12 @@ import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.ui.recyclerview.DividerItemDecoration
+import com.example.myapplication.ui.recyclerview.HorizontalItemsDividerDecoration
+import com.example.myapplication.ui.recyclerview.RegularDividerItemDecoration
+import com.example.myapplication.ui.recyclerview.VerticalItemsDividerDecoration
 import com.squareup.picasso.Picasso
 
-fun ImageView.setImage(imageUrl: String){
+fun ImageView.setImage(imageUrl: String) {
     Picasso.get()
         .load(imageUrl)
         .placeholder(R.drawable.poster_placeholder)
@@ -25,8 +27,12 @@ fun EditText.getStringText(): String {
     return this.text.toString()
 }
 
-fun ImageButton.setCurrentResource(condition: () -> Boolean, @DrawableRes whenConditionRight: Int, @DrawableRes whenConditionWrong: Int) {
-    if(condition.invoke()) {
+fun ImageButton.setCurrentResource(
+    condition: () -> Boolean,
+    @DrawableRes whenConditionRight: Int,
+    @DrawableRes whenConditionWrong: Int,
+) {
+    if (condition.invoke()) {
         setBackgroundResource(whenConditionRight)
     } else {
         setBackgroundResource(whenConditionWrong)
@@ -45,23 +51,54 @@ class Utils {
     }
 }
 
-fun RecyclerView.setConfigHorizontalLinearWithDiv(mAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>,
-                                                  context: Context,
-                                                  div: Int) {
+fun RecyclerView.setConfigHorizontalLinearWithDiv(
+    mAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>,
+    context: Context,
+    div: Int,
+) {
     this.apply {
         layoutManager = LinearLayoutManager(context,
             LinearLayoutManager.HORIZONTAL,
             false)
         adapter = mAdapter
-        addItemDecoration(DividerItemDecoration(div))
+        addItemDecoration(RegularDividerItemDecoration(div))
+    }
+}
+
+fun RecyclerView.setConfigHorizontalWithInnerAndOuterDivs(
+    mAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>,
+    context: Context,
+    innerDiv: Int,
+    outerDiv: Int
+) {
+    this.apply {
+        layoutManager = LinearLayoutManager(context,
+            LinearLayoutManager.HORIZONTAL,
+            false)
+        adapter = mAdapter
+        addItemDecoration(HorizontalItemsDividerDecoration(innerDivider = innerDiv, outerDivider = outerDiv))
     }
 }
 
 fun RecyclerView.setConfigVerticalLinear(
     mAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>,
-    context: Context) {
+    context: Context,
+) {
     this.apply {
         layoutManager = LinearLayoutManager(context)
         adapter = mAdapter
+    }
+}
+
+fun RecyclerView.setConfigVerticalWithInnerAndOuterDivs(
+    mAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>,
+    context: Context,
+    innerDiv: Int,
+    outerDiv: Int
+) {
+    this.apply {
+        layoutManager = LinearLayoutManager(context)
+        adapter = mAdapter
+        addItemDecoration(VerticalItemsDividerDecoration(innerDivider = innerDiv, outerDivider = outerDiv))
     }
 }

@@ -2,6 +2,7 @@ package com.example.myapplication.ui.recyclerview.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -12,9 +13,12 @@ import com.example.myapplication.models.pojo.BaseItem
 import com.example.myapplication.models.pojo.Film
 import com.example.myapplication.models.pojo.Person
 import com.example.myapplication.models.pojo.TV
+import com.example.myapplication.ui.recyclerview.listeners.MovieAndPersonListener
 import com.example.myapplication.utils.setImage
 
-class TopListPagingAdapter : PagingDataAdapter<BaseItem, TopListPagingAdapter.ItemViewHolder>(ItemComparator) {
+class TopListPagingAdapter(private val listener: MovieAndPersonListener) :
+    PagingDataAdapter<BaseItem, TopListPagingAdapter.ItemViewHolder>(ItemComparator),
+    View.OnClickListener {
 
     private lateinit var binding: ItemMovieBinding
 
@@ -48,6 +52,7 @@ class TopListPagingAdapter : PagingDataAdapter<BaseItem, TopListPagingAdapter.It
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+        holder.itemView.tag = getItem(position)
         getItem(position)?.let { item ->
             when (item) {
                 is Film -> holder.bindMovie(item)
@@ -60,16 +65,16 @@ class TopListPagingAdapter : PagingDataAdapter<BaseItem, TopListPagingAdapter.It
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         binding = ItemMovieBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
-
+        binding.root.setOnClickListener(this)
         return ItemViewHolder(binding)
     }
 
-    object ItemComparator: DiffUtil.ItemCallback<BaseItem>() {
+    object ItemComparator : DiffUtil.ItemCallback<BaseItem>() {
         override fun areItemsTheSame(oldItem: BaseItem, newItem: BaseItem): Boolean {
             return when (oldItem) {
-                is Film -> (oldItem as Film).id == (newItem as Film).id
-                is TV -> (oldItem as TV).id == (newItem as TV).id
-                is Person -> (oldItem as Person).id == (newItem as Person).id
+                is Film -> oldItem.id == (newItem as Film).id
+                is TV -> oldItem.id == (newItem as TV).id
+                is Person -> oldItem.id == (newItem as Person).id
                 else -> oldItem == newItem
             }
         }
@@ -78,5 +83,14 @@ class TopListPagingAdapter : PagingDataAdapter<BaseItem, TopListPagingAdapter.It
             return oldItem == newItem
         }
 
+    }
+
+    override fun onClick(view: View?) {
+        val movie = view?.tag as BaseItem
+        when (movie) {
+            is Film -> listener.onOpenMovie(movie.id)
+            is TV -> listener.onOpenTV(movie.id)
+            is Person -> listener.onOpenPerson(movie.id)
+        }
     }
 }

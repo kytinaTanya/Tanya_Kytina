@@ -26,12 +26,12 @@ import com.example.myapplication.ui.activities.MainActivity.Companion.PERSON_TYP
 import com.example.myapplication.ui.activities.MainActivity.Companion.SEASON
 import com.example.myapplication.ui.activities.MainActivity.Companion.SEASON_TYPE
 import com.example.myapplication.ui.activities.MainActivity.Companion.TV_TYPE
-import com.example.myapplication.ui.recyclerview.DividerItemDecoration
+import com.example.myapplication.ui.recyclerview.RegularDividerItemDecoration
 import com.example.myapplication.ui.recyclerview.adapters.*
 import com.example.myapplication.ui.recyclerview.listeners.AllSpecificListener
 import com.example.myapplication.ui.recyclerview.listeners.PhotoClickListener
 import com.example.myapplication.utils.Utils.Companion.setIfIsNotEmpty
-import com.example.myapplication.utils.setConfigHorizontalLinearWithDiv
+import com.example.myapplication.utils.setConfigHorizontalWithInnerAndOuterDivs
 import com.example.myapplication.utils.setCurrentResource
 import com.example.myapplication.utils.setImage
 import com.example.myapplication.viewmodel.ItemInfoViewModel
@@ -114,7 +114,6 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        showProgress(true)
         initComponents()
         setObservers()
     }
@@ -130,13 +129,13 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
             initUiData(
                 movie.posterPath,
                 movie.title,
-                movie.releaseDate,
+                formatDate(movie.releaseDate),
                 movie.rating,
                 movie.overview,
                 movie.tagline,
                 movie.genres,
-                formatBudget(movie.budget, "Бюджет: "),
-                formatBudget(movie.revenue, "Сборы: "),
+                formatBudget(movie.budget, "Бюджет"),
+                formatBudget(movie.revenue, "Сборы"),
                 movie.collection,
                 movie.companies,
                 movie.countries,
@@ -184,7 +183,6 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
                 binding.backdropRecyclerview.visibility = View.VISIBLE
                 backdropAdapter.setImages(movie.backdrops)
             }
-            showProgress(false)
         }
 
         viewModel.tvDetails.observe(viewLifecycleOwner) { tv ->
@@ -197,8 +195,8 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
                 tv.overview,
                 tv.tagline,
                 tv.genres,
-                formatSeasons(tv.numOfSeasons, "Количество сезонов: "),
-                formatSeasons(tv.episodes, "Количество серий: "),
+                formatSeasons(tv.numOfSeasons, "Количество сезонов"),
+                formatSeasons(tv.episodes, "Количество серий"),
                 tv.lastEpisode,
                 tv.companies,
                 tv.countries,
@@ -246,7 +244,6 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
                 binding.backdropRecyclerview.visibility = View.VISIBLE
                 backdropAdapter.setImages(tv.backdrops)
             }
-            showProgress(false)
         }
 
         viewModel.personDetails.observe(viewLifecycleOwner) { person ->
@@ -256,7 +253,7 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
                 "",
                 person.popularity,
                 person.biography,
-                person.birthday,
+                formatDate(person.birthday),
                 emptyList(),
                 formatGender(person.gender),
                 person.placeOfBirth,
@@ -269,7 +266,6 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
                 emptyList(),
                 false
             )
-            showProgress(false)
         }
 
         viewModel.baseItemDetails.observe(viewLifecycleOwner) { item ->
@@ -278,7 +274,7 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
                     initUiData(
                         item.posterPath,
                         item.name,
-                        item.airDate,
+                        formatDate(item.airDate),
                         0.0,
                         item.overview,
                         "",
@@ -304,7 +300,7 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
                     initUiData(
                         item.stillPath,
                         item.name,
-                        item.airDate,
+                        formatDate(item.airDate),
                         0.0,
                         item.overview,
                         "",
@@ -348,7 +344,6 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
                     binding.posterText.text = "Состав коллекции"
                 }
             }
-            showProgress(false)
         }
 
         viewModel.addToWatchlistState.observe(viewLifecycleOwner) { status ->
@@ -396,6 +391,26 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
                 posterAdapter.setImages(profiles)
             }
         }
+    }
+
+    private fun formatDate(releaseDate: String): String {
+        val year = releaseDate.substringBefore("-")
+        val month = when (releaseDate.substringAfter("-").substringBefore("-").toInt()) {
+            1 -> "января"
+            2 -> "февраля"
+            3 -> "марта"
+            4 -> "апреля"
+            5 -> "мая"
+            6 -> "июня"
+            7 -> "июля"
+            8 -> "августа"
+            9 -> "сентября"
+            10 -> "октября"
+            11 -> "ноября"
+            else -> "декабря"
+        }
+        val day = releaseDate.substringAfterLast("-")
+        return "$day $month $year"
     }
 
     private fun initComponents() {
@@ -447,7 +462,7 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
         binding.genres.apply {
             layoutManager = genresLayoutManager
             adapter = genresAdapter
-            addItemDecoration(DividerItemDecoration(8))
+            addItemDecoration(RegularDividerItemDecoration(8))
         }
 
         companiesAdapter = MovieRecyclerAdapter(this)
@@ -456,7 +471,7 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
         binding.companies.apply {
             layoutManager = companiesLayoutManager
             adapter = companiesAdapter
-            addItemDecoration(DividerItemDecoration(8))
+            addItemDecoration(RegularDividerItemDecoration(8))
         }
 
         posterAdapter = ImagesRecyclerAdapter(this)
@@ -468,13 +483,13 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
         castAdapter = MovieRecyclerAdapter(this)
 
         binding.apply {
-            posterRecyclerview.setConfigHorizontalLinearWithDiv(posterAdapter, requireContext(), 16)
-            backdropRecyclerview.setConfigHorizontalLinearWithDiv(backdropAdapter, requireContext(), 16)
-            videoRecyclerview.setConfigHorizontalLinearWithDiv(videoAdapter, requireContext(), 16)
-            recommendationRecyclerview.setConfigHorizontalLinearWithDiv(recommendationAdapter, requireContext(), 16)
-            similarRecyclerview.setConfigHorizontalLinearWithDiv(similarAdapter, requireContext(), 16)
-            seasons.setConfigHorizontalLinearWithDiv(seasonAdapter, requireContext(), 16)
-            mainRoles.setConfigHorizontalLinearWithDiv(castAdapter, requireContext(), 16)
+            posterRecyclerview.setConfigHorizontalWithInnerAndOuterDivs(posterAdapter, requireContext(), 24, 48)
+            backdropRecyclerview.setConfigHorizontalWithInnerAndOuterDivs(backdropAdapter, requireContext(), 24, 48)
+            videoRecyclerview.setConfigHorizontalWithInnerAndOuterDivs(videoAdapter, requireContext(), 24, 48)
+            recommendationRecyclerview.setConfigHorizontalWithInnerAndOuterDivs(recommendationAdapter, requireContext(), 24, 48)
+            similarRecyclerview.setConfigHorizontalWithInnerAndOuterDivs(similarAdapter, requireContext(), 24, 48)
+            seasons.setConfigHorizontalWithInnerAndOuterDivs(seasonAdapter, requireContext(), 24, 48)
+            mainRoles.setConfigHorizontalWithInnerAndOuterDivs(castAdapter, requireContext(), 24, 48)
         }
     }
 
@@ -483,7 +498,7 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
         binding.posterRecyclerview.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = episodeAdapter
-            addItemDecoration(DividerItemDecoration(16))
+            addItemDecoration(RegularDividerItemDecoration(16))
         }
     }
 
@@ -506,25 +521,20 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
         seasons: List<Season>,
         isAlbumPath: Boolean
     ) {
-
-        if(isAlbumPath) {
-            binding.movieImage.visibility = View.GONE
-            binding.stillImage.visibility = View.VISIBLE
-            binding.stillImage.setImage(BuildConfig.BASE_STILL_URL + posterPath)
-            binding.stillImage.setOnClickListener {
-                onOpenPicture(BuildConfig.BASE_STILL_URL + posterPath)
-            }
-        } else {
-            binding.movieImage.setImage(BuildConfig.BASE_POSTER_URL + posterPath)
-            binding.movieImage.setOnClickListener {
-                onOpenPicture(BuildConfig.BASE_POSTER_URL + posterPath)
-            }
+        val imageBaseUrl = if(isAlbumPath) BuildConfig.BASE_STILL_URL else BuildConfig.BASE_POSTER_URL
+        binding.mainImage.setImage(imageBaseUrl + posterPath)
+        binding.mainImage.setOnClickListener {
+            onOpenPicture(imageBaseUrl + posterPath)
+        }
+        binding.toolbar.title = title
+        binding.toolbar.setNavigationOnClickListener {
+            view?.findNavController()?.popBackStack()
         }
         setIfIsNotEmpty(title, binding.movieTitle)
         setIfIsNotEmpty(releaseDate, binding.yearOfMovie)
         setIfIsNotEmpty(overview, binding.movieAnnotation)
         setIfIsNotEmpty(tagline, binding.tagline)
-        setIfIsNotEmpty(rating.toString(), binding.movieRating)
+        setIfIsNotEmpty(formatRating(rating), binding.movieRating)
         setIfIsNotEmpty(budget, binding.budget)
         setIfIsNotEmpty(revenue, binding.revenue)
         if(genres.isEmpty()) {
@@ -589,6 +599,8 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
             binding.companyTitle.visibility = View.GONE
         }
     }
+
+    private fun formatRating(rating: Number?): String = rating?.let { "Оценка: $it" } ?: ""
 
     private fun initCollectionWidget(type: String, image: String, name: String) {
         binding.isCollection.text = type
@@ -662,20 +674,6 @@ class ItemInfoFragment : Fragment(), AllSpecificListener, PhotoClickListener {
                 loveBtn.setCurrentResource({ isFavorite }, R.drawable.ic_favorite_marked, R.drawable.ic_favorite)
             }
             starBtn.setCurrentResource({ rating > 0.0 }, R.drawable.ic_baseline_star_marked, R.drawable.ic_star)
-        }
-    }
-
-    private fun showProgress(show: Boolean) {
-        if (show) {
-            binding.apply {
-                loaded.visibility = View.GONE
-                loading.visibility = View.VISIBLE
-            }
-        } else {
-            binding.apply {
-                loaded.visibility = View.VISIBLE
-                loading.visibility = View.GONE
-            }
         }
     }
 

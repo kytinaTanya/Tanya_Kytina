@@ -14,7 +14,7 @@
         android:id="@+id/warning"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="В этом списке ничего нет"
+        android:text="@string/there_are_no_items"
         android:gravity="center"
         android:textSize="30sp"
         android:visibility="gone"/>

@@ -15,7 +15,7 @@ import com.example.myapplication.models.pojo.TV
 import com.example.myapplication.ui.activities.MainActivity
 import com.example.myapplication.ui.recyclerview.adapters.CollectionRecyclerAdapter
 import com.example.myapplication.ui.recyclerview.listeners.MovieClickListener
-import com.example.myapplication.utils.setConfigVerticalLinear
+import com.example.myapplication.utils.setConfigVerticalWithInnerAndOuterDivs
 import com.example.myapplication.viewmodel.ListsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -112,7 +112,12 @@ class ListFragment : Fragment(), MovieClickListener {
 
     private fun initRecyclerView() {
         mAdapter = CollectionRecyclerAdapter(this)
-        binding.movieList.setConfigVerticalLinear(mAdapter = mAdapter, context = requireContext())
+        binding.movieList.setConfigVerticalWithInnerAndOuterDivs(
+            mAdapter = mAdapter,
+            context = requireContext(),
+            innerDiv = 32,
+            outerDiv = 32
+        )
     }
 
     override fun onOpenMovie(id: Long) {

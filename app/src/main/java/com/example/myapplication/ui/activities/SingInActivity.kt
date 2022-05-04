@@ -18,17 +18,17 @@ class SingInActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.Theme_MyApplication_NoActionBar)
+        setTheme(R.style.Theme_MovieDatabase_NoActionBar)
         binding = ActivitySingInBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initFirebase()
 
-        binding.exit.setOnClickListener {
+        binding.toSignUp.setOnClickListener {
             val i = Intent(this, SingUpActivity::class.java)
             startActivity(i)
         }
 
-        binding.enter.setOnClickListener {
+        binding.signIn.setOnClickListener {
             if(checkData()) {
                 signIn(binding.login.getStringText(), binding.password.getStringText())
             }

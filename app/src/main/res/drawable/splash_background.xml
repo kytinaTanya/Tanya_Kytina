@@ -5,5 +5,5 @@
 
     <item
         android:gravity="center"
-        android:drawable="@drawable/ic_logo1" />
+        android:drawable="@drawable/ic_squered_logo" />
 </layer-list>

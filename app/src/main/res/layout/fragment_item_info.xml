@@ -1,22 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.ItemInfoFragment">
 
-    <ProgressBar
-        android:id="@+id/loading"
-        android:layout_width="wrap_content"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentScrim="@color/very_dark_blue"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+            app:titleEnabled="false">
+
+            <ImageView
+                android:id="@+id/main_image"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:navigationIcon="?attr/homeAsUpIndicator"
+                android:background="@color/black_80"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/loaded"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -43,32 +69,6 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_end="16dp" />
 
-            <ImageView
-                android:id="@+id/movieImage"
-                android:layout_width="150dp"
-                android:layout_height="225dp"
-                app:layout_constraintStart_toStartOf="@+id/left_line"
-                app:layout_constraintTop_toTopOf="@id/top_line"
-                android:scaleType="centerCrop"
-                tools:src="@drawable/poster_placeholder" />
-
-            <ImageView
-                android:id="@+id/still_image"
-                android:layout_width="225dp"
-                android:layout_height="150dp"
-                app:layout_constraintStart_toStartOf="@+id/left_line"
-                app:layout_constraintTop_toTopOf="@id/top_line"
-                android:scaleType="centerCrop"
-                tools:src="@drawable/poster_placeholder"
-                android:visibility="gone"/>
-
-            <androidx.constraintlayout.widget.Barrier
-                android:id="@+id/end_barrier"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:barrierDirection="end"
-                app:constraint_referenced_ids="movieImage, still_image"/>
-
             <TextView
                 android:id="@+id/movieTitle"
                 android:layout_width="wrap_content"
@@ -79,20 +79,23 @@
                 app:layout_constrainedWidth="true"
                 app:layout_constraintEnd_toStartOf="@+id/right_line"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/end_barrier"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/top_line"
-                tools:text="Name" />
+                tools:text="Name"
+                android:textColor="@color/light_gray"/>
 
             <TextView
                 android:id="@+id/original_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constrainedWidth="true"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toStartOf="@+id/right_line"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/movieTitle"
                 app:layout_constraintTop_toBottomOf="@+id/movieTitle"
-                tools:text="Name" />
+                tools:text="Name"
+                android:textColor="@color/light_gray"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/genres"
@@ -115,27 +118,29 @@
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@+id/genres"
                 app:layout_constraintTop_toBottomOf="@+id/genres"
-                tools:text="2000" />
+                tools:text="2000"
+                android:textColor="@color/light_gray"/>
 
             <TextView
                 android:id="@+id/movieRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/yearOfMovie"
                 app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
                 android:layout_marginTop="16dp"
-                tools:text="10.0" />
+                tools:text="10.0"
+                android:textColor="@color/light_gray"/>
 
             <ImageButton
                 android:id="@+id/love_btn"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="@drawable/ic_favorite"
-                app:layout_constraintStart_toEndOf="@id/movieRating"
+                app:layout_constraintEnd_toStartOf="@id/watchlist_btn"
                 app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
                 android:layout_marginTop="16dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:visibility="gone"/>
 
             <ImageButton
@@ -143,10 +148,10 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="@drawable/ic_turned_in"
-                app:layout_constraintStart_toEndOf="@id/love_btn"
+                app:layout_constraintEnd_toStartOf="@id/star_btn"
                 app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
                 android:layout_marginTop="16dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:visibility="gone"/>
 
             <ImageButton
@@ -154,18 +159,10 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="@drawable/ic_star"
-                app:layout_constraintStart_toEndOf="@id/watchlist_btn"
+                app:layout_constraintEnd_toStartOf="@id/right_line"
                 app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
                 android:layout_marginTop="16dp"
-                android:layout_marginStart="8dp"
                 android:visibility="gone"/>
-
-            <androidx.constraintlayout.widget.Barrier
-                android:id="@+id/bottom_barrier"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:barrierDirection="bottom"
-                app:constraint_referenced_ids="movieImage, still_image, end_barrier, movieTitle, genres, yearOfMovie, movieRating, love_btn, watchlist_btn, star_btn"/>
 
             <RatingBar
                 android:id="@+id/rating_bar"
@@ -174,10 +171,22 @@
                 android:numStars="5"
                 app:layout_constraintEnd_toStartOf="@+id/right_line"
                 app:layout_constraintStart_toStartOf="@+id/left_line"
-                app:layout_constraintTop_toBottomOf="@+id/bottom_barrier"
+                app:layout_constraintTop_toBottomOf="@+id/movieRating"
                 app:layout_constrainedWidth="true"
                 android:layout_marginTop="16dp"
                 android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/annotation_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/annotation_title"
+                style="@style/ItemInfoTitle"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/rating_bar"
+                android:layout_marginTop="20dp"/>
 
             <TextView
                 android:id="@+id/tagline"
@@ -187,11 +196,12 @@
                 app:layout_constraintEnd_toStartOf="@+id/right_line"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/left_line"
-                app:layout_constraintTop_toBottomOf="@+id/rating_bar"
+                app:layout_constraintTop_toBottomOf="@+id/annotation_title"
                 app:layout_constrainedWidth="true"
                 android:layout_marginTop="16dp"
                 android:textSize="16sp"
-                tools:text="tagline" />
+                tools:text="tagline"
+                android:textColor="@color/light_gray"/>
 
             <TextView
                 android:id="@+id/movieAnnotation"
@@ -203,31 +213,30 @@
                 app:layout_constraintStart_toStartOf="@+id/left_line"
                 app:layout_constraintTop_toBottomOf="@+id/tagline"
                 android:textSize="16sp"
+                android:textColor="@color/light_gray"
                 tools:text="Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation" />
 
             <TextView
                 android:id="@+id/main_roles_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:textAppearance="@style/ItemInfoTitle"
                 app:layout_constraintEnd_toStartOf="@+id/right_line"
                 app:layout_constraintStart_toStartOf="@+id/left_line"
                 app:layout_constraintTop_toBottomOf="@+id/movieAnnotation"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintHorizontal_bias="0.0"
-                android:layout_marginTop="16dp"
-                android:text="В главных ролях"
-                android:visibility="gone"/>
+                android:text="@string/in_main_roles_title"
+                android:visibility="gone"
+                android:layout_marginTop="20dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/main_roles"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toStartOf="@+id/right_line"
-                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/main_roles_title"
-                app:layout_constrainedWidth="true"
                 app:layout_constraintHorizontal_bias="0.0"
                 android:layout_marginTop="8dp"
                 tools:listitem="@layout/item_person"
@@ -242,7 +251,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/main_roles"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintHorizontal_bias="0.0"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="20dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -250,10 +259,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="Collection"
-                    android:textSize="20sp"
+                    style="@style/ItemInfoTitle"
                     android:maxLines="1"
-                    android:ellipsize="end"
-                    android:textStyle="bold"/>
+                    android:ellipsize="end"/>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -277,21 +285,21 @@
                     tools:text="Collection"
                     android:textSize="18sp"
                     android:maxLines="1"
-                    android:ellipsize="end" />
+                    android:ellipsize="end"
+                    android:textColor="@color/light_gray"/>
             </LinearLayout>
 
             <TextView
                 android:id="@+id/company_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toStartOf="@+id/right_line"
                 app:layout_constraintStart_toStartOf="@+id/left_line"
                 app:layout_constraintTop_toBottomOf="@+id/collection"
                 app:layout_constraintHorizontal_bias="0.0"
                 android:text="Производство"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
+                style="@style/ItemInfoTitle"/>
 
             <TextView
                 android:id="@+id/created_by"
@@ -302,7 +310,8 @@
                 app:layout_constraintStart_toStartOf="@+id/left_line"
                 app:layout_constraintTop_toBottomOf="@+id/company_title"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constrainedWidth="true"/>
+                app:layout_constrainedWidth="true"
+                android:textColor="@color/light_gray"/>
 
             <TextView
                 android:id="@+id/countries"
@@ -313,7 +322,8 @@
                 app:layout_constraintEnd_toStartOf="@+id/right_line"
                 app:layout_constraintStart_toStartOf="@+id/left_line"
                 app:layout_constraintTop_toBottomOf="@+id/created_by"
-                app:layout_constraintHorizontal_bias="0.0"/>
+                app:layout_constraintHorizontal_bias="0.0"
+                android:textColor="@color/light_gray"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/companies"
@@ -321,21 +331,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 tools:listitem="@layout/item_logo"
-                app:layout_constrainedWidth="true"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toStartOf="@+id/right_line"
-                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintStart_toStartOf="@id/left_line"
                 app:layout_constraintTop_toBottomOf="@+id/countries"
                 app:layout_constraintHorizontal_bias="0.0"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/seasons"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toStartOf="@+id/right_line"
-                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/companies"
-                app:layout_constrainedWidth="true"
                 app:layout_constraintHorizontal_bias="0.0"
                 android:layout_marginTop="16dp"
                 tools:listitem="@layout/item_season"/>
@@ -351,7 +358,8 @@
                 android:textSize="16sp"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintHorizontal_bias="0.0"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginTop="16dp"
+                android:textColor="@color/light_gray"/>
 
             <TextView
                 android:id="@+id/revenue"
@@ -364,21 +372,21 @@
                 android:textSize="16sp"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintHorizontal_bias="0.0"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginTop="16dp"
+                android:textColor="@color/light_gray"/>
 
             <TextView
                 android:id="@+id/poster_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Постеры"
-                android:textSize="20sp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/right_line"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/left_line"
                 app:layout_constraintTop_toBottomOf="@+id/revenue"
-                android:layout_marginTop="16dp"
-                android:visibility="gone"/>
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                style="@style/ItemInfoTitle"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/poster_recyclerview"
@@ -386,11 +394,9 @@
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/item_poster"
                 app:layout_constraintEnd_toStartOf="@+id/right_line"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/poster_text"
                 android:layout_marginTop="16dp"
-                app:layout_constrainedWidth="true"
                 android:visibility="gone"/>
 
             <TextView
@@ -398,26 +404,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Задники"
-                android:textSize="20sp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/right_line"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/left_line"
                 app:layout_constraintTop_toBottomOf="@+id/poster_recyclerview"
-                android:layout_marginTop="16dp"
-                android:visibility="gone"/>
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                style="@style/ItemInfoTitle"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/backdrop_recyclerview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/item_backdrop"
-                app:layout_constraintEnd_toStartOf="@+id/right_line"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/backdrop_text"
                 android:layout_marginTop="16dp"
-                app:layout_constrainedWidth="true"
                 android:visibility="gone"/>
 
             <TextView
@@ -431,20 +433,18 @@
                 android:layout_marginTop="16dp"
                 android:textSize="18sp"
                 app:layout_constrainedWidth="true"
-                android:autoLink="web"/>
+                android:autoLink="web"
+                android:textColor="@color/light_gray"/>
 
             <TextView
                 android:id="@+id/video_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Видео"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/right_line"
-                app:layout_constraintHorizontal_bias="0.0"
+                style="@style/ItemInfoTitle"
                 app:layout_constraintStart_toStartOf="@+id/left_line"
                 app:layout_constraintTop_toBottomOf="@+id/homepage"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="20dp"
                 android:visibility="gone"/>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -452,12 +452,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/item_video"
-                app:layout_constraintEnd_toStartOf="@+id/right_line"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/video_text"
                 android:layout_marginTop="16dp"
-                app:layout_constrainedWidth="true"
                 android:visibility="gone"/>
 
             <TextView
@@ -465,26 +462,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Рекомендуем"
-                android:textSize="20sp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/right_line"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/left_line"
                 app:layout_constraintTop_toBottomOf="@+id/video_recyclerview"
-                android:layout_marginTop="16dp"
-                android:visibility="gone"/>
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                style="@style/ItemInfoTitle"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recommendation_recyclerview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/item_backdrop_title"
-                app:layout_constraintEnd_toStartOf="@+id/right_line"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recommendation_text"
                 android:layout_marginTop="16dp"
-                app:layout_constrainedWidth="true"
                 android:visibility="gone"/>
 
             <TextView
@@ -492,13 +485,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Похожие фильмы"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                style="@style/ItemInfoTitle"
                 app:layout_constraintEnd_toStartOf="@+id/right_line"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/left_line"
                 app:layout_constraintTop_toBottomOf="@+id/recommendation_recyclerview"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="20dp"
                 android:visibility="gone"/>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -506,16 +498,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/item_backdrop_title"
-                app:layout_constraintEnd_toStartOf="@+id/right_line"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/similar_text"
                 android:layout_marginTop="16dp"
-                app:layout_constrainedWidth="true"
                 android:visibility="gone"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

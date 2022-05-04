@@ -101,6 +101,9 @@
         <argument
             android:name="request"
             app:argType="com.example.myapplication.viewmodel.MainScreenRequest" />
+        <action
+            android:id="@+id/action_topListFragment_to_itemInfoFragment"
+            app:destination="@id/itemInfoFragment" />
     </fragment>
 
 </navigation>

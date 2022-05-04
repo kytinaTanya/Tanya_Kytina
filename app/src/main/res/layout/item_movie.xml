@@ -1,92 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
-    style="?android:attr/selectableItemBackground"
-    android:background="@color/light_gray"
+    android:layout_marginHorizontal="8dp"
+    app:cardCornerRadius="15dp"
     android:elevation="5dp">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/start_line"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp"/>
+        android:background="@color/dark_blue">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/end_line"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="16dp"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/start_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp"/>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/top_line"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="16dp"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/end_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp"/>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/bottom_line"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_end="16dp"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/top_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="16dp"/>
 
-    <ImageView
-        android:id="@+id/movieImage"
-        android:layout_width="90dp"
-        android:layout_height="152dp"
-        android:paddingBottom="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_line"
-        app:layout_constraintStart_toStartOf="@+id/start_line"
-        app:layout_constraintTop_toTopOf="@+id/top_line"
-        app:layout_constraintVertical_bias="0.0" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/bottom_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="16dp"/>
 
-    <TextView
-        android:id="@+id/movieTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/end_line"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/movieImage"
-        app:layout_constraintTop_toTopOf="@+id/top_line"
-        tools:text="Name"
-        app:layout_constrainedWidth="true"
-        android:maxLines="2"
-        android:ellipsize="end"/>
+        <ImageView
+            android:id="@+id/movieImage"
+            android:layout_width="90dp"
+            android:layout_height="152dp"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_line"
+            app:layout_constraintStart_toStartOf="@+id/start_line"
+            app:layout_constraintTop_toTopOf="@+id/top_line"
+            app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/yearOfMovie"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/end_line"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/movieTitle"
-        app:layout_constraintTop_toBottomOf="@+id/movieTitle"
-        tools:text="2000" />
+        <TextView
+            android:id="@+id/movieTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/end_line"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/movieImage"
+            app:layout_constraintTop_toTopOf="@+id/top_line"
+            tools:text="Name"
+            app:layout_constrainedWidth="true"
+            android:maxLines="2"
+            android:ellipsize="end"/>
 
-    <TextView
-        android:id="@+id/movieAnnotation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:ellipsize="end"
-        android:maxLines="5"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_line"
-        app:layout_constraintEnd_toStartOf="@+id/end_line"
-        app:layout_constraintStart_toStartOf="@+id/yearOfMovie"
-        app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
-        tools:text="Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation" />
+        <TextView
+            android:id="@+id/yearOfMovie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/end_line"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/movieTitle"
+            app:layout_constraintTop_toBottomOf="@+id/movieTitle"
+            tools:text="2000" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/movieAnnotation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:ellipsize="end"
+            android:maxLines="5"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_line"
+            app:layout_constraintEnd_toStartOf="@+id/end_line"
+            app:layout_constraintStart_toStartOf="@+id/yearOfMovie"
+            app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
+            tools:text="Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation Movie annotation" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

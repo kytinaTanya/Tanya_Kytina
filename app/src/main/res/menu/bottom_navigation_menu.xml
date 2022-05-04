@@ -18,5 +18,5 @@
     <item
         android:icon="@drawable/ic_baseline_account"
         android:id="@+id/account_page"
-        android:title="Профиль" />
+        android:title="Профиль"/>
 </menu>

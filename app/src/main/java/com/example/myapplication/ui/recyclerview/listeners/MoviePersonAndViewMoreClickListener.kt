@@ -1,0 +1,3 @@
+package com.example.myapplication.ui.recyclerview.listeners
+
+interface MoviePersonAndViewMoreClickListener : MovieClickListener, PersonClickListener, ViewMoreClickListener

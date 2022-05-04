@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.FavoriteFragment">
+    tools:context=".ui.fragments.FavoriteFragment"
+    android:background="@color/very_dark_blue">
 
     <ProgressBar
         android:id="@+id/loading"
@@ -23,7 +24,11 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="scrollable"/>
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/light_blue"
+            app:tabTextColor="@color/light_gray"
+            app:tabBackground="@color/very_dark_blue"
+            app:tabIndicatorColor="@color/light_blue"/>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/pager"

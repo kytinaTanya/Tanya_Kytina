@@ -12,14 +12,14 @@ import com.example.myapplication.ui.activities.MainActivity.Companion.MOVIE_TYPE
 import com.example.myapplication.ui.activities.MainActivity.Companion.PERSON_TYPE
 import com.example.myapplication.ui.activities.MainActivity.Companion.TV_TYPE
 import com.example.myapplication.ui.recyclerview.adapters.FeedRecyclerAdapter
-import com.example.myapplication.ui.recyclerview.listeners.MovieAndPersonListener
-import com.example.myapplication.utils.setConfigHorizontalLinearWithDiv
+import com.example.myapplication.ui.recyclerview.listeners.MoviePersonAndViewMoreClickListener
+import com.example.myapplication.utils.setConfigHorizontalWithInnerAndOuterDivs
 import com.example.myapplication.viewmodel.MainScreenRequest
 import com.example.myapplication.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainFragment : Fragment(), MovieAndPersonListener {
+class MainFragment : Fragment(), MoviePersonAndViewMoreClickListener {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
@@ -59,51 +59,51 @@ class MainFragment : Fragment(), MovieAndPersonListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        showProgress(true)
+//        showProgress(true)
         initRecyclerViews()
         viewModel.moviesInTrend.observe(viewLifecycleOwner) { movies ->
             filmsInTrendAdapter.appendMovies(movies)
-            showProgress(!isAllLoaded())
+//            showProgress(!isAllLoaded())
         }
 
         viewModel.moviesNowPlaying.observe(viewLifecycleOwner) { movies ->
             filmsNowPlayingAdapter.appendMovies(movies)
-            showProgress(!isAllLoaded())
+//            showProgress(!isAllLoaded())
         }
 
         viewModel.moviesUpcoming.observe(viewLifecycleOwner) { movies ->
             filmsUpcomingAdapter.appendMovies(movies)
-            showProgress(!isAllLoaded())
+//            showProgress(!isAllLoaded())
         }
 
         viewModel.popularTV.observe(viewLifecycleOwner) { tv ->
             tvPopularAdapter.appendMovies(tv)
-            showProgress(!isAllLoaded())
+//            showProgress(!isAllLoaded())
         }
 
         viewModel.topRatedTV.observe(viewLifecycleOwner) { tv ->
             tvBestAdapter.appendMovies(tv)
-            showProgress(!isAllLoaded())
+//            showProgress(!isAllLoaded())
         }
 
         viewModel.nowOnAirTV.observe(viewLifecycleOwner) { tv ->
             tvNowOnAirAdapter.appendMovies(tv)
-            showProgress(!isAllLoaded())
+//            showProgress(!isAllLoaded())
         }
 
         viewModel.onAirTodayTV.observe(viewLifecycleOwner) { tv ->
             tvTodayOnAirAdapter.appendMovies(tv)
-            showProgress(!isAllLoaded())
+//            showProgress(!isAllLoaded())
         }
 
         viewModel.moviesTopRated.observe(viewLifecycleOwner) { movies ->
             filmsBestAdapter.appendMovies(movies)
-            showProgress(!isAllLoaded())
+//            showProgress(!isAllLoaded())
         }
 
         viewModel.popularPersons.observe(viewLifecycleOwner) { persons ->
             personPopularAdapter.appendMovies(persons)
-            showProgress(!isAllLoaded())
+//            showProgress(!isAllLoaded())
         }
     }
 
@@ -114,31 +114,31 @@ class MainFragment : Fragment(), MovieAndPersonListener {
 
     private fun initRecyclerViews() {
         filmsInTrendAdapter = FeedRecyclerAdapter(this, MainScreenRequest.POPULAR_MOVIES)
-        binding.popularMovies.setConfigHorizontalLinearWithDiv(filmsInTrendAdapter, requireContext(), 16)
+        binding.popularMovies.setConfigHorizontalWithInnerAndOuterDivs(filmsInTrendAdapter, requireContext(), INNER_DIV, OUTER_DIV)
 
         filmsUpcomingAdapter = FeedRecyclerAdapter(this, MainScreenRequest.UPCOMING_MOVIES)
-        binding.upcomingMovies.setConfigHorizontalLinearWithDiv(filmsUpcomingAdapter, requireContext(), 16)
+        binding.upcomingMovies.setConfigHorizontalWithInnerAndOuterDivs(filmsUpcomingAdapter, requireContext(), INNER_DIV, OUTER_DIV)
 
         tvPopularAdapter = FeedRecyclerAdapter(this, MainScreenRequest.POPULAR_TVS)
-        binding.popularTv.setConfigHorizontalLinearWithDiv(tvPopularAdapter, requireContext(), 16)
+        binding.popularTv.setConfigHorizontalWithInnerAndOuterDivs(tvPopularAdapter, requireContext(), INNER_DIV, OUTER_DIV)
 
         filmsNowPlayingAdapter = FeedRecyclerAdapter(this, MainScreenRequest.NOW_PLAYING_MOVIES)
-        binding.nowPlayingMovies.setConfigHorizontalLinearWithDiv(filmsNowPlayingAdapter, requireContext(), 16)
+        binding.nowPlayingMovies.setConfigHorizontalWithInnerAndOuterDivs(filmsNowPlayingAdapter, requireContext(), INNER_DIV, OUTER_DIV)
 
         tvBestAdapter = FeedRecyclerAdapter(this, MainScreenRequest.TOP_RATED_TVS)
-        binding.topRatedTv.setConfigHorizontalLinearWithDiv(tvBestAdapter, requireContext(), 16)
+        binding.topRatedTv.setConfigHorizontalWithInnerAndOuterDivs(tvBestAdapter, requireContext(), INNER_DIV, OUTER_DIV)
 
         tvNowOnAirAdapter = FeedRecyclerAdapter(this, MainScreenRequest.ON_THE_AIR_TVS)
-        binding.nowOnAirTv.setConfigHorizontalLinearWithDiv(tvNowOnAirAdapter, requireContext(), 16)
+        binding.nowOnAirTv.setConfigHorizontalWithInnerAndOuterDivs(tvNowOnAirAdapter, requireContext(), INNER_DIV, OUTER_DIV)
 
         tvTodayOnAirAdapter = FeedRecyclerAdapter(this, MainScreenRequest.AIRING_TODAY_TVS)
-        binding.onAirTodayTv.setConfigHorizontalLinearWithDiv(tvTodayOnAirAdapter, requireContext(), 16)
+        binding.onAirTodayTv.setConfigHorizontalWithInnerAndOuterDivs(tvTodayOnAirAdapter, requireContext(), INNER_DIV, OUTER_DIV)
 
         filmsBestAdapter = FeedRecyclerAdapter(this, MainScreenRequest.TOP_RATED_MOVIES)
-        binding.topRatedMovies.setConfigHorizontalLinearWithDiv(filmsBestAdapter, requireContext(), 16)
+        binding.topRatedMovies.setConfigHorizontalWithInnerAndOuterDivs(filmsBestAdapter, requireContext(), INNER_DIV, OUTER_DIV)
 
         personPopularAdapter = FeedRecyclerAdapter(this, MainScreenRequest.POPULAR_PERSONS)
-        binding.popularPersons.setConfigHorizontalLinearWithDiv(personPopularAdapter, requireContext(), 16)
+        binding.popularPersons.setConfigHorizontalWithInnerAndOuterDivs(personPopularAdapter, requireContext(), INNER_DIV, OUTER_DIV)
     }
 
     override fun onOpenMovie(id: Long) {
@@ -161,22 +161,27 @@ class MainFragment : Fragment(), MovieAndPersonListener {
         view?.findNavController()?.navigate(action)
     }
 
-    private fun showProgress(show: Boolean) {
-        if (show) {
-            binding.apply {
-                loaded.visibility = View.GONE
-                loading.visibility = View.VISIBLE
-            }
-        } else {
-            binding.apply {
-                loaded.visibility = View.VISIBLE
-                loading.visibility = View.GONE
-            }
-        }
-    }
+//    private fun showProgress(show: Boolean) {
+//        if (show) {
+//            binding.apply {
+//                loaded.visibility = View.GONE
+//                loading.visibility = View.VISIBLE
+//            }
+//        } else {
+//            binding.apply {
+//                loaded.visibility = View.VISIBLE
+//                loading.visibility = View.GONE
+//            }
+//        }
+//    }
+//
+//    private fun isAllLoaded() : Boolean {
+//        loaded++
+//        return loaded >= 8
+//    }
 
-    private fun isAllLoaded() : Boolean {
-        loaded++
-        return loaded >= 8
+    companion object {
+        const val INNER_DIV = 24
+        const val OUTER_DIV = 48
     }
 }

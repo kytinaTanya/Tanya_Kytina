@@ -48,15 +48,15 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/image_card"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:cardCornerRadius="100dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:cardCornerRadius="150dp"
             app:layout_constraintStart_toStartOf="@+id/start_line"
             app:layout_constraintTop_toTopOf="@+id/top_line">
             <ImageView
                 android:id="@+id/profile_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:scaleType="centerCrop"/>
         </androidx.cardview.widget.CardView>
 
@@ -64,15 +64,15 @@
             android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginLeft="8dp"
             app:layout_constraintEnd_toStartOf="@+id/end_line"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/image_card"
             app:layout_constraintTop_toTopOf="@+id/top_line"
             tools:text="Username"
             app:layout_constrainedWidth="true"
+            android:layout_marginStart="16dp"
             android:maxLines="2"
             android:ellipsize="end"/>
 
@@ -85,27 +85,12 @@
             app:layout_constraintTop_toBottomOf="@+id/username"
             tools:text="email@email.com"
             app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
             app:layout_constrainedWidth="true"
             android:maxLines="2"
             android:ellipsize="end"
-            android:textSize="16sp"/>
-
-        <Button
-            android:id="@+id/settings_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toStartOf="@+id/end_line"
-            app:layout_constraintStart_toStartOf="@+id/start_line"
-            app:layout_constraintTop_toBottomOf="@+id/image_card"
-            android:layout_marginTop="16dp"
-            android:drawableLeft="@drawable/ic_baseline_settings"
-            android:text="Настройки"
-            android:textAlignment="textStart"
-            android:visibility="gone"
-            style="@color/white"/>
+            android:textSize="18sp"/>
 
         <Button
             android:id="@+id/exit_button"
@@ -114,8 +99,10 @@
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toStartOf="@+id/end_line"
             app:layout_constraintStart_toStartOf="@+id/start_line"
-            app:layout_constraintTop_toBottomOf="@+id/settings_button"
-            android:text="Выйти" />
+            app:layout_constraintTop_toBottomOf="@+id/image_card"
+            android:layout_marginTop="32dp"
+            android:text="@string/exit_button_title"
+            style="@style/WhiteBorderRoundedButton"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

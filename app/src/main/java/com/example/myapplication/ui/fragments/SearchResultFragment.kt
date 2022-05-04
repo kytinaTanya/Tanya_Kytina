@@ -14,7 +14,7 @@ import com.example.myapplication.ui.activities.MainActivity.Companion.MOVIE_TYPE
 import com.example.myapplication.ui.activities.MainActivity.Companion.TV_TYPE
 import com.example.myapplication.ui.recyclerview.adapters.SearchResultRecyclerAdapter
 import com.example.myapplication.ui.recyclerview.listeners.MovieClickListener
-import com.example.myapplication.utils.setConfigVerticalLinear
+import com.example.myapplication.utils.setConfigVerticalWithInnerAndOuterDivs
 import com.example.myapplication.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -66,7 +66,12 @@ class SearchResultFragment : Fragment(), MovieClickListener, SearchViewModel.Sea
 
     private fun initRecyclerView() {
         searchListAdapter = SearchResultRecyclerAdapter(this)
-        binding.searchList.setConfigVerticalLinear(searchListAdapter, requireContext())
+        binding.searchList.setConfigVerticalWithInnerAndOuterDivs(
+            searchListAdapter,
+            requireContext(),
+            24,
+            24
+        )
     }
 
     override fun onDestroy() {

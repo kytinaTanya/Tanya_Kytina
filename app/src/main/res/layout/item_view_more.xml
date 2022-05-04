@@ -2,15 +2,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.MyApplication.NoActionBar"
+    android:theme="@style/Theme.MovieDatabase.NoActionBar"
     android:background="@color/color_view_more_item">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="150dp"
         android:gravity="center"
         android:paddingHorizontal="12dp"
-        />
+        android:textColor="@color/light_gray"/>
 
 </FrameLayout>

@@ -29,7 +29,7 @@ class SingUpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.Theme_MyApplication_NoActionBar)
+        setTheme(R.style.Theme_MovieDatabase_NoActionBar)
         binding = ActivitySingUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initFirebase()
@@ -43,20 +43,20 @@ class SingUpActivity : AppCompatActivity() {
             sessionKey = it
         }
 
-        binding.exit.setOnClickListener {
+        binding.iAlredyHaveAnAccount.setOnClickListener {
             val i = Intent(this, SingInActivity::class.java)
             startActivity(i)
         }
 
         binding.proof.setOnClickListener {
             binding.proof.visibility = View.GONE
-            binding.enter.visibility = View.VISIBLE
+            binding.signUp.visibility = View.VISIBLE
             val intent = Intent(Intent.ACTION_VIEW,
                 Uri.parse("https://www.themoviedb.org/authenticate/$requestToken"))
             startActivity(intent)
         }
 
-        binding.enter.setOnClickListener {
+        binding.signUp.setOnClickListener {
             if(checkData()) {
 
                 createAccount(binding.name.getStringText(), binding.surname.getStringText(),
