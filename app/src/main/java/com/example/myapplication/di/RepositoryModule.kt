@@ -3,6 +3,7 @@ package com.example.myapplication.di
 import com.example.myapplication.repository.impl.AccountRepositoryImpl
 import com.example.myapplication.repository.impl.DetailsRepositoryImpl
 import com.example.myapplication.repository.impl.RepositoryImpl
+import com.example.myapplication.repository.impl.UserListsRepositoryImpl
 import com.example.myapplication.repository.impl.search_screen.RatedItemsRepositoryImpl
 import com.example.myapplication.repository.impl.search_screen.SearchRepositoryImpl
 import com.example.myapplication.repository.repositories.*
@@ -33,8 +34,8 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideListRepository(service: TmdbService) : ListRepository {
-        return RepositoryImpl(service)
+    fun provideUserListsRepository(service: TmdbService) : UserListsRepository {
+        return UserListsRepositoryImpl(service)
     }
 
     @Provides

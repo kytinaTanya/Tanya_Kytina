@@ -3,21 +3,21 @@ package com.example.myapplication.ui.recyclerview.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.databinding.ItemMovieBinding
 import com.example.myapplication.models.pojo.BaseItem
 import com.example.myapplication.models.pojo.Film
 import com.example.myapplication.models.pojo.TV
+import com.example.myapplication.ui.recyclerview.itemcomparator.ItemComparator
 import com.example.myapplication.ui.recyclerview.listeners.MovieClickListener
 import com.example.myapplication.utils.setImage
 
 
 class CollectionRecyclerAdapter(val listener: MovieClickListener):
-    RecyclerView.Adapter<RecyclerView.ViewHolder>(),
+    PagingDataAdapter<BaseItem, CollectionRecyclerAdapter.MovieViewHolder>(ItemComparator),
     View.OnClickListener {
-
-    private var baseItemList: MutableList<BaseItem> = arrayListOf()
 
     class MovieViewHolder(val binding: ItemMovieBinding): RecyclerView.ViewHolder(binding.root) {
         fun bindFilm(movie: Film) {
@@ -34,28 +34,18 @@ class CollectionRecyclerAdapter(val listener: MovieClickListener):
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        binding.root.setOnClickListener(this)
-        return MovieViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        holder.itemView.tag = baseItemList[position]
-        when(baseItemList[position]) {
-            is Film -> (holder as MovieViewHolder).bindFilm(baseItemList[position] as Film)
-            is TV -> (holder as MovieViewHolder).bindTV(baseItemList[position] as TV)
+    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+        holder.itemView.tag = getItem(position)
+        when(getItem(position)) {
+            is Film -> holder.bindFilm(getItem(position) as Film)
+            is TV -> holder.bindTV(getItem(position) as TV)
         }
     }
 
-    override fun getItemCount(): Int {
-        return baseItemList.size
-    }
-
-    fun addMovies(baseItems: List<BaseItem>) {
-        baseItemList.clear()
-        baseItemList.addAll(baseItems)
-        notifyDataSetChanged()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
+        val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding.root.setOnClickListener(this)
+        return MovieViewHolder(binding)
     }
 
     override fun onClick(v: View?) {

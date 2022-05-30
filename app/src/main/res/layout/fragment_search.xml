@@ -7,44 +7,10 @@
     tools:context=".ui.fragments.SearchFragment"
     android:background="@color/very_dark_blue">
 
-    <ProgressBar
-        android:id="@+id/loading"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center" />
-
-    <LinearLayout
-        android:id="@+id/error"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/messageText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="28sp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="156dp"
-            android:gravity="center" />
-
-        <Button
-            android:id="@+id/retryBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_gravity="center_horizontal"
-            android:text="Перезагрузить"/>
-
-    </LinearLayout>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@id/loaded"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/top_line"
@@ -115,6 +81,34 @@
             tools:orientation="horizontal"
             tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
+        <ProgressBar
+            android:id="@+id/rated_movies_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rated_movies"
+            android:paddingVertical="50dp"
+            android:layout_marginTop="8dp"/>
+
+        <include
+            android:id="@+id/rated_movies_error"
+            layout="@layout/error_item"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rated_movies"
+            android:layout_marginTop="8dp"
+            android:layout_height="150dp"
+            android:layout_width="match_parent"
+            android:visibility="gone"/>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/rated_movies_barrier"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="rated_movies_list, rated_movies_progress, rated_movies_error"/>
+
         <TextView
             android:id="@+id/rated_tvs"
             android:layout_width="wrap_content"
@@ -127,7 +121,7 @@
             app:layout_constraintEnd_toStartOf="@+id/end_line"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/start_line"
-            app:layout_constraintTop_toBottomOf="@id/rated_movies_list"/>
+            app:layout_constraintTop_toBottomOf="@id/rated_movies_barrier"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rated_tvs_list"
@@ -139,6 +133,34 @@
             android:layout_marginTop="8dp"
             tools:orientation="horizontal"
             tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+        <ProgressBar
+            android:id="@+id/rated_tvs_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rated_tvs"
+            android:paddingVertical="50dp"
+            android:layout_marginTop="8dp"/>
+
+        <include
+            android:id="@+id/rated_tvs_error"
+            layout="@layout/error_item"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rated_tvs"
+            android:layout_marginTop="8dp"
+            android:layout_height="150dp"
+            android:layout_width="match_parent"
+            android:visibility="gone"/>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/rated_tvs_barrier"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="rated_tvs_list, rated_tvs_progress, rated_tvs_error"/>
 
         <TextView
             android:id="@+id/rated_episodes"
@@ -152,7 +174,7 @@
             app:layout_constraintEnd_toStartOf="@+id/end_line"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/start_line"
-            app:layout_constraintTop_toBottomOf="@id/rated_tvs_list"/>
+            app:layout_constraintTop_toBottomOf="@id/rated_tvs_barrier"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rated_episodes_list"
@@ -164,6 +186,27 @@
             android:layout_marginTop="8dp"
             tools:orientation="horizontal"
             tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+        <ProgressBar
+            android:id="@+id/rated_episodes_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rated_episodes"
+            android:paddingVertical="50dp"
+            android:layout_marginTop="8dp"/>
+
+        <include
+            android:id="@+id/rated_episodes_error"
+            layout="@layout/error_item"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rated_episodes"
+            android:layout_marginTop="8dp"
+            android:layout_height="150dp"
+            android:layout_width="match_parent"
+            android:visibility="gone"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

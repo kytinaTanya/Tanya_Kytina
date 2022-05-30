@@ -47,6 +47,14 @@
         <item name="android:textColor">@color/light_blue</item>
     </style>
 
+    <style name="NonBackgroundRoundedButton"
+        parent="Widget.AppCompat.Button.Colored">
+        <item name="android:background">@drawable/border_radio_button</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/light_blue</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
     <!--EditText styles-->
     <style name="WhiteBorderRoundedEditText" parent="Widget.AppCompat.EditText">
         <item name="android:background">@drawable/white_border_radio_edittext_states</item>

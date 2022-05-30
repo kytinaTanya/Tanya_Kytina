@@ -1,81 +1,70 @@
 package com.example.myapplication.models.lists
 
+import com.example.myapplication.models.pojo.BaseItem
 import com.example.myapplication.models.pojo.Film
 import com.example.myapplication.models.pojo.TV
 import com.google.gson.annotations.SerializedName
 
-sealed class MovieList
+sealed class MovieList {
+    abstract val page: Int
+    abstract val list: List<BaseItem>
+    abstract val totalPages: Int
+    abstract val totalResults: Int
 
-data class CreatedList(
-    @SerializedName("id")
-    val id: Int,
+    data class FavouriteMovieList(
+        @SerializedName("page")
+        override val page: Int,
 
-    @SerializedName("name")
-    val name: String,
+        @SerializedName("results")
+        override val list: List<Film>,
 
-    @SerializedName("item_count")
-    val itemCount: Int,
+        @SerializedName("total_pages")
+        override val totalPages: Int,
 
-    @SerializedName("description")
-    val description: String,
+        @SerializedName("total_results")
+        override val totalResults: Int
+    ): MovieList()
 
-    @SerializedName("list_type")
-    val listType: String
-): MovieList()
+    data class MovieWatchList(
+        @SerializedName("page")
+        override val page: Int,
 
-data class FavouriteMovieList(
-    @SerializedName("page")
-    val page: Int,
+        @SerializedName("results")
+        override val list: List<Film>,
 
-    @SerializedName("results")
-    val result: List<Film>,
+        @SerializedName("total_pages")
+        override val totalPages: Int,
 
-    @SerializedName("total_pages")
-    val totalPages: Int,
+        @SerializedName("total_results")
+        override val totalResults: Int
+    ): MovieList()
 
-    @SerializedName("total_results")
-    val totalResults: Int
-): MovieList()
+    data class FavouriteTVList(
+        @SerializedName("page")
+        override val page: Int,
 
-data class MovieWatchList(
-    @SerializedName("page")
-    val page: Int,
+        @SerializedName("results")
+        override val list: List<TV>,
 
-    @SerializedName("results")
-    val result: List<Film>,
+        @SerializedName("total_pages")
+        override val totalPages: Int,
 
-    @SerializedName("total_pages")
-    val totalPages: Int,
+        @SerializedName("total_results")
+        override val totalResults: Int
+    ): MovieList()
 
-    @SerializedName("total_results")
-    val totalResults: Int
-): MovieList()
+    data class TVWatchList(
+        @SerializedName("page")
+        override val page: Int,
 
-data class FavouriteTVList(
-    @SerializedName("page")
-    val page: Int,
+        @SerializedName("results")
+        override val list: List<TV>,
 
-    @SerializedName("results")
-    val result: List<TV>,
+        @SerializedName("total_pages")
+        override val totalPages: Int,
 
-    @SerializedName("total_pages")
-    val totalPages: Int,
-
-    @SerializedName("total_results")
-    val totalResults: Int
-): MovieList()
-
-data class TVWatchList(
-    @SerializedName("page")
-    val page: Int,
-
-    @SerializedName("results")
-    val result: List<TV>,
-
-    @SerializedName("total_pages")
-    val totalPages: Int,
-
-    @SerializedName("total_results")
-    val totalResults: Int
-): MovieList()
+        @SerializedName("total_results")
+        override val totalResults: Int
+    ): MovieList()
+}
 

@@ -4,8 +4,8 @@ import com.example.myapplication.BuildConfig
 import com.example.myapplication.models.RequestToken
 import com.example.myapplication.models.RetrofitPostToken
 import com.example.myapplication.models.SessionId
-import com.example.myapplication.models.history.*
-import com.example.myapplication.models.lists.*
+import com.example.myapplication.models.history.PostResponseStatus
+import com.example.myapplication.models.lists.MovieList
 import com.example.myapplication.models.marks.AddToWatchlistMovie
 import com.example.myapplication.models.marks.MarkAsFavouriteMovie
 import com.example.myapplication.models.marks.RatingValue
@@ -238,15 +238,6 @@ interface TmdbService {
         @Query("page") page: Int = 1
     ): Response<MoviesResponse<Person>>
 
-    @GET("account/{account_id}/lists")
-    suspend fun getCreatedList(
-        @Path("account_id") id: Int = BuildConfig.MY_ID.toInt(),
-        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
-        @Query("session_id") sessionId: String,
-        @Query("page") page: Int = 1
-    ): Response<ListResponse>
-
     @GET("account/{account_id}/favorite/movies")
     suspend fun getFavouriteMovieList(
         @Path("account_id") id: Int = BuildConfig.MY_ID.toInt(),
@@ -255,7 +246,7 @@ interface TmdbService {
         @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
         @Query("sort_by") sortBy: String = "created_at.desc",
         @Query("page") page: Int = 1
-    ): Response<FavouriteMovieList>
+    ): Response<MovieList.FavouriteMovieList>
 
     @GET("account/{account_id}/favorite/tv")
     suspend fun getFavouriteTVList(
@@ -265,7 +256,7 @@ interface TmdbService {
         @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
         @Query("sort_by") sortBy: String = "created_at.desc",
         @Query("page") page: Int = 1
-    ): Response<FavouriteTVList>
+    ): Response<MovieList.FavouriteTVList>
 
     @GET("account/{account_id}/watchlist/movies")
     suspend fun getMovieWatchlist(
@@ -275,7 +266,7 @@ interface TmdbService {
         @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
         @Query("sort_by") sortBy: String = "created_at.desc",
         @Query("page") page: Int = 1
-    ): Response<MovieWatchList>
+    ): Response<MovieList.MovieWatchList>
 
     @GET("account/{account_id}/watchlist/tv")
     suspend fun getTVWatchlist(
@@ -285,40 +276,7 @@ interface TmdbService {
         @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
         @Query("sort_by") sortBy: String = "created_at.desc",
         @Query("page") page: Int = 1
-    ): Response<TVWatchList>
-
-    @POST("list")
-    suspend fun createList(
-        @Header("Content-Type") contextType: String = BuildConfig.HEADER,
-        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Query("session_id") sessionId: String,
-        @Body body: CreatedListBody
-    ): Response<HistoryList>
-
-    @POST("list/{list_id}/add_item")
-    suspend fun addMovie(
-        @Path("list_id") id: Int,
-        @Header("Content-Type") contextType: String = BuildConfig.HEADER,
-        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Query("session_id") sessionId: String,
-        @Body body: MediaBody
-    ): Response<PostResponseStatus>
-
-    @POST("list/{list_id}/remove_item")
-    suspend fun removeMovie(
-        @Path("list_id") id: Int,
-        @Header("Content-Type") contextType: String = BuildConfig.HEADER,
-        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Query("session_id") sessionId: String,
-        @Body body: MediaBody
-    ): Response<PostResponseStatus>
-
-    @GET("list/{list_id}")
-    suspend fun detailsAboutHistoryList(
-        @Path("list_id") id: Int,
-        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Query("session_id") sessionId: String
-    ): Response<HistoryResponse>
+    ): Response<MovieList.TVWatchList>
 
     @GET("account/{account_id}/rated/movies")
     suspend fun ratedMovies(

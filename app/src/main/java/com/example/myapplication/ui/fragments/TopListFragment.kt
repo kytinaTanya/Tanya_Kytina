@@ -4,16 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentTopListBinding
 import com.example.myapplication.ui.activities.MainActivity
 import com.example.myapplication.ui.recyclerview.VerticalItemsDividerDecoration
 import com.example.myapplication.ui.recyclerview.adapters.TopListPagingAdapter
+import com.example.myapplication.ui.recyclerview.adapters.loadstate.ItemListLoadStateAdapter
 import com.example.myapplication.ui.recyclerview.listeners.MovieAndPersonListener
 import com.example.myapplication.viewmodel.MainScreenRequest
 import com.example.myapplication.viewmodel.TopListsViewModel
@@ -39,7 +42,7 @@ class TopListFragment : Fragment(), MovieAndPersonListener {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         _binding = FragmentTopListBinding.inflate(inflater, container, false)
         return binding.root
@@ -49,10 +52,13 @@ class TopListFragment : Fragment(), MovieAndPersonListener {
         super.onViewCreated(view, savedInstanceState)
 
         mAdapter = TopListPagingAdapter(this)
-
+        binding.errorButton.setOnClickListener { mAdapter.retry() }
         binding.movieList.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = mAdapter
+            adapter = mAdapter.withLoadStateHeaderAndFooter(
+                ItemListLoadStateAdapter(mAdapter::retry),
+                ItemListLoadStateAdapter(mAdapter::retry)
+            )
             addItemDecoration(VerticalItemsDividerDecoration(innerDivider = 32, outerDivider = 4))
         }
 
@@ -64,6 +70,16 @@ class TopListFragment : Fragment(), MovieAndPersonListener {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getData(requestType ?: MainScreenRequest.TOP_RATED_MOVIES).collectLatest {
                 mAdapter.submitData(it)
+            }
+
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            mAdapter.loadStateFlow.collectLatest { state ->
+                binding.progress.isVisible = state.refresh is LoadState.Loading
+                binding.movieList.isVisible = state.refresh !is LoadState.Loading
+                binding.errorText.isVisible = state.refresh is LoadState.Error
+                binding.errorButton.isVisible = state.refresh is LoadState.Error
             }
         }
     }
@@ -99,35 +115,35 @@ class TopListFragment : Fragment(), MovieAndPersonListener {
                     getString(R.string.movies_subtitle)
                 )
             MainScreenRequest.NOW_PLAYING_MOVIES ->
-                    getFormattedString(
-                        getString(R.string.now_watching_title),
-                        getString(R.string.movies_subtitle)
-                    )
+                getFormattedString(
+                    getString(R.string.now_watching_title),
+                    getString(R.string.movies_subtitle)
+                )
             MainScreenRequest.UPCOMING_MOVIES ->
-                    getFormattedString(
-                        getString(R.string.soon_title),
-                        getString(R.string.movies_subtitle)
-                    )
+                getFormattedString(
+                    getString(R.string.soon_title),
+                    getString(R.string.movies_subtitle)
+                )
             MainScreenRequest.TOP_RATED_TVS ->
-                    getFormattedString(
-                        getString(R.string.the_best_title),
-                        getString(R.string.tvs_subtitle)
-                    )
+                getFormattedString(
+                    getString(R.string.the_best_title),
+                    getString(R.string.tvs_subtitle)
+                )
             MainScreenRequest.AIRING_TODAY_TVS ->
-                    getFormattedString(
-                        getString(R.string.today_on_air),
-                        getString(R.string.tvs_subtitle)
-                    )
+                getFormattedString(
+                    getString(R.string.today_on_air),
+                    getString(R.string.tvs_subtitle)
+                )
             MainScreenRequest.ON_THE_AIR_TVS ->
-                    getFormattedString(
-                        getString(R.string.now_on_air_title),
-                        getString(R.string.tvs_subtitle)
-                    )
+                getFormattedString(
+                    getString(R.string.now_on_air_title),
+                    getString(R.string.tvs_subtitle)
+                )
             MainScreenRequest.POPULAR_TVS ->
-                    getFormattedString(
-                        getString(R.string.in_trend_title),
-                        getString(R.string.tvs_subtitle)
-                    )
+                getFormattedString(
+                    getString(R.string.in_trend_title),
+                    getString(R.string.tvs_subtitle)
+                )
             MainScreenRequest.POPULAR_PERSONS -> getString(R.string.popular_actors_title)
             else -> getString(R.string.top_list_toolbar_title)
         }

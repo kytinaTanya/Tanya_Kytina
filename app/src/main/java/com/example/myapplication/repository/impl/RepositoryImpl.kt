@@ -2,99 +2,97 @@ package com.example.myapplication.repository.impl
 
 import android.util.Log
 import com.example.myapplication.models.RetrofitPostToken
-import com.example.myapplication.models.lists.*
 import com.example.myapplication.models.pojo.Film
+import com.example.myapplication.models.pojo.MoviesResponse
 import com.example.myapplication.models.pojo.Person
 import com.example.myapplication.models.pojo.TV
 import com.example.myapplication.repository.repositories.AuthRepository
-import com.example.myapplication.repository.repositories.ListRepository
 import com.example.myapplication.repository.repositories.Repository
 import com.example.myapplication.repository.services.TmdbService
+import java.net.ConnectException
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(private val service: TmdbService) : Repository,
-    AuthRepository,
-    ListRepository {
+    AuthRepository {
 
-    override suspend fun getListOfPopularMovies() : List<Film> {
-        val response = service.getPopularMovies()
-        return if (response.isSuccessful) {
-            val responseBody = response.body()
-            responseBody?.items ?: emptyList()
-        } else {
-            emptyList()
+    override suspend fun getListOfPopularMovies() : Repository.Result {
+        return try {
+            val response = service.getPopularMovies()
+            handleFilmResult(resultBody = response.body(), isSuccessful = response.isSuccessful)
+        } catch (e: ConnectException) {
+            Repository.Result.Error
         }
     }
 
-    override suspend fun getListOfNowPlayingMovies(): List<Film> {
-        val response = service.getNowPlayingMovies()
-        return if(response.isSuccessful) {
-            response.body()?.items ?: emptyList()
-        } else {
-            emptyList()
+    override suspend fun getListOfNowPlayingMovies(): Repository.Result {
+        return try {
+            val response = service.getNowPlayingMovies()
+            return handleFilmResult(resultBody = response.body(), isSuccessful = response.isSuccessful)
+        } catch (e: ConnectException) {
+            Repository.Result.Error
         }
     }
 
-    override suspend fun getListOfUpcomingMovies(): List<Film> {
-        val response = service.getUpcomingMovies()
-        return if(response.isSuccessful) {
-            response.body()?.items ?: emptyList()
-        } else {
-            emptyList()
+    override suspend fun getListOfUpcomingMovies(): Repository.Result {
+        return try {
+            val response = service.getUpcomingMovies()
+            return handleFilmResult(resultBody = response.body(), isSuccessful = response.isSuccessful)
+        } catch (e: ConnectException) {
+            Repository.Result.Error
         }
     }
 
-    override suspend fun getListOfTopRatedMovies(): List<Film> {
-        val response = service.getTopRatedMovies()
-        return if(response.isSuccessful) {
-            response.body()?.items ?: emptyList()
-        } else {
-            emptyList()
+    override suspend fun getListOfTopRatedMovies(): Repository.Result {
+        return try {
+            val response = service.getTopRatedMovies()
+            return handleFilmResult(resultBody = response.body(), isSuccessful = response.isSuccessful)
+        } catch (e: ConnectException) {
+            Repository.Result.Error
         }
     }
 
-    override suspend fun getListOfPopularTv(): List<TV> {
-        val response = service.getPopularTV()
-        return if(response.isSuccessful) {
-            response.body()?.items ?: emptyList()
-        } else {
-            emptyList()
+    override suspend fun getListOfPopularTv(): Repository.Result {
+        return try {
+            val response = service.getPopularTV()
+            return handleTVResult(resultBody = response.body(), isSuccessful = response.isSuccessful)
+        } catch (e: ConnectException) {
+            Repository.Result.Error
         }
     }
 
-    override suspend fun getListOfOnAirTodayTV(): List<TV> {
-        val response = service.getOnAirTodayTV()
-        return if(response.isSuccessful) {
-            response.body()?.items ?: emptyList()
-        } else {
-            emptyList()
+    override suspend fun getListOfOnAirTodayTV(): Repository.Result {
+        return try {
+            val response = service.getOnAirTodayTV()
+            return handleTVResult(resultBody = response.body(), isSuccessful = response.isSuccessful)
+        } catch (e: ConnectException) {
+            Repository.Result.Error
         }
     }
 
-    override suspend fun getListOfNowOnAirTV(): List<TV> {
-        val response = service.getNowOnAirTV()
-        return if(response.isSuccessful) {
-            response.body()?.items ?: emptyList()
-        } else {
-            emptyList()
+    override suspend fun getListOfNowOnAirTV(): Repository.Result {
+        return try {
+            val response = service.getNowOnAirTV()
+            return handleTVResult(resultBody = response.body(), isSuccessful = response.isSuccessful)
+        } catch (e: ConnectException) {
+            Repository.Result.Error
         }
     }
 
-    override suspend fun getListOfTopRatedTV(): List<TV> {
-        val response = service.getTopRatedTV()
-        return if(response.isSuccessful) {
-            response.body()?.items ?: emptyList()
-        } else {
-            emptyList()
+    override suspend fun getListOfTopRatedTV(): Repository.Result {
+        return try {
+            val response = service.getTopRatedTV()
+            return handleTVResult(resultBody = response.body(), isSuccessful = response.isSuccessful)
+        } catch (e: ConnectException) {
+            Repository.Result.Error
         }
     }
 
-    override suspend fun getListOfPopularPersons(): List<Person> {
-        val response = service.getPopularPersons()
-        return if(response.isSuccessful) {
-            response.body()?.items ?: emptyList()
-        } else {
-            emptyList()
+    override suspend fun getListOfPopularPersons(): Repository.Result {
+        return try {
+            val response = service.getPopularPersons()
+            return handlePersonResult(resultBody = response.body(), isSuccessful = response.isSuccessful)
+        } catch (e: ConnectException) {
+            Repository.Result.Error
         }
     }
 
@@ -129,51 +127,42 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService) : Rep
     }
 
     companion object {
-        val EMPTY_STRING = ""
+        const val EMPTY_STRING = ""
     }
 
-    override suspend fun getCreatedLists(sessionId: String): List<CreatedList> {
-        val response = service.getCreatedList(sessionId = sessionId)
-        return if(response.isSuccessful) {
-            response.body()?.result ?: emptyList()
+    private fun handleFilmResult(resultBody: MoviesResponse<Film>?, isSuccessful: Boolean): Repository.Result {
+        return if (isSuccessful) {
+            if (resultBody?.items != null) {
+                Repository.Result.Success.FilmSuccess(resultBody.items)
+            } else {
+                Repository.Result.Error
+            }
         } else {
-            emptyList()
+            Repository.Result.Error
         }
     }
 
-    override suspend fun getFavoriteMoviesList(sessionId: String): FavouriteMovieList? {
-        val response = service.getFavouriteMovieList(sessionId = sessionId)
-        return if(response.isSuccessful) {
-            response.body()
+    private fun handleTVResult(resultBody: MoviesResponse<TV>?, isSuccessful: Boolean): Repository.Result {
+        return if (isSuccessful) {
+            if (resultBody?.items != null) {
+                Repository.Result.Success.TvSuccess(resultBody.items)
+            } else {
+                Repository.Result.Error
+            }
         } else {
-            null
+            Repository.Result.Error
         }
     }
 
-    override suspend fun getFavoriteTVsList(sessionId: String): FavouriteTVList? {
-        val response = service.getFavouriteTVList(sessionId = sessionId)
-        return if(response.isSuccessful) {
-            response.body()
+    private fun handlePersonResult(resultBody: MoviesResponse<Person>?, isSuccessful: Boolean): Repository.Result {
+        return if (isSuccessful) {
+            if (resultBody?.items != null) {
+                Repository.Result.Success.PersonSuccess(resultBody.items)
+            } else {
+                Repository.Result.Error
+            }
         } else {
-            null
-        }
-    }
-
-    override suspend fun getMovieWatchlist(sessionId: String): MovieWatchList? {
-        val response = service.getMovieWatchlist(sessionId = sessionId)
-        return if(response.isSuccessful) {
-            response.body()
-        } else {
-            null
-        }
-    }
-
-    override suspend fun getTVWatchlist(sessionId: String): TVWatchList? {
-        val response = service.getTVWatchlist(sessionId = sessionId)
-        return if(response.isSuccessful) {
-            response.body()
-        } else {
-            null
+            Repository.Result.Error
         }
     }
 }

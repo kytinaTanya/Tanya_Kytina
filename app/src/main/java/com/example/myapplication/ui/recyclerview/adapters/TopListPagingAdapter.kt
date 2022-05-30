@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.databinding.ItemMovieBinding
@@ -13,6 +12,7 @@ import com.example.myapplication.models.pojo.BaseItem
 import com.example.myapplication.models.pojo.Film
 import com.example.myapplication.models.pojo.Person
 import com.example.myapplication.models.pojo.TV
+import com.example.myapplication.ui.recyclerview.itemcomparator.ItemComparator
 import com.example.myapplication.ui.recyclerview.listeners.MovieAndPersonListener
 import com.example.myapplication.utils.setImage
 
@@ -67,22 +67,6 @@ class TopListPagingAdapter(private val listener: MovieAndPersonListener) :
             .inflate(LayoutInflater.from(parent.context), parent, false)
         binding.root.setOnClickListener(this)
         return ItemViewHolder(binding)
-    }
-
-    object ItemComparator : DiffUtil.ItemCallback<BaseItem>() {
-        override fun areItemsTheSame(oldItem: BaseItem, newItem: BaseItem): Boolean {
-            return when (oldItem) {
-                is Film -> oldItem.id == (newItem as Film).id
-                is TV -> oldItem.id == (newItem as TV).id
-                is Person -> oldItem.id == (newItem as Person).id
-                else -> oldItem == newItem
-            }
-        }
-
-        override fun areContentsTheSame(oldItem: BaseItem, newItem: BaseItem): Boolean {
-            return oldItem == newItem
-        }
-
     }
 
     override fun onClick(view: View?) {

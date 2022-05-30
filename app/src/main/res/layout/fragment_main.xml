@@ -43,6 +43,34 @@
             app:layout_constraintTop_toBottomOf="@id/popular_movies_title"
             app:layout_constraintStart_toStartOf="parent"/>
 
+        <ProgressBar
+            android:id="@+id/popular_movies_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/popular_movies_title"
+            android:paddingVertical="50dp"
+            android:layout_marginTop="16dp"/>
+
+        <include
+            android:id="@+id/popular_movies_error"
+            layout="@layout/error_item"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/popular_movies_title"
+            android:layout_marginTop="16dp"
+            android:layout_height="150dp"
+            android:layout_width="match_parent"
+            android:visibility="gone"/>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/popular_movies_barrier"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="popular_movies, popular_movies_progress, popular_movies_error"/>
+
         <TextView
             android:id="@+id/popular_tv_title"
             android:layout_width="wrap_content"
@@ -51,7 +79,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:textAppearance="@style/TextHeaderL"
-            app:layout_constraintTop_toBottomOf="@id/popular_movies"
+            app:layout_constraintTop_toBottomOf="@id/popular_movies_barrier"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
@@ -68,13 +96,41 @@
             android:id="@+id/popular_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:listitem="@layout/item_backdrop_title"
             android:layout_marginTop="16dp"
-            tools:orientation="horizontal"
-            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/popular_tv_title"
-            app:layout_constraintStart_toStartOf="parent"/>
+            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_backdrop_title"
+            tools:orientation="horizontal" />
+
+        <ProgressBar
+            android:id="@+id/popular_tv_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/popular_tv_title"
+            android:paddingVertical="70dp"
+            android:layout_marginTop="16dp"/>
+
+        <include
+            android:id="@+id/popular_tv_error"
+            layout="@layout/error_item"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/popular_tv_title"
+            android:layout_marginTop="16dp"
+            android:layout_height="150dp"
+            android:layout_width="match_parent"
+            android:visibility="gone"/>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/popular_tv_barrier"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="popular_tv, popular_tv_progress, popular_tv_error"/>
 
         <TextView
             android:id="@+id/now_playing_movies_title"
@@ -84,7 +140,7 @@
             android:textAppearance="@style/TextHeaderL"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@id/popular_tv"
+            app:layout_constraintTop_toBottomOf="@id/popular_tv_barrier"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
@@ -109,6 +165,34 @@
             app:layout_constraintTop_toBottomOf="@id/now_playing_movies_title"
             app:layout_constraintStart_toStartOf="parent"/>
 
+        <ProgressBar
+            android:id="@+id/now_playing_movies_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/now_playing_movies_title"
+            android:paddingVertical="50dp"
+            android:layout_marginTop="16dp"/>
+
+        <include
+            android:id="@+id/now_playing_movies_error"
+            layout="@layout/error_item"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/now_playing_movies_title"
+            android:layout_marginTop="16dp"
+            android:layout_height="150dp"
+            android:layout_width="match_parent"
+            android:visibility="gone"/>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/now_playing_movies_barrier"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="now_playing_movies, now_playing_movies_progress, now_playing_movies_error"/>
+
         <TextView
             android:id="@+id/upcoming_movies_title"
             android:layout_width="wrap_content"
@@ -117,7 +201,7 @@
             android:textAppearance="@style/TextHeaderL"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@id/now_playing_movies"
+            app:layout_constraintTop_toBottomOf="@id/now_playing_movies_barrier"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
@@ -142,6 +226,34 @@
             app:layout_constraintTop_toBottomOf="@id/upcoming_movies_title"
             app:layout_constraintStart_toStartOf="parent"/>
 
+        <ProgressBar
+            android:id="@+id/upcoming_movies_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/upcoming_movies_title"
+            android:paddingVertical="50dp"
+            android:layout_marginTop="16dp"/>
+
+        <include
+            android:id="@+id/upcoming_movies_error"
+            layout="@layout/error_item"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/upcoming_movies_title"
+            android:layout_marginTop="16dp"
+            android:layout_height="150dp"
+            android:layout_width="match_parent"
+            android:visibility="gone"/>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/upcoming_movies_barrier"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="upcoming_movies, upcoming_movies_progress, upcoming_movies_error"/>
+
         <TextView
             android:id="@+id/popular_persons_title"
             android:layout_width="wrap_content"
@@ -150,7 +262,7 @@
             android:textAppearance="@style/TextHeaderL"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@id/upcoming_movies"
+            app:layout_constraintTop_toBottomOf="@id/upcoming_movies_barrier"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -165,6 +277,34 @@
             app:layout_constraintTop_toBottomOf="@id/popular_persons_title"
             app:layout_constraintStart_toStartOf="parent"/>
 
+        <ProgressBar
+            android:id="@+id/popular_persons_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/popular_persons_title"
+            android:paddingVertical="50dp"
+            android:layout_marginTop="16dp"/>
+
+        <include
+            android:id="@+id/popular_persons_error"
+            layout="@layout/error_item"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/popular_persons_title"
+            android:layout_marginTop="16dp"
+            android:layout_height="150dp"
+            android:layout_width="match_parent"
+            android:visibility="gone"/>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/popular_persons_barrier"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="popular_persons, popular_persons_progress, popular_persons_error"/>
+
         <TextView
             android:id="@+id/top_rated_tv_title"
             android:layout_width="wrap_content"
@@ -173,7 +313,7 @@
             android:layout_marginTop="24dp"
             android:text="@string/the_best_title"
             android:textAppearance="@style/TextHeaderL"
-            app:layout_constraintTop_toBottomOf="@id/popular_persons"
+            app:layout_constraintTop_toBottomOf="@id/popular_persons_barrier"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
@@ -198,6 +338,34 @@
             app:layout_constraintTop_toBottomOf="@id/top_rated_tv_title"
             app:layout_constraintStart_toStartOf="parent"/>
 
+        <ProgressBar
+            android:id="@+id/top_rated_tv_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/top_rated_tv_title"
+            android:paddingVertical="50dp"
+            android:layout_marginTop="16dp"/>
+
+        <include
+            android:id="@+id/top_rated_tv_error"
+            layout="@layout/error_item"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/top_rated_tv_title"
+            android:layout_marginTop="16dp"
+            android:layout_height="150dp"
+            android:layout_width="match_parent"
+            android:visibility="gone"/>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/top_rated_tv_barrier"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="top_rated_tv, top_rated_tv_progress, top_rated_tv_error"/>
+
         <TextView
             android:id="@+id/on_air_today_tv_title"
             android:layout_width="wrap_content"
@@ -206,7 +374,7 @@
             android:textAppearance="@style/TextHeaderL"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@id/top_rated_tv"
+            app:layout_constraintTop_toBottomOf="@id/top_rated_tv_barrier"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
@@ -231,6 +399,34 @@
             app:layout_constraintTop_toBottomOf="@id/on_air_today_tv_title"
             app:layout_constraintStart_toStartOf="parent"/>
 
+        <ProgressBar
+            android:id="@+id/on_air_today_tv_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/on_air_today_tv_title"
+            android:paddingVertical="50dp"
+            android:layout_marginTop="16dp"/>
+
+        <include
+            android:id="@+id/on_air_today_tv_error"
+            layout="@layout/error_item"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/on_air_today_tv_title"
+            android:layout_marginTop="16dp"
+            android:layout_height="150dp"
+            android:layout_width="match_parent"
+            android:visibility="gone"/>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/on_air_today_tv_barrier"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="on_air_today_tv, on_air_today_tv_progress, on_air_today_tv_error"/>
+
         <TextView
             android:id="@+id/top_rated_movies_title"
             android:layout_width="wrap_content"
@@ -239,7 +435,7 @@
             android:textAppearance="@style/TextHeaderL"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@id/on_air_today_tv"
+            app:layout_constraintTop_toBottomOf="@id/on_air_today_tv_barrier"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
@@ -264,6 +460,34 @@
             app:layout_constraintTop_toBottomOf="@id/top_rated_movies_title"
             app:layout_constraintStart_toStartOf="parent"/>
 
+        <ProgressBar
+            android:id="@+id/top_rated_movies_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/top_rated_movies_title"
+            android:paddingVertical="50dp"
+            android:layout_marginTop="16dp"/>
+
+        <include
+            android:id="@+id/top_rated_movies_error"
+            layout="@layout/error_item"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/top_rated_movies_title"
+            android:layout_marginTop="16dp"
+            android:layout_height="150dp"
+            android:layout_width="match_parent"
+            android:visibility="gone"/>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/top_rated_movies_barrier"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="top_rated_movies, top_rated_movies_progress, top_rated_movies_error"/>
+
         <TextView
             android:id="@+id/now_on_air_tv_title"
             android:layout_width="wrap_content"
@@ -272,7 +496,7 @@
             android:textAppearance="@style/TextHeaderL"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@id/top_rated_movies"
+            app:layout_constraintTop_toBottomOf="@id/top_rated_movies_barrier"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
@@ -297,6 +521,27 @@
             tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/now_on_air_tv_title"
             app:layout_constraintStart_toStartOf="parent"/>
+
+        <ProgressBar
+            android:id="@+id/now_on_air_tv_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/now_on_air_tv_title"
+            android:paddingVertical="50dp"
+            android:layout_marginTop="16dp"/>
+
+        <include
+            android:id="@+id/now_on_air_tv_error"
+            layout="@layout/error_item"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/now_on_air_tv_title"
+            android:layout_marginTop="16dp"
+            android:layout_height="150dp"
+            android:layout_width="match_parent"
+            android:visibility="gone"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

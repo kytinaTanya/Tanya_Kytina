@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.myapplication.databinding.FragmentMainBinding
+import com.example.myapplication.states.MainViewState
 import com.example.myapplication.ui.activities.MainActivity.Companion.MOVIE_TYPE
 import com.example.myapplication.ui.activities.MainActivity.Companion.PERSON_TYPE
 import com.example.myapplication.ui.activities.MainActivity.Companion.TV_TYPE
@@ -59,57 +60,143 @@ class MainFragment : Fragment(), MoviePersonAndViewMoreClickListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        showProgress(true)
         initRecyclerViews()
-        viewModel.moviesInTrend.observe(viewLifecycleOwner) { movies ->
-            filmsInTrendAdapter.appendMovies(movies)
-//            showProgress(!isAllLoaded())
+        initUI()
+        viewModel.moviesInTrend.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                MainViewState.Error ->
+                    showPopularMovies(result = false, progress = false, error = true)
+                MainViewState.Loading ->
+                    showPopularMovies(result = false, progress = true, error = false)
+                is MainViewState.Success.FilmSuccess -> {
+                    showPopularMovies(result = true, progress = false, error = false)
+                    filmsInTrendAdapter.appendMovies(result.list)
+                }
+            }
         }
 
-        viewModel.moviesNowPlaying.observe(viewLifecycleOwner) { movies ->
-            filmsNowPlayingAdapter.appendMovies(movies)
-//            showProgress(!isAllLoaded())
+        viewModel.moviesNowPlaying.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                MainViewState.Error ->
+                    showNowPlayingMovies(result = false, progress = false, error = true)
+                MainViewState.Loading ->
+                    showNowPlayingMovies(result = false, progress = true, error = false)
+                is MainViewState.Success.FilmSuccess -> {
+                    showNowPlayingMovies(result = true, progress = false, error = false)
+                    filmsNowPlayingAdapter.appendMovies(result.list)
+                }
+            }
         }
 
-        viewModel.moviesUpcoming.observe(viewLifecycleOwner) { movies ->
-            filmsUpcomingAdapter.appendMovies(movies)
-//            showProgress(!isAllLoaded())
+        viewModel.moviesUpcoming.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                MainViewState.Error ->
+                    showUpcomingMovies(result = false, progress = false, error = true)
+                MainViewState.Loading ->
+                    showUpcomingMovies(result = false, progress = true, error = false)
+                is MainViewState.Success.FilmSuccess -> {
+                    showUpcomingMovies(result = true, progress = false, error = false)
+                    filmsUpcomingAdapter.appendMovies(result.list)
+                }
+            }
         }
 
-        viewModel.popularTV.observe(viewLifecycleOwner) { tv ->
-            tvPopularAdapter.appendMovies(tv)
-//            showProgress(!isAllLoaded())
+        viewModel.popularTV.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                MainViewState.Error ->
+                    showPopularTvs(result = false, progress = false, error = true)
+                MainViewState.Loading ->
+                    showPopularTvs(result = false, progress = true, error = false)
+                is MainViewState.Success.TvSuccess -> {
+                    showPopularTvs(result = true, progress = false, error = false)
+                    tvPopularAdapter.appendMovies(result.list)
+                }
+            }
         }
 
-        viewModel.topRatedTV.observe(viewLifecycleOwner) { tv ->
-            tvBestAdapter.appendMovies(tv)
-//            showProgress(!isAllLoaded())
+        viewModel.topRatedTV.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                MainViewState.Error ->
+                    showTopRatedTvs(result = false, progress = false, error = true)
+                MainViewState.Loading ->
+                    showTopRatedTvs(result = false, progress = true, error = false)
+                is MainViewState.Success.TvSuccess -> {
+                    showTopRatedTvs(result = true, progress = false, error = false)
+                    tvBestAdapter.appendMovies(result.list)
+                }
+            }
         }
 
-        viewModel.nowOnAirTV.observe(viewLifecycleOwner) { tv ->
-            tvNowOnAirAdapter.appendMovies(tv)
-//            showProgress(!isAllLoaded())
+        viewModel.nowOnAirTV.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                MainViewState.Error ->
+                    showNowOnAirTvs(result = false, progress = false, error = true)
+                MainViewState.Loading ->
+                    showNowOnAirTvs(result = false, progress = true, error = false)
+                is MainViewState.Success.TvSuccess -> {
+                    showNowOnAirTvs(result = true, progress = false, error = false)
+                    tvNowOnAirAdapter.appendMovies(result.list)
+                }
+            }
         }
 
-        viewModel.onAirTodayTV.observe(viewLifecycleOwner) { tv ->
-            tvTodayOnAirAdapter.appendMovies(tv)
-//            showProgress(!isAllLoaded())
+        viewModel.onAirTodayTV.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                MainViewState.Error ->
+                    showOnAirTodayTvs(result = false, progress = false, error = true)
+                MainViewState.Loading ->
+                    showOnAirTodayTvs(result = false, progress = true, error = false)
+                is MainViewState.Success.TvSuccess -> {
+                    showOnAirTodayTvs(result = true, progress = false, error = false)
+                    tvTodayOnAirAdapter.appendMovies(result.list)
+                }
+            }
         }
 
-        viewModel.moviesTopRated.observe(viewLifecycleOwner) { movies ->
-            filmsBestAdapter.appendMovies(movies)
-//            showProgress(!isAllLoaded())
+        viewModel.moviesTopRated.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                MainViewState.Error ->
+                    showTopRatedMovies(result = false, progress = false, error = true)
+                MainViewState.Loading ->
+                    showTopRatedMovies(result = false, progress = true, error = false)
+                is MainViewState.Success.FilmSuccess -> {
+                    showTopRatedMovies(result = true, progress = false, error = false)
+                    filmsBestAdapter.appendMovies(result.list)
+                }
+            }
         }
 
-        viewModel.popularPersons.observe(viewLifecycleOwner) { persons ->
-            personPopularAdapter.appendMovies(persons)
-//            showProgress(!isAllLoaded())
+        viewModel.popularPersons.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                MainViewState.Error ->
+                    showPopularPersons(result = false, progress = false, error = true)
+                MainViewState.Loading ->
+                    showPopularPersons(result = false, progress = true, error = false)
+                is MainViewState.Success.PersonSuccess -> {
+                    showPopularPersons(result = true, progress = false, error = false)
+                    personPopularAdapter.appendMovies(result.list)
+                }
+            }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun initUI() {
+        binding.apply {
+            popularMoviesError.errorButton.setOnClickListener { viewModel.loadMoviesInTrend() }
+            upcomingMoviesError.errorButton.setOnClickListener { viewModel.loadUpcomingMovies() }
+            popularTvError.errorButton.setOnClickListener { viewModel.loadPopularTV() }
+            nowPlayingMoviesError.errorButton.setOnClickListener { viewModel.loadNowPlayingMovies() }
+            topRatedTvError.errorButton.setOnClickListener { viewModel.loadTopRatedTV() }
+            nowOnAirTvError.errorButton.setOnClickListener { viewModel.loadNowOnAirTV() }
+            onAirTodayTvError.errorButton.setOnClickListener { viewModel.loadOnAirTodayTV() }
+            topRatedMoviesError.errorButton.setOnClickListener { viewModel.loadTopRatedMovies() }
+            popularPersonsError.errorButton.setOnClickListener { viewModel.loadPopularPersons() }
+        }
     }
 
     private fun initRecyclerViews() {
@@ -161,24 +248,63 @@ class MainFragment : Fragment(), MoviePersonAndViewMoreClickListener {
         view?.findNavController()?.navigate(action)
     }
 
-//    private fun showProgress(show: Boolean) {
-//        if (show) {
-//            binding.apply {
-//                loaded.visibility = View.GONE
-//                loading.visibility = View.VISIBLE
-//            }
-//        } else {
-//            binding.apply {
-//                loaded.visibility = View.VISIBLE
-//                loading.visibility = View.GONE
-//            }
-//        }
-//    }
-//
-//    private fun isAllLoaded() : Boolean {
-//        loaded++
-//        return loaded >= 8
-//    }
+    private fun showPopularMovies(result: Boolean, progress: Boolean, error: Boolean) {
+        showView(binding.popularMovies, result)
+        showView(binding.popularMoviesProgress, progress)
+        showView(binding.popularMoviesError.errorView, error)
+    }
+
+    private fun showPopularTvs(result: Boolean, progress: Boolean, error: Boolean) {
+        showView(binding.popularTv, result)
+        showView(binding.popularTvProgress, progress)
+        showView(binding.popularTvError.errorView, error)
+    }
+
+    private fun showTopRatedTvs(result: Boolean, progress: Boolean, error: Boolean) {
+        showView(binding.topRatedTv, result)
+        showView(binding.topRatedTvProgress, progress)
+        showView(binding.topRatedTvError.errorView, error)
+    }
+
+    private fun showNowOnAirTvs(result: Boolean, progress: Boolean, error: Boolean) {
+        showView(binding.nowOnAirTv, result)
+        showView(binding.nowOnAirTvProgress, progress)
+        showView(binding.nowOnAirTvError.errorView, error)
+    }
+
+    private fun showOnAirTodayTvs(result: Boolean, progress: Boolean, error: Boolean) {
+        showView(binding.onAirTodayTv, result)
+        showView(binding.onAirTodayTvProgress, progress)
+        showView(binding.onAirTodayTvError.errorView, error)
+    }
+
+    private fun showNowPlayingMovies(result: Boolean, progress: Boolean, error: Boolean) {
+        showView(binding.nowPlayingMovies, result)
+        showView(binding.nowPlayingMoviesProgress, progress)
+        showView(binding.nowPlayingMoviesError.errorView, error)
+    }
+
+    private fun showUpcomingMovies(result: Boolean, progress: Boolean, error: Boolean) {
+        showView(binding.upcomingMovies, result)
+        showView(binding.upcomingMoviesProgress, progress)
+        showView(binding.upcomingMoviesError.errorView, error)
+    }
+
+    private fun showTopRatedMovies(result: Boolean, progress: Boolean, error: Boolean) {
+        showView(binding.topRatedMovies, result)
+        showView(binding.topRatedMoviesProgress, progress)
+        showView(binding.topRatedMoviesError.errorView, error)
+    }
+
+    private fun showPopularPersons(result: Boolean, progress: Boolean, error: Boolean) {
+        showView(binding.popularPersons, result)
+        showView(binding.popularPersonsProgress, progress)
+        showView(binding.popularPersonsError.errorView, error)
+    }
+
+    private fun showView(view: View, show: Boolean) {
+        view.visibility = if (show) View.VISIBLE else View.GONE
+    }
 
     companion object {
         const val INNER_DIV = 24

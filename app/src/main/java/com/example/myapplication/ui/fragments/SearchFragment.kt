@@ -9,9 +9,9 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentSearchBinding
 import com.example.myapplication.firebase.USER
+import com.example.myapplication.states.SearchScreenViewState
 import com.example.myapplication.ui.activities.MainActivity
 import com.example.myapplication.ui.recyclerview.adapters.HistoryRecyclerAdapter
 import com.example.myapplication.ui.recyclerview.listeners.MovieAndEpisodeListener
@@ -20,7 +20,7 @@ import com.example.myapplication.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchFragment : Fragment(), MovieAndEpisodeListener, SearchViewModel.SearchView {
+class SearchFragment : Fragment(), MovieAndEpisodeListener {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
@@ -32,20 +32,10 @@ class SearchFragment : Fragment(), MovieAndEpisodeListener, SearchViewModel.Sear
     private var loaded: Int = 0
     private val viewModel: SearchViewModel by viewModels()
 
-    override var showError: (error: SearchViewModel.ErrorType) -> Unit = { error ->
-        when (error) {
-            SearchViewModel.ErrorType.NO_RESULT ->
-                showErrorMessage(getString(R.string.result_error))
-            SearchViewModel.ErrorType.SERVER_ERROR ->
-                showErrorMessage(getString(R.string.server_error))
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sessionKey = USER.sessionKey
         Log.d("USER LIST ID", "SESSION ID $sessionKey")
-        viewModel.init(this)
         viewModel.loadRatedItems(USER.sessionKey)
     }
 
@@ -58,24 +48,41 @@ class SearchFragment : Fragment(), MovieAndEpisodeListener, SearchViewModel.Sear
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        showProgress(true)
         initRecyclerView()
         initDataObservers()
         initUI()
     }
 
     private fun initDataObservers() {
-        viewModel.ratedFilms.observe(viewLifecycleOwner) { films ->
-            ratedMoviesAdapter.appendFilms(films)
-            showProgress(!isAllLoaded())
+        viewModel.ratedFilms.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                SearchScreenViewState.Error -> showRatedFilms(View.GONE, View.GONE, View.VISIBLE)
+                SearchScreenViewState.Loading -> showRatedFilms(View.GONE, View.VISIBLE, View.GONE)
+                is SearchScreenViewState.Success.FilmSuccess -> {
+                    showRatedFilms(View.VISIBLE, View.GONE, View.GONE)
+                    ratedMoviesAdapter.appendFilms(result.films)
+                }
+            }
         }
-        viewModel.ratedTVs.observe(viewLifecycleOwner) { tvs ->
-            ratedTvsAdapter.appendFilms(tvs)
-            showProgress(!isAllLoaded())
+        viewModel.ratedTVs.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                SearchScreenViewState.Error -> showRatedTvs(View.GONE, View.GONE, View.VISIBLE)
+                SearchScreenViewState.Loading -> showRatedTvs(View.GONE, View.VISIBLE, View.GONE)
+                is SearchScreenViewState.Success.TvSuccess -> {
+                    showRatedTvs(View.VISIBLE, View.GONE, View.GONE)
+                    ratedTvsAdapter.appendFilms(result.tvs)
+                }
+            }
         }
-        viewModel.ratedEpisodes.observe(viewLifecycleOwner) { eps ->
-            ratedEpisodesAdapter.appendFilms(eps)
-            showProgress(!isAllLoaded())
+        viewModel.ratedEpisodes.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                SearchScreenViewState.Error -> showRatedEpisodes(View.GONE, View.GONE, View.VISIBLE)
+                SearchScreenViewState.Loading -> showRatedEpisodes(View.GONE, View.VISIBLE, View.GONE)
+                is SearchScreenViewState.Success.EpisodeSuccess -> {
+                    showRatedEpisodes(View.VISIBLE, View.GONE, View.GONE)
+                    ratedEpisodesAdapter.appendFilms(result.episodes)
+                }
+            }
         }
     }
 
@@ -93,9 +100,9 @@ class SearchFragment : Fragment(), MovieAndEpisodeListener, SearchViewModel.Sear
                 val action = SearchFragmentDirections.actionSearchPageToSearchResultFragment(result)
                 view?.findNavController()?.navigate(action)
             }
-            retryBtn.setOnClickListener {
-                retry()
-            }
+            ratedMoviesError.errorButton.setOnClickListener { viewModel.loadRatedFilms(USER.sessionKey) }
+            ratedTvsError.errorButton.setOnClickListener { viewModel.loadRatedTvs(USER.sessionKey) }
+            ratedEpisodesError.errorButton.setOnClickListener { viewModel.loadRatedEpisodes(USER.sessionKey) }
         }
     }
 
@@ -133,38 +140,27 @@ class SearchFragment : Fragment(), MovieAndEpisodeListener, SearchViewModel.Sear
         view?.findNavController()?.navigate(action)
     }
 
-    private fun showProgress(show: Boolean) {
-        if (show) {
-            binding.apply {
-                loaded.visibility = View.GONE
-                error.visibility = View.GONE
-                loading.visibility = View.VISIBLE
-            }
-        } else {
-            binding.apply {
-                loaded.visibility = View.VISIBLE
-                loading.visibility = View.GONE
-            }
-        }
-    }
-
-    private fun showErrorMessage(message: String) {
-        showProgress(false)
+    private fun showRatedFilms(result: Int, loading: Int, error: Int) {
         binding.apply {
-            loaded.visibility = View.GONE
-            error.visibility = View.VISIBLE
-            messageText.text = message
+            ratedMoviesList.visibility = result
+            ratedMoviesProgress.visibility = loading
+            ratedMoviesError.errorView.visibility = error
         }
     }
 
-    private fun isAllLoaded() : Boolean {
-        loaded++
-        return loaded >= 3
+    private fun showRatedTvs(result: Int, loading: Int, error: Int) {
+        binding.apply {
+            ratedTvsList.visibility = result
+            ratedTvsProgress.visibility = loading
+            ratedTvsError.errorView.visibility = error
+        }
     }
 
-    private fun retry() {
-        loaded = 0
-        viewModel.loadRatedItems(USER.sessionKey)
-        showProgress(true)
+    private fun showRatedEpisodes(result: Int, loading: Int, error: Int) {
+        binding.apply {
+            ratedEpisodesList.visibility = result
+            ratedEpisodesProgress.visibility = loading
+            ratedEpisodesError.errorView.visibility = error
+        }
     }
 }

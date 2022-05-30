@@ -15,10 +15,39 @@
         app:title="@string/top_list_toolbar_title"
         android:background="@color/very_dark_blue"/>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/movie_list"
-        />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/movie_list" />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/error_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/server_error"
+            android:textSize="24sp"
+            android:paddingHorizontal="36dp"
+            android:layout_gravity="center"
+            android:textAlignment="center"/>
+
+        <Button
+            android:id="@+id/error_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/repeat_button_title"
+            style="@style/NonBackgroundRoundedButton"
+            android:layout_gravity="center"
+            android:layout_marginTop="56dp"/>
+    </FrameLayout>
 
 </LinearLayout>

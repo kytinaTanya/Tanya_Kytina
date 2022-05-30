@@ -5,14 +5,16 @@ import com.example.myapplication.models.pojo.Film
 import com.example.myapplication.models.pojo.TV
 
 interface RatedItemsRepository {
-    suspend fun execute(sessionId: String): RatedItemsRepository.Result
+    suspend fun executeLoadingRatedFilms(sessionId: String): Result
+    suspend fun executeLoadingRatedTvs(sessionId: String): Result
+    suspend fun executeLoadingRatedEpisodes(sessionId: String): Result
 
     sealed class Result {
-        data class Success(
-            val movies: List<Film>,
-            val tvs: List<TV>,
-            val episodes: List<Episode>
-        ) : RatedItemsRepository.Result()
+        sealed class Success : RatedItemsRepository.Result() {
+            data class FilmSuccess(val films: List<Film>) : Success()
+            data class TvSuccess(val tvs: List<TV>) : Success()
+            data class EpisodesSuccess(val episodes: List<Episode>) : Success()
+        }
         object ServerError : RatedItemsRepository.Result()
     }
 }

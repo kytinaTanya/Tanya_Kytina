@@ -28,4 +28,6 @@
     <string name="information_title">Информация</string>
     <string name="annotation_title">Описание</string>
     <string name="in_main_roles_title">В главных ролях</string>
+    <string name="repeat_button_title">Повторить</string>
+    <string name="something_went_wrong">Что-то пошло не так.</string>
 </resources>

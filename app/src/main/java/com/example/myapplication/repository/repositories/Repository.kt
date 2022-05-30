@@ -3,16 +3,24 @@ package com.example.myapplication.repository.repositories
 import com.example.myapplication.models.pojo.Film
 import com.example.myapplication.models.pojo.Person
 import com.example.myapplication.models.pojo.TV
-import com.example.myapplication.repository.States
 
 interface Repository {
-    suspend fun getListOfPopularMovies() : List<Film>
-    suspend fun getListOfNowPlayingMovies() : List<Film>
-    suspend fun getListOfUpcomingMovies() : List<Film>
-    suspend fun getListOfTopRatedMovies() : List<Film>
-    suspend fun getListOfPopularTv() : List<TV>
-    suspend fun getListOfOnAirTodayTV() : List<TV>
-    suspend fun getListOfNowOnAirTV() : List<TV>
-    suspend fun getListOfTopRatedTV() : List<TV>
-    suspend fun getListOfPopularPersons() : List<Person>
+    suspend fun getListOfPopularMovies() : Result
+    suspend fun getListOfNowPlayingMovies() : Result
+    suspend fun getListOfUpcomingMovies() : Result
+    suspend fun getListOfTopRatedMovies() : Result
+    suspend fun getListOfPopularTv() : Result
+    suspend fun getListOfOnAirTodayTV() : Result
+    suspend fun getListOfNowOnAirTV() : Result
+    suspend fun getListOfTopRatedTV() : Result
+    suspend fun getListOfPopularPersons() : Result
+
+    sealed class Result {
+        sealed class Success : Repository.Result() {
+            data class FilmSuccess(val list: List<Film>) : Success()
+            data class TvSuccess(val list: List<TV>) : Success()
+            data class PersonSuccess(val list: List<Person>) : Success()
+        }
+        object Error : Repository.Result()
+    }
 }
