@@ -9,10 +9,10 @@ import com.example.myapplication.databinding.ItemBackdropTitleBinding
 import com.example.myapplication.models.pojo.BaseItem
 import com.example.myapplication.models.pojo.Film
 import com.example.myapplication.models.pojo.TV
-import com.example.myapplication.ui.recyclerview.listeners.MovieClickListener
+import com.example.myapplication.ui.recyclerview.listeners.MovieAndTvClickListener
 import com.example.myapplication.utils.setImage
 
-class RecommendationRecyclerAdapter(val listener: MovieClickListener):
+class RecommendationRecyclerAdapter(val listener: MovieAndTvClickListener):
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
 
     private val recommendations: MutableList<BaseItem> = arrayListOf()

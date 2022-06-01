@@ -143,7 +143,7 @@ interface TmdbService {
         @Path("season_number") seasonNum: Int,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE
-    ) : Response<SeasonDetails>
+    ) : Response<BaseItemDetails.SeasonDetails>
 
     @GET("tv/{tv_id}/season/{season_number}/episode/{episode_number}")
     suspend fun getEpisodeDetails(
@@ -152,14 +152,14 @@ interface TmdbService {
         @Path("episode_number") episodeNum: Int,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE
-    ): Response<EpisodeDetails>
+    ): Response<BaseItemDetails.EpisodeDetails>
 
     @GET("collection/{collection_id}")
     suspend fun getCollectionDetails(
         @Path("collection_id") id: Int,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE
-    ): Response<MovieCollection>
+    ): Response<BaseItemDetails.MovieCollection>
 
     @GET("authentication/token/new")
     suspend fun getRequestToken(
@@ -388,6 +388,27 @@ interface TmdbService {
     @DELETE("tv/{tv_id}/rating")
     suspend fun deleteTvRating(
         @Path("tv_id") id: Long,
+        @Header("Content-Type") contextType: String = BuildConfig.HEADER,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("session_id") sessionId: String
+    ): Response<PostResponseStatus>
+
+    @POST("tv/{tv_id}/season/{season_number}/episode/{episode_number}/rating")
+    suspend fun rateEpisode(
+        @Path("tv_id") tvId: Long,
+        @Path("season_number") season: Int,
+        @Path("episode_number") episode: Int,
+        @Header("Content-Type") contextType: String = BuildConfig.HEADER,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("session_id") sessionId: String,
+        @Body body: RatingValue
+    ): Response<PostResponseStatus>
+
+    @DELETE("tv/{tv_id}/season/{season_number}/episode/{episode_number}/rating")
+    suspend fun deleteEpisodeRating(
+        @Path("tv_id") tvId: Long,
+        @Path("season_number") season: Int,
+        @Path("episode_number") episode: Int,
         @Header("Content-Type") contextType: String = BuildConfig.HEADER,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("session_id") sessionId: String

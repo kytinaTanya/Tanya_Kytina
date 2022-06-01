@@ -11,11 +11,11 @@ import com.example.myapplication.models.pojo.BaseItem
 import com.example.myapplication.models.pojo.Film
 import com.example.myapplication.models.pojo.TV
 import com.example.myapplication.ui.recyclerview.itemcomparator.ItemComparator
-import com.example.myapplication.ui.recyclerview.listeners.MovieClickListener
+import com.example.myapplication.ui.recyclerview.listeners.MovieAndTvClickListener
 import com.example.myapplication.utils.setImage
 
 
-class CollectionRecyclerAdapter(val listener: MovieClickListener):
+class CollectionRecyclerAdapter(val listener: MovieAndTvClickListener):
     PagingDataAdapter<BaseItem, CollectionRecyclerAdapter.MovieViewHolder>(ItemComparator),
     View.OnClickListener {
 

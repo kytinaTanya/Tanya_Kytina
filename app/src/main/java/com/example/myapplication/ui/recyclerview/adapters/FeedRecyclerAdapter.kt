@@ -12,12 +12,12 @@ import com.example.myapplication.databinding.ItemPersonBinding
 import com.example.myapplication.databinding.ItemPosterBinding
 import com.example.myapplication.databinding.ItemViewMoreBinding
 import com.example.myapplication.models.pojo.*
-import com.example.myapplication.ui.recyclerview.listeners.MoviePersonAndViewMoreClickListener
+import com.example.myapplication.ui.recyclerview.listeners.MoviePersonAndViewMoreAndTvClickListener
 import com.example.myapplication.utils.setImage
 import com.example.myapplication.viewmodel.MainScreenRequest
 
 class FeedRecyclerAdapter(
-    private val listener: MoviePersonAndViewMoreClickListener,
+    private val listener: MoviePersonAndViewMoreAndTvClickListener,
     private val request: MainScreenRequest,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
 

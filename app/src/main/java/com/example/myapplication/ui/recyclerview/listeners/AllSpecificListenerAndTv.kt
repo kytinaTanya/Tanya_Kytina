@@ -1,0 +1,4 @@
+package com.example.myapplication.ui.recyclerview.listeners
+
+interface AllSpecificListenerAndTv: MovieAndTvClickListener, EpisodeClickListener, PersonClickListener, SeasonAndCollectionClickListener, MovieAndTvAndEpisodeListener {
+}

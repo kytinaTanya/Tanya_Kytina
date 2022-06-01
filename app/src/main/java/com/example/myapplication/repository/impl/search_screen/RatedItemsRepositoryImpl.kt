@@ -2,7 +2,10 @@ package com.example.myapplication.repository.impl.search_screen
 
 import com.example.myapplication.repository.repositories.search_screen.RatedItemsRepository
 import com.example.myapplication.repository.services.TmdbService
+import retrofit2.HttpException
 import java.net.ConnectException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 class RatedItemsRepositoryImpl @Inject constructor(val service: TmdbService): RatedItemsRepository {
@@ -15,7 +18,13 @@ class RatedItemsRepositoryImpl @Inject constructor(val service: TmdbService): Ra
             } else {
                 RatedItemsRepository.Result.ServerError
             }
+        } catch (e: HttpException) {
+            RatedItemsRepository.Result.ServerError
         } catch (e: ConnectException) {
+            RatedItemsRepository.Result.ServerError
+        } catch (e: UnknownHostException) {
+            RatedItemsRepository.Result.ServerError
+        } catch (e: SocketTimeoutException) {
             RatedItemsRepository.Result.ServerError
         }
     }
@@ -28,7 +37,13 @@ class RatedItemsRepositoryImpl @Inject constructor(val service: TmdbService): Ra
             } else {
                 RatedItemsRepository.Result.ServerError
             }
+        } catch (e: HttpException) {
+            RatedItemsRepository.Result.ServerError
         } catch (e: ConnectException) {
+            RatedItemsRepository.Result.ServerError
+        } catch (e: UnknownHostException) {
+            RatedItemsRepository.Result.ServerError
+        } catch (e: SocketTimeoutException) {
             RatedItemsRepository.Result.ServerError
         }
     }
@@ -41,7 +56,13 @@ class RatedItemsRepositoryImpl @Inject constructor(val service: TmdbService): Ra
             } else {
                 RatedItemsRepository.Result.ServerError
             }
+        } catch (e: HttpException) {
+            RatedItemsRepository.Result.ServerError
         } catch (e: ConnectException) {
+            RatedItemsRepository.Result.ServerError
+        } catch (e: UnknownHostException) {
+            RatedItemsRepository.Result.ServerError
+        } catch (e: SocketTimeoutException) {
             RatedItemsRepository.Result.ServerError
         }
     }

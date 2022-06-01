@@ -9,18 +9,17 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.myapplication.databinding.FragmentMainBinding
 import com.example.myapplication.states.MainViewState
-import com.example.myapplication.ui.activities.MainActivity.Companion.MOVIE_TYPE
-import com.example.myapplication.ui.activities.MainActivity.Companion.PERSON_TYPE
-import com.example.myapplication.ui.activities.MainActivity.Companion.TV_TYPE
 import com.example.myapplication.ui.recyclerview.adapters.FeedRecyclerAdapter
-import com.example.myapplication.ui.recyclerview.listeners.MoviePersonAndViewMoreClickListener
+import com.example.myapplication.ui.recyclerview.listeners.MoviePersonAndViewMoreAndTvClickListener
+import com.example.myapplication.utils.hideAnimated
 import com.example.myapplication.utils.setConfigHorizontalWithInnerAndOuterDivs
+import com.example.myapplication.utils.showAnimated
 import com.example.myapplication.viewmodel.MainScreenRequest
 import com.example.myapplication.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainFragment : Fragment(), MoviePersonAndViewMoreClickListener {
+class MainFragment : Fragment(), MoviePersonAndViewMoreAndTvClickListener {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
@@ -33,7 +32,6 @@ class MainFragment : Fragment(), MoviePersonAndViewMoreClickListener {
     lateinit var tvTodayOnAirAdapter: FeedRecyclerAdapter
     lateinit var filmsBestAdapter: FeedRecyclerAdapter
     lateinit var personPopularAdapter: FeedRecyclerAdapter
-    private var loaded: Int = 0
 
     private val viewModel: MainViewModel by activityViewModels()
 
@@ -64,12 +62,20 @@ class MainFragment : Fragment(), MoviePersonAndViewMoreClickListener {
         initUI()
         viewModel.moviesInTrend.observe(viewLifecycleOwner) { result ->
             when (result) {
-                MainViewState.Error ->
-                    showPopularMovies(result = false, progress = false, error = true)
-                MainViewState.Loading ->
-                    showPopularMovies(result = false, progress = true, error = false)
+                MainViewState.Error -> {
+                    binding.popularMovies.visibility = View.GONE
+                    binding.popularMoviesProgress.hideAnimated()
+                    binding.popularMoviesError.errorView.showAnimated()
+                }
+                MainViewState.Loading -> {
+                    binding.popularMovies.visibility = View.GONE
+                    binding.popularMoviesProgress.showAnimated()
+                    binding.popularMoviesError.errorView.hideAnimated()
+                }
                 is MainViewState.Success.FilmSuccess -> {
-                    showPopularMovies(result = true, progress = false, error = false)
+                    binding.popularMovies.showAnimated()
+                    binding.popularMoviesProgress.hideAnimated()
+                    binding.popularMoviesError.errorView.visibility = View.GONE
                     filmsInTrendAdapter.appendMovies(result.list)
                 }
             }
@@ -77,12 +83,20 @@ class MainFragment : Fragment(), MoviePersonAndViewMoreClickListener {
 
         viewModel.moviesNowPlaying.observe(viewLifecycleOwner) { result ->
             when (result) {
-                MainViewState.Error ->
-                    showNowPlayingMovies(result = false, progress = false, error = true)
-                MainViewState.Loading ->
-                    showNowPlayingMovies(result = false, progress = true, error = false)
+                MainViewState.Error -> {
+                    binding.nowPlayingMovies.visibility = View.GONE
+                    binding.nowPlayingMoviesProgress.hideAnimated()
+                    binding.nowPlayingMoviesError.errorView.showAnimated()
+                }
+                MainViewState.Loading -> {
+                    binding.nowPlayingMovies.visibility = View.GONE
+                    binding.nowPlayingMoviesProgress.showAnimated()
+                    binding.nowPlayingMoviesError.errorView.hideAnimated()
+                }
                 is MainViewState.Success.FilmSuccess -> {
-                    showNowPlayingMovies(result = true, progress = false, error = false)
+                    binding.nowPlayingMovies.showAnimated()
+                    binding.nowPlayingMoviesProgress.hideAnimated()
+                    binding.nowPlayingMoviesError.errorView.visibility = View.GONE
                     filmsNowPlayingAdapter.appendMovies(result.list)
                 }
             }
@@ -90,12 +104,20 @@ class MainFragment : Fragment(), MoviePersonAndViewMoreClickListener {
 
         viewModel.moviesUpcoming.observe(viewLifecycleOwner) { result ->
             when (result) {
-                MainViewState.Error ->
-                    showUpcomingMovies(result = false, progress = false, error = true)
-                MainViewState.Loading ->
-                    showUpcomingMovies(result = false, progress = true, error = false)
+                MainViewState.Error -> {
+                    binding.upcomingMovies.visibility = View.GONE
+                    binding.upcomingMoviesProgress.hideAnimated()
+                    binding.upcomingMoviesError.errorView.showAnimated()
+                }
+                MainViewState.Loading -> {
+                    binding.upcomingMovies.visibility = View.GONE
+                    binding.upcomingMoviesProgress.showAnimated()
+                    binding.upcomingMoviesError.errorView.hideAnimated()
+                }
                 is MainViewState.Success.FilmSuccess -> {
-                    showUpcomingMovies(result = true, progress = false, error = false)
+                    binding.upcomingMovies.showAnimated()
+                    binding.upcomingMoviesProgress.hideAnimated()
+                    binding.upcomingMoviesError.errorView.visibility = View.GONE
                     filmsUpcomingAdapter.appendMovies(result.list)
                 }
             }
@@ -103,12 +125,20 @@ class MainFragment : Fragment(), MoviePersonAndViewMoreClickListener {
 
         viewModel.popularTV.observe(viewLifecycleOwner) { result ->
             when (result) {
-                MainViewState.Error ->
-                    showPopularTvs(result = false, progress = false, error = true)
-                MainViewState.Loading ->
-                    showPopularTvs(result = false, progress = true, error = false)
+                MainViewState.Error -> {
+                    binding.popularTv.visibility = View.GONE
+                    binding.popularTvProgress.hideAnimated()
+                    binding.popularTvError.errorView.showAnimated()
+                }
+                MainViewState.Loading -> {
+                    binding.popularTv.visibility = View.GONE
+                    binding.popularTvProgress.showAnimated()
+                    binding.popularTvError.errorView.hideAnimated()
+                }
                 is MainViewState.Success.TvSuccess -> {
-                    showPopularTvs(result = true, progress = false, error = false)
+                    binding.popularTv.showAnimated()
+                    binding.popularTvProgress.hideAnimated()
+                    binding.popularTvError.errorView.visibility = View.GONE
                     tvPopularAdapter.appendMovies(result.list)
                 }
             }
@@ -116,12 +146,20 @@ class MainFragment : Fragment(), MoviePersonAndViewMoreClickListener {
 
         viewModel.topRatedTV.observe(viewLifecycleOwner) { result ->
             when (result) {
-                MainViewState.Error ->
-                    showTopRatedTvs(result = false, progress = false, error = true)
-                MainViewState.Loading ->
-                    showTopRatedTvs(result = false, progress = true, error = false)
+                MainViewState.Error -> {
+                    binding.topRatedTv.visibility = View.GONE
+                    binding.topRatedTvProgress.hideAnimated()
+                    binding.topRatedTvError.errorView.showAnimated()
+                }
+                MainViewState.Loading -> {
+                    binding.topRatedTv.visibility = View.GONE
+                    binding.topRatedTvProgress.showAnimated()
+                    binding.topRatedTvError.errorView.hideAnimated()
+                }
                 is MainViewState.Success.TvSuccess -> {
-                    showTopRatedTvs(result = true, progress = false, error = false)
+                    binding.topRatedTv.showAnimated()
+                    binding.topRatedTvProgress.hideAnimated()
+                    binding.topRatedTvError.errorView.visibility = View.GONE
                     tvBestAdapter.appendMovies(result.list)
                 }
             }
@@ -129,12 +167,20 @@ class MainFragment : Fragment(), MoviePersonAndViewMoreClickListener {
 
         viewModel.nowOnAirTV.observe(viewLifecycleOwner) { result ->
             when (result) {
-                MainViewState.Error ->
-                    showNowOnAirTvs(result = false, progress = false, error = true)
-                MainViewState.Loading ->
-                    showNowOnAirTvs(result = false, progress = true, error = false)
+                MainViewState.Error -> {
+                    binding.nowOnAirTv.visibility = View.GONE
+                    binding.nowOnAirTvProgress.hideAnimated()
+                    binding.nowOnAirTvError.errorView.showAnimated()
+                }
+                MainViewState.Loading -> {
+                    binding.nowOnAirTv.visibility = View.GONE
+                    binding.nowOnAirTvProgress.showAnimated()
+                    binding.nowOnAirTvError.errorView.hideAnimated()
+                }
                 is MainViewState.Success.TvSuccess -> {
-                    showNowOnAirTvs(result = true, progress = false, error = false)
+                    binding.nowOnAirTv.showAnimated()
+                    binding.nowOnAirTvProgress.hideAnimated()
+                    binding.nowOnAirTvError.errorView.visibility = View.GONE
                     tvNowOnAirAdapter.appendMovies(result.list)
                 }
             }
@@ -142,12 +188,20 @@ class MainFragment : Fragment(), MoviePersonAndViewMoreClickListener {
 
         viewModel.onAirTodayTV.observe(viewLifecycleOwner) { result ->
             when (result) {
-                MainViewState.Error ->
-                    showOnAirTodayTvs(result = false, progress = false, error = true)
-                MainViewState.Loading ->
-                    showOnAirTodayTvs(result = false, progress = true, error = false)
+                MainViewState.Error -> {
+                    binding.onAirTodayTv.visibility = View.GONE
+                    binding.onAirTodayTvProgress.hideAnimated()
+                    binding.onAirTodayTvError.errorView.showAnimated()
+                }
+                MainViewState.Loading -> {
+                    binding.onAirTodayTv.visibility = View.GONE
+                    binding.onAirTodayTvProgress.showAnimated()
+                    binding.onAirTodayTvError.errorView.hideAnimated()
+                }
                 is MainViewState.Success.TvSuccess -> {
-                    showOnAirTodayTvs(result = true, progress = false, error = false)
+                    binding.onAirTodayTv.showAnimated()
+                    binding.onAirTodayTvProgress.hideAnimated()
+                    binding.onAirTodayTvError.errorView.visibility = View.GONE
                     tvTodayOnAirAdapter.appendMovies(result.list)
                 }
             }
@@ -155,12 +209,20 @@ class MainFragment : Fragment(), MoviePersonAndViewMoreClickListener {
 
         viewModel.moviesTopRated.observe(viewLifecycleOwner) { result ->
             when (result) {
-                MainViewState.Error ->
-                    showTopRatedMovies(result = false, progress = false, error = true)
-                MainViewState.Loading ->
-                    showTopRatedMovies(result = false, progress = true, error = false)
+                MainViewState.Error -> {
+                    binding.topRatedMovies.visibility = View.GONE
+                    binding.topRatedMoviesProgress.hideAnimated()
+                    binding.topRatedMoviesError.errorView.showAnimated()
+                }
+                MainViewState.Loading -> {
+                    binding.topRatedMovies.visibility = View.GONE
+                    binding.topRatedMoviesProgress.showAnimated()
+                    binding.topRatedMoviesError.errorView.hideAnimated()
+                }
                 is MainViewState.Success.FilmSuccess -> {
-                    showTopRatedMovies(result = true, progress = false, error = false)
+                    binding.topRatedMovies.showAnimated()
+                    binding.topRatedMoviesProgress.hideAnimated()
+                    binding.topRatedMoviesError.errorView.visibility = View.GONE
                     filmsBestAdapter.appendMovies(result.list)
                 }
             }
@@ -168,12 +230,20 @@ class MainFragment : Fragment(), MoviePersonAndViewMoreClickListener {
 
         viewModel.popularPersons.observe(viewLifecycleOwner) { result ->
             when (result) {
-                MainViewState.Error ->
-                    showPopularPersons(result = false, progress = false, error = true)
-                MainViewState.Loading ->
-                    showPopularPersons(result = false, progress = true, error = false)
+                MainViewState.Error ->{
+                    binding.popularPersons.visibility = View.GONE
+                    binding.popularPersonsProgress.hideAnimated()
+                    binding.popularPersonsError.errorView.showAnimated()
+                }
+                MainViewState.Loading -> {
+                    binding.popularPersons.visibility = View.GONE
+                    binding.popularPersonsProgress.showAnimated()
+                    binding.popularPersonsError.errorView.hideAnimated()
+                }
                 is MainViewState.Success.PersonSuccess -> {
-                    showPopularPersons(result = true, progress = false, error = false)
+                    binding.popularPersons.showAnimated()
+                    binding.popularPersonsProgress.hideAnimated()
+                    binding.popularPersonsError.errorView.visibility = View.GONE
                     personPopularAdapter.appendMovies(result.list)
                 }
             }
@@ -229,81 +299,23 @@ class MainFragment : Fragment(), MoviePersonAndViewMoreClickListener {
     }
 
     override fun onOpenMovie(id: Long) {
-        val action = MainFragmentDirections.actionMainPageToItemInfoFragment(id, MOVIE_TYPE, 0, 0)
+        val action = MainFragmentDirections.actionMainPageToFilmInfoFragment(id)
         view?.findNavController()?.navigate(action)
     }
 
     override fun onOpenTV(id: Long) {
-        val action = MainFragmentDirections.actionMainPageToItemInfoFragment(id, TV_TYPE, 0, 0)
+        val action = MainFragmentDirections.actionMainPageToTvInfoFragment(id)
         view?.findNavController()?.navigate(action)
     }
 
     override fun onOpenPerson(id: Long) {
-        val action = MainFragmentDirections.actionMainPageToItemInfoFragment(id, PERSON_TYPE, 0, 0)
+        val action = MainFragmentDirections.actionMainPageToPersonInfoFragment(id)
         view?.findNavController()?.navigate(action)
     }
 
     override fun onOpenMore(requestType: MainScreenRequest) {
         val action = MainFragmentDirections.actionMainPageToTopListFragment(requestType)
         view?.findNavController()?.navigate(action)
-    }
-
-    private fun showPopularMovies(result: Boolean, progress: Boolean, error: Boolean) {
-        showView(binding.popularMovies, result)
-        showView(binding.popularMoviesProgress, progress)
-        showView(binding.popularMoviesError.errorView, error)
-    }
-
-    private fun showPopularTvs(result: Boolean, progress: Boolean, error: Boolean) {
-        showView(binding.popularTv, result)
-        showView(binding.popularTvProgress, progress)
-        showView(binding.popularTvError.errorView, error)
-    }
-
-    private fun showTopRatedTvs(result: Boolean, progress: Boolean, error: Boolean) {
-        showView(binding.topRatedTv, result)
-        showView(binding.topRatedTvProgress, progress)
-        showView(binding.topRatedTvError.errorView, error)
-    }
-
-    private fun showNowOnAirTvs(result: Boolean, progress: Boolean, error: Boolean) {
-        showView(binding.nowOnAirTv, result)
-        showView(binding.nowOnAirTvProgress, progress)
-        showView(binding.nowOnAirTvError.errorView, error)
-    }
-
-    private fun showOnAirTodayTvs(result: Boolean, progress: Boolean, error: Boolean) {
-        showView(binding.onAirTodayTv, result)
-        showView(binding.onAirTodayTvProgress, progress)
-        showView(binding.onAirTodayTvError.errorView, error)
-    }
-
-    private fun showNowPlayingMovies(result: Boolean, progress: Boolean, error: Boolean) {
-        showView(binding.nowPlayingMovies, result)
-        showView(binding.nowPlayingMoviesProgress, progress)
-        showView(binding.nowPlayingMoviesError.errorView, error)
-    }
-
-    private fun showUpcomingMovies(result: Boolean, progress: Boolean, error: Boolean) {
-        showView(binding.upcomingMovies, result)
-        showView(binding.upcomingMoviesProgress, progress)
-        showView(binding.upcomingMoviesError.errorView, error)
-    }
-
-    private fun showTopRatedMovies(result: Boolean, progress: Boolean, error: Boolean) {
-        showView(binding.topRatedMovies, result)
-        showView(binding.topRatedMoviesProgress, progress)
-        showView(binding.topRatedMoviesError.errorView, error)
-    }
-
-    private fun showPopularPersons(result: Boolean, progress: Boolean, error: Boolean) {
-        showView(binding.popularPersons, result)
-        showView(binding.popularPersonsProgress, progress)
-        showView(binding.popularPersonsError.errorView, error)
-    }
-
-    private fun showView(view: View, show: Boolean) {
-        view.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     companion object {

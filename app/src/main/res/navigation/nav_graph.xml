@@ -11,11 +11,33 @@
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
-            android:id="@+id/action_main_page_to_itemInfoFragment"
-            app:destination="@id/itemInfoFragment" />
+            android:id="@+id/action_main_page_to_filmInfoFragment"
+            app:destination="@id/filmInfoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_main_page_to_topListFragment"
-            app:destination="@+id/topListFragment" />
+            app:destination="@+id/topListFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_main_page_to_tvInfoFragment"
+            app:destination="@id/tvInfoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_main_page_to_personInfoFragment"
+            app:destination="@id/personInfoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
 
     <fragment
@@ -24,8 +46,19 @@
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" >
         <action
-            android:id="@+id/action_favorite_page_to_itemInfoFragment"
-            app:destination="@id/itemInfoFragment" />
+            android:id="@+id/action_favorite_page_to_filmInfoFragment"
+            app:destination="@id/filmInfoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_favorite_page_to_tvInfoFragment"
+            app:destination="@id/tvInfoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/search_page"
@@ -34,10 +67,32 @@
         tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_search_page_to_searchResultFragment"
-            app:destination="@id/searchResultFragment" />
+            app:destination="@id/searchResultFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
         <action
-            android:id="@+id/action_search_page_to_itemInfoFragment"
-            app:destination="@id/itemInfoFragment" />
+            android:id="@+id/action_search_page_to_filmInfoFragment"
+            app:destination="@id/filmInfoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_search_page_to_tvInfoFragment"
+            app:destination="@id/tvInfoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_search_page_to_episodeInfoFragment"
+            app:destination="@id/episodeInfoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/account_page"
@@ -46,7 +101,11 @@
         tools:layout="@layout/fragment_account" >
         <action
             android:id="@+id/action_account_page_to_photoFragment"
-            app:destination="@id/photoFragment" />
+            app:destination="@id/photoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/searchResultFragment"
@@ -57,8 +116,19 @@
             android:name="searchRequest"
             app:argType="string" />
         <action
-            android:id="@+id/action_searchResultFragment_to_itemInfoFragment"
-            app:destination="@id/itemInfoFragment" />
+            android:id="@+id/action_searchResultFragment_to_filmInfoFragment"
+            app:destination="@id/filmInfoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_searchResultFragment_to_tvInfoFragment"
+            app:destination="@id/tvInfoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/photoFragment"
@@ -70,28 +140,41 @@
             app:argType="string" />
     </fragment>
     <fragment
-        android:id="@+id/itemInfoFragment"
-        android:name="com.example.myapplication.ui.fragments.ItemInfoFragment"
-        android:label="fragment_item_info"
-        tools:layout="@layout/fragment_item_info" >
+        android:id="@+id/filmInfoFragment"
+        android:name="com.example.myapplication.ui.fragments.itemsinfos.FilmInfoFragment"
+        android:label="fragment_film_info"
+        tools:layout="@layout/fragment_film_info" >
         <argument
-            android:name="id"
+            android:name="mediaId"
             app:argType="long" />
-        <argument
-            android:name="type"
-            app:argType="integer" />
-        <argument
-            android:name="season"
-            app:argType="integer" />
-        <argument
-            android:name="episode"
-            app:argType="integer" />
         <action
-            android:id="@+id/action_itemInfoFragment_self"
-            app:destination="@id/itemInfoFragment" />
+            android:id="@+id/action_filmInfoFragment_self"
+            app:destination="@id/filmInfoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
         <action
-            android:id="@+id/action_itemInfoFragment_to_photoFragment"
-            app:destination="@id/photoFragment" />
+            android:id="@+id/action_filmInfoFragment_to_photoFragment"
+            app:destination="@id/photoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_filmInfoFragment_to_collectionInfoFragment"
+            app:destination="@id/collectionInfoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_filmInfoFragment_to_personInfoFragment"
+            app:destination="@id/personInfoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/topListFragment"
@@ -102,8 +185,152 @@
             android:name="request"
             app:argType="com.example.myapplication.viewmodel.MainScreenRequest" />
         <action
-            android:id="@+id/action_topListFragment_to_itemInfoFragment"
-            app:destination="@id/itemInfoFragment" />
+            android:id="@+id/action_topListFragment_to_filmInfoFragment"
+            app:destination="@id/filmInfoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_topListFragment_to_tvInfoFragment"
+            app:destination="@id/tvInfoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_topListFragment_to_personInfoFragment"
+            app:destination="@id/personInfoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+    </fragment>
+    <fragment
+        android:id="@+id/collectionInfoFragment"
+        android:name="com.example.myapplication.ui.fragments.itemsinfos.CollectionInfoFragment"
+        android:label="CollectionInfoFragment" >
+        <argument
+            android:name="mediaId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_collectionInfoFragment_to_filmInfoFragment"
+            app:destination="@id/filmInfoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_collectionInfoFragment_to_photoFragment"
+            app:destination="@id/photoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/seasonInfoFragment"
+        android:name="com.example.myapplication.ui.fragments.itemsinfos.SeasonInfoFragment"
+        android:label="SeasonInfoFragment" >
+        <argument
+            android:name="mediaId"
+            app:argType="long" />
+        <argument
+            android:name="seasonId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_seasonInfoFragment_to_photoFragment"
+            app:destination="@id/photoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_seasonInfoFragment_to_episodeInfoFragment"
+            app:destination="@id/episodeInfoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+    </fragment>
+    <fragment
+        android:id="@+id/episodeInfoFragment"
+        android:name="com.example.myapplication.ui.fragments.itemsinfos.EpisodeInfoFragment"
+        android:label="EpisodeInfoFragment" >
+        <argument
+            android:name="mediaId"
+            app:argType="long" />
+        <argument
+            android:name="seasonId"
+            app:argType="integer" />
+        <argument
+            android:name="episodeId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_episodeInfoFragment_to_photoFragment"
+            app:destination="@id/photoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/tvInfoFragment"
+        android:name="com.example.myapplication.ui.fragments.itemsinfos.TvInfoFragment"
+        android:label="TvInfoFragment" >
+        <argument
+            android:name="mediaId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_tvInfoFragment_to_photoFragment"
+            app:destination="@id/photoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_tvInfoFragment_to_seasonInfoFragment"
+            app:destination="@id/seasonInfoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_tvInfoFragment_to_episodeInfoFragment"
+            app:destination="@id/episodeInfoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_tvInfoFragment_to_personInfoFragment"
+            app:destination="@id/personInfoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_tvInfoFragment_self"
+            app:destination="@id/tvInfoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+    </fragment>
+    <fragment
+        android:id="@+id/personInfoFragment"
+        android:name="com.example.myapplication.ui.fragments.itemsinfos.PersonInfoFragment"
+        android:label="PersonInfoFragment" >
+        <argument
+            android:name="mediaId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_personInfoFragment_to_photoFragment"
+            app:destination="@id/photoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
 
 </navigation>

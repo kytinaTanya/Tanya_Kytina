@@ -13,11 +13,10 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentTopListBinding
-import com.example.myapplication.ui.activities.MainActivity
 import com.example.myapplication.ui.recyclerview.VerticalItemsDividerDecoration
 import com.example.myapplication.ui.recyclerview.adapters.TopListPagingAdapter
 import com.example.myapplication.ui.recyclerview.adapters.loadstate.ItemListLoadStateAdapter
-import com.example.myapplication.ui.recyclerview.listeners.MovieAndPersonListener
+import com.example.myapplication.ui.recyclerview.listeners.MovieAndTvAndPersonListener
 import com.example.myapplication.viewmodel.MainScreenRequest
 import com.example.myapplication.viewmodel.TopListsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,7 +24,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class TopListFragment : Fragment(), MovieAndPersonListener {
+class TopListFragment : Fragment(), MovieAndTvAndPersonListener {
     private var _binding: FragmentTopListBinding? = null
     private val binding get() = _binding!!
 
@@ -85,20 +84,17 @@ class TopListFragment : Fragment(), MovieAndPersonListener {
     }
 
     override fun onOpenMovie(id: Long) {
-        val action = TopListFragmentDirections.actionTopListFragmentToItemInfoFragment(id,
-            MainActivity.MOVIE_TYPE, 0, 0)
+        val action = TopListFragmentDirections.actionTopListFragmentToFilmInfoFragment(id)
         view?.findNavController()?.navigate(action)
     }
 
     override fun onOpenTV(id: Long) {
-        val action = TopListFragmentDirections.actionTopListFragmentToItemInfoFragment(id,
-            MainActivity.TV_TYPE, 0, 0)
+        val action = TopListFragmentDirections.actionTopListFragmentToTvInfoFragment(id)
         view?.findNavController()?.navigate(action)
     }
 
     override fun onOpenPerson(id: Long) {
-        val action = TopListFragmentDirections.actionTopListFragmentToItemInfoFragment(id,
-            MainActivity.PERSON_TYPE, 0, 0)
+        val action = TopListFragmentDirections.actionTopListFragmentToPersonInfoFragment(id)
         view?.findNavController()?.navigate(action)
     }
 

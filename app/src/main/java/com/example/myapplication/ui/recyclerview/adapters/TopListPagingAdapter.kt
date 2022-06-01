@@ -13,10 +13,10 @@ import com.example.myapplication.models.pojo.Film
 import com.example.myapplication.models.pojo.Person
 import com.example.myapplication.models.pojo.TV
 import com.example.myapplication.ui.recyclerview.itemcomparator.ItemComparator
-import com.example.myapplication.ui.recyclerview.listeners.MovieAndPersonListener
+import com.example.myapplication.ui.recyclerview.listeners.MovieAndTvAndPersonListener
 import com.example.myapplication.utils.setImage
 
-class TopListPagingAdapter(private val listener: MovieAndPersonListener) :
+class TopListPagingAdapter(private val listener: MovieAndTvAndPersonListener) :
     PagingDataAdapter<BaseItem, TopListPagingAdapter.ItemViewHolder>(ItemComparator),
     View.OnClickListener {
 

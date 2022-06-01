@@ -10,6 +10,8 @@ import com.example.myapplication.repository.repositories.AuthRepository
 import com.example.myapplication.repository.repositories.Repository
 import com.example.myapplication.repository.services.TmdbService
 import java.net.ConnectException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(private val service: TmdbService) : Repository,
@@ -21,6 +23,10 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService) : Rep
             handleFilmResult(resultBody = response.body(), isSuccessful = response.isSuccessful)
         } catch (e: ConnectException) {
             Repository.Result.Error
+        } catch (e: UnknownHostException) {
+            Repository.Result.Error
+        } catch (e: SocketTimeoutException) {
+            Repository.Result.Error
         }
     }
 
@@ -29,6 +35,10 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService) : Rep
             val response = service.getNowPlayingMovies()
             return handleFilmResult(resultBody = response.body(), isSuccessful = response.isSuccessful)
         } catch (e: ConnectException) {
+            Repository.Result.Error
+        } catch (e: UnknownHostException) {
+            Repository.Result.Error
+        } catch (e: SocketTimeoutException) {
             Repository.Result.Error
         }
     }
@@ -39,6 +49,10 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService) : Rep
             return handleFilmResult(resultBody = response.body(), isSuccessful = response.isSuccessful)
         } catch (e: ConnectException) {
             Repository.Result.Error
+        } catch (e: UnknownHostException) {
+            Repository.Result.Error
+        } catch (e: SocketTimeoutException) {
+            Repository.Result.Error
         }
     }
 
@@ -47,6 +61,10 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService) : Rep
             val response = service.getTopRatedMovies()
             return handleFilmResult(resultBody = response.body(), isSuccessful = response.isSuccessful)
         } catch (e: ConnectException) {
+            Repository.Result.Error
+        } catch (e: UnknownHostException) {
+            Repository.Result.Error
+        } catch (e: SocketTimeoutException) {
             Repository.Result.Error
         }
     }
@@ -57,6 +75,10 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService) : Rep
             return handleTVResult(resultBody = response.body(), isSuccessful = response.isSuccessful)
         } catch (e: ConnectException) {
             Repository.Result.Error
+        } catch (e: UnknownHostException) {
+            Repository.Result.Error
+        } catch (e: SocketTimeoutException) {
+            Repository.Result.Error
         }
     }
 
@@ -65,6 +87,10 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService) : Rep
             val response = service.getOnAirTodayTV()
             return handleTVResult(resultBody = response.body(), isSuccessful = response.isSuccessful)
         } catch (e: ConnectException) {
+            Repository.Result.Error
+        } catch (e: UnknownHostException) {
+            Repository.Result.Error
+        } catch (e: SocketTimeoutException) {
             Repository.Result.Error
         }
     }
@@ -75,6 +101,10 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService) : Rep
             return handleTVResult(resultBody = response.body(), isSuccessful = response.isSuccessful)
         } catch (e: ConnectException) {
             Repository.Result.Error
+        } catch (e: UnknownHostException) {
+            Repository.Result.Error
+        } catch (e: SocketTimeoutException) {
+            Repository.Result.Error
         }
     }
 
@@ -84,6 +114,10 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService) : Rep
             return handleTVResult(resultBody = response.body(), isSuccessful = response.isSuccessful)
         } catch (e: ConnectException) {
             Repository.Result.Error
+        } catch (e: UnknownHostException) {
+            Repository.Result.Error
+        } catch (e: SocketTimeoutException) {
+            Repository.Result.Error
         }
     }
 
@@ -92,6 +126,10 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService) : Rep
             val response = service.getPopularPersons()
             return handlePersonResult(resultBody = response.body(), isSuccessful = response.isSuccessful)
         } catch (e: ConnectException) {
+            Repository.Result.Error
+        } catch (e: UnknownHostException) {
+            Repository.Result.Error
+        } catch (e: SocketTimeoutException) {
             Repository.Result.Error
         }
     }

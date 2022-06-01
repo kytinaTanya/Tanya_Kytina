@@ -12,10 +12,10 @@ import com.example.myapplication.models.pojo.BaseItem
 import com.example.myapplication.models.pojo.Film
 import com.example.myapplication.models.pojo.HeaderItem
 import com.example.myapplication.models.pojo.TV
-import com.example.myapplication.ui.recyclerview.listeners.MovieClickListener
+import com.example.myapplication.ui.recyclerview.listeners.MovieAndTvClickListener
 import com.example.myapplication.utils.setImage
 
-class SearchResultRecyclerAdapter(val listener: MovieClickListener):
+class SearchResultRecyclerAdapter(val listener: MovieAndTvClickListener):
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
 
     private var baseItemList: MutableList<BaseItem> = arrayListOf()

@@ -54,7 +54,7 @@ sealed class BaseItem()
         val adult: Boolean,
 
         @SerializedName("belongs_to_collection")
-        val collection: MovieCollection?,
+        val collection: BaseItemDetails.MovieCollection?,
 
         @SerializedName("budget")
         val budget: Int,
@@ -350,42 +350,7 @@ sealed class BaseItem()
         )
     }
 
-    data class SeasonDetails(
-        @SerializedName("air_date")
-        val airDate: String,
 
-        @SerializedName("episodes")
-        var episodes: List<Episode>,
-
-        @SerializedName("id")
-        val id: Int,
-
-        @SerializedName("name")
-        val name: String,
-
-        @SerializedName("overview")
-        val overview: String,
-
-        @SerializedName("poster_path")
-        val posterPath: String,
-
-        @SerializedName("show_id")
-        var showId: Long = 0L,
-
-        @SerializedName("season_number")
-        val number: Int
-    ): BaseItem() {
-        constructor(): this(
-            "",
-            emptyList(),
-            0,
-            "",
-            "",
-            "0L",
-            0L,
-            0
-        )
-    }
 
 
 /* Реализации классов
@@ -426,64 +391,6 @@ sealed class BaseItem()
             "Non",
             "Non",
             0.0
-        )
-    }
-
-    data class EpisodeDetails(
-        @SerializedName("air_date")
-        val airDate: String,
-
-        @SerializedName("crew")
-        val crew: List<Crew>,
-
-        @SerializedName("episode_number")
-        val episodeNum: Int,
-
-        @SerializedName("guest_stars")
-        val guestStars: List<GuestStar>,
-
-        @SerializedName("name")
-        val name: String,
-
-        @SerializedName("overview")
-        val overview: String,
-
-        @SerializedName("id")
-        val id: Long,
-
-        @SerializedName("show_id")
-        var showId: Long = 0L,
-
-        @SerializedName("production_code")
-        val productionCode: String,
-
-        @SerializedName("season_number")
-        val seasonNum: Int,
-
-        @SerializedName("still_path")
-        val stillPath: String,
-
-        @SerializedName("vote_average")
-        val rating: Double,
-
-        @SerializedName("vote_count")
-        val votes: Int
-
-    ) : BaseItem() {
-        constructor() : this(
-            "",
-            emptyList<Crew>(),
-            0,
-            emptyList<GuestStar>(),
-            "",
-            "",
-            0L,
-            0L,
-            "",
-            0,
-            "",
-            0.0,
-            0
         )
     }
 
@@ -658,4 +565,118 @@ data class TvProducer(
     @SerializedName("profile_path")
     val profile: String
 ): BaseItem()
+
+sealed class BaseItemDetails : BaseItem() {
+    data class EpisodeDetails(
+        @SerializedName("air_date")
+        val airDate: String,
+
+        @SerializedName("crew")
+        val crew: List<Crew>,
+
+        @SerializedName("episode_number")
+        val episodeNum: Int,
+
+        @SerializedName("guest_stars")
+        val guestStars: List<GuestStar>,
+
+        @SerializedName("name")
+        val name: String,
+
+        @SerializedName("overview")
+        val overview: String,
+
+        @SerializedName("id")
+        val id: Long,
+
+        @SerializedName("show_id")
+        var showId: Long = 0L,
+
+        @SerializedName("production_code")
+        val productionCode: String,
+
+        @SerializedName("season_number")
+        val seasonNum: Int,
+
+        @SerializedName("still_path")
+        val stillPath: String,
+
+        @SerializedName("vote_average")
+        val rating: Double,
+
+        @SerializedName("vote_count")
+        val votes: Int
+
+    ) : BaseItemDetails() {
+        constructor() : this(
+            "",
+            emptyList<Crew>(),
+            0,
+            emptyList<GuestStar>(),
+            "",
+            "",
+            0L,
+            0L,
+            "",
+            0,
+            "",
+            0.0,
+            0
+        )
+    }
+
+    data class SeasonDetails(
+        @SerializedName("air_date")
+        val airDate: String,
+
+        @SerializedName("episodes")
+        var episodes: List<Episode>,
+
+        @SerializedName("id")
+        val id: Int,
+
+        @SerializedName("name")
+        val name: String,
+
+        @SerializedName("overview")
+        val overview: String,
+
+        @SerializedName("poster_path")
+        val posterPath: String,
+
+        @SerializedName("show_id")
+        var showId: Long = 0L,
+
+        @SerializedName("season_number")
+        val number: Int
+    ): BaseItemDetails() {
+        constructor(): this(
+            "",
+            emptyList(),
+            0,
+            "",
+            "",
+            "0L",
+            0L,
+            0
+        )
+    }
+
+    data class MovieCollection(
+        @SerializedName("id")
+        val id: Int,
+
+        @SerializedName("name")
+        val name: String,
+
+        @SerializedName("overview")
+        val overview: String,
+
+        @SerializedName("backdrop_path")
+        val backdrop: String,
+
+        @SerializedName("parts")
+        val parts: List<Film>
+    ): BaseItemDetails()
+}
 

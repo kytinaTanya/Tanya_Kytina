@@ -39,6 +39,23 @@ fun ImageButton.setCurrentResource(
     }
 }
 
+fun View.showAnimated() {
+    alpha = 0f
+    visibility = View.VISIBLE
+    animate()
+        .alpha(1f)
+        .setDuration(200L)
+        .setListener(null)
+}
+
+fun View.hideAnimated() {
+    animate()
+        .alpha(0f)
+        .setDuration(200L)
+        .setListener(null)
+    visibility = View.GONE
+}
+
 class Utils {
     companion object {
         fun setIfIsNotEmpty(text: String, view: TextView) {
@@ -47,6 +64,26 @@ class Utils {
             } else {
                 view.text = text
             }
+        }
+
+        fun formatDate(date: String) : String {
+            val year = date.substringBefore("-")
+            val month = when (date.substringAfter("-").substringBefore("-").toInt()) {
+                1 -> "января"
+                2 -> "февраля"
+                3 -> "марта"
+                4 -> "апреля"
+                5 -> "мая"
+                6 -> "июня"
+                7 -> "июля"
+                8 -> "августа"
+                9 -> "сентября"
+                10 -> "октября"
+                11 -> "ноября"
+                else -> "декабря"
+            }
+            val day = date.substringAfterLast("-")
+            return "$day $month $year"
         }
     }
 }

@@ -10,16 +10,16 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentSearchResultBinding
-import com.example.myapplication.ui.activities.MainActivity.Companion.MOVIE_TYPE
-import com.example.myapplication.ui.activities.MainActivity.Companion.TV_TYPE
 import com.example.myapplication.ui.recyclerview.adapters.SearchResultRecyclerAdapter
-import com.example.myapplication.ui.recyclerview.listeners.MovieClickListener
+import com.example.myapplication.ui.recyclerview.listeners.MovieAndTvClickListener
+import com.example.myapplication.utils.hideAnimated
 import com.example.myapplication.utils.setConfigVerticalWithInnerAndOuterDivs
+import com.example.myapplication.utils.showAnimated
 import com.example.myapplication.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchResultFragment : Fragment(), MovieClickListener, SearchViewModel.SearchView {
+class SearchResultFragment : Fragment(), MovieAndTvClickListener, SearchViewModel.SearchView {
 
     private var _binding: FragmentSearchResultBinding? = null
     private val binding get() = _binding!!
@@ -80,18 +80,12 @@ class SearchResultFragment : Fragment(), MovieClickListener, SearchViewModel.Sea
     }
 
     override fun onOpenMovie(id: Long) {
-        val action = SearchResultFragmentDirections.actionSearchResultFragmentToItemInfoFragment(id,
-            MOVIE_TYPE,
-            0,
-            0)
+        val action = SearchResultFragmentDirections.actionSearchResultFragmentToFilmInfoFragment(id)
         view?.findNavController()?.navigate(action)
     }
 
     override fun onOpenTV(id: Long) {
-        val action = SearchResultFragmentDirections.actionSearchResultFragmentToItemInfoFragment(id,
-            TV_TYPE,
-            0,
-            0)
+        val action = SearchResultFragmentDirections.actionSearchResultFragmentToTvInfoFragment(id)
         view?.findNavController()?.navigate(action)
     }
 
@@ -99,7 +93,7 @@ class SearchResultFragment : Fragment(), MovieClickListener, SearchViewModel.Sea
         showProgress(false)
         binding.apply {
             searchList.visibility = View.GONE
-            error.visibility = View.VISIBLE
+            error.showAnimated()
             messageText.text = message
         }
     }
@@ -108,13 +102,13 @@ class SearchResultFragment : Fragment(), MovieClickListener, SearchViewModel.Sea
         if (show) {
             binding.apply {
                 searchList.visibility = View.GONE
-                error.visibility = View.GONE
-                loading.visibility = View.VISIBLE
+                error.hideAnimated()
+                loading.showAnimated()
             }
         } else {
             binding.apply {
-                searchList.visibility = View.VISIBLE
-                loading.visibility = View.GONE
+                searchList.showAnimated()
+                loading.hideAnimated()
             }
         }
     }

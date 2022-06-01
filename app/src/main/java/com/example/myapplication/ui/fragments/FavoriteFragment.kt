@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.myapplication.databinding.FragmentFavoriteBinding
 import com.example.myapplication.ui.viewpager.MoviesCollectionAdapter
+import com.example.myapplication.utils.hideAnimated
+import com.example.myapplication.utils.showAnimated
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -54,13 +56,13 @@ class FavoriteFragment : Fragment() {
     private fun showProgress(show: Boolean) {
         if (show) {
             binding.apply {
-                loaded.visibility = View.GONE
-                loading.visibility = View.VISIBLE
+                loaded.hideAnimated()
+                loading.showAnimated()
             }
         } else {
             binding.apply {
-                loaded.visibility = View.VISIBLE
-                loading.visibility = View.GONE
+                loaded.showAnimated()
+                loading.hideAnimated()
             }
         }
     }

@@ -4,7 +4,7 @@ import com.example.myapplication.models.pojo.*
 
 data class MovieView(
     val adult: Boolean,
-    val collection: MovieCollection?,
+    val collection: BaseItemDetails.MovieCollection?,
     val budget: Int,
     val genres: List<MovieGenres>,
     val homepage: String,

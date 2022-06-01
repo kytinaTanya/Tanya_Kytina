@@ -32,29 +32,19 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_end="8dp"/>
-
-        <EditText
+        
+        <androidx.appcompat.widget.SearchView
             android:id="@+id/search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_search"
-            android:drawableLeft="@drawable/ic_search_input_icon"
-            android:drawablePadding="6dp"
-            android:hint="@string/search_title"
-            android:padding="6dp"
             app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toStartOf="@+id/search_btn"
+            app:layout_constraintEnd_toEndOf="@id/end_line"
             app:layout_constraintStart_toStartOf="@+id/start_line"
-            app:layout_constraintTop_toTopOf="@+id/top_line" />
-
-        <Button
-            android:id="@+id/search_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Поиск"
-            app:layout_constraintEnd_toStartOf="@+id/end_line"
             app:layout_constraintTop_toTopOf="@+id/top_line"
-            android:visibility="gone"/>
+            app:defaultQueryHint="Поиск"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@drawable/no_background_edit_text"
+            android:background="@drawable/custom_search" />
 
         <TextView
             android:id="@+id/rated_movies"

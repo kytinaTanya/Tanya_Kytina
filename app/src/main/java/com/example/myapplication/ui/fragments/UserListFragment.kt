@@ -12,18 +12,19 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.databinding.FragmentListBinding
 import com.example.myapplication.firebase.USER
-import com.example.myapplication.ui.activities.MainActivity
 import com.example.myapplication.ui.recyclerview.VerticalItemsDividerDecoration
 import com.example.myapplication.ui.recyclerview.adapters.CollectionRecyclerAdapter
 import com.example.myapplication.ui.recyclerview.adapters.loadstate.ItemListLoadStateAdapter
-import com.example.myapplication.ui.recyclerview.listeners.MovieClickListener
+import com.example.myapplication.ui.recyclerview.listeners.MovieAndTvClickListener
+import com.example.myapplication.utils.hideAnimated
+import com.example.myapplication.utils.showAnimated
 import com.example.myapplication.viewmodel.UserListsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class UserListFragment : Fragment(), MovieClickListener {
+class UserListFragment : Fragment(), MovieAndTvClickListener {
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
 
@@ -45,6 +46,21 @@ class UserListFragment : Fragment(), MovieClickListener {
         }
         initRecyclerView()
         loadData()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onOpenMovie(id: Long) {
+        val action = FavoriteFragmentDirections.actionFavoritePageToFilmInfoFragment(id)
+        view?.findNavController()?.navigate(action)
+    }
+
+    override fun onOpenTV(id: Long) {
+        val action = FavoriteFragmentDirections.actionFavoritePageToTvInfoFragment(id)
+        view?.findNavController()?.navigate(action)
     }
 
     private fun loadData() {
@@ -80,23 +96,6 @@ class UserListFragment : Fragment(), MovieClickListener {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    override fun onOpenMovie(id: Long) {
-        val action = FavoriteFragmentDirections.actionFavoritePageToItemInfoFragment(id,
-            MainActivity.MOVIE_TYPE, 0, 0)
-        view?.findNavController()?.navigate(action)
-    }
-
-    override fun onOpenTV(id: Long) {
-        val action = FavoriteFragmentDirections.actionFavoritePageToItemInfoFragment(id,
-            MainActivity.TV_TYPE, 0, 0)
-        view?.findNavController()?.navigate(action)
-    }
-
     private fun initRecyclerView() {
         mAdapter = CollectionRecyclerAdapter(this)
         binding.movieList.apply {
@@ -119,14 +118,13 @@ class UserListFragment : Fragment(), MovieClickListener {
     private fun handleLoadingState(state: LoadState) {
         if (state is LoadState.Loading) {
             binding.apply {
-                progress.visibility = View.VISIBLE
+                progress.showAnimated()
                 movieList.visibility = View.GONE
                 warning.visibility = View.GONE
             }
         } else {
-            binding.progress.visibility = View.GONE
-            if (mAdapter.itemCount == 0) binding.warning.visibility =
-                View.VISIBLE else binding.movieList.visibility = View.VISIBLE
+            binding.progress.hideAnimated()
+            if (mAdapter.itemCount == 0) binding.warning.showAnimated() else binding.movieList.showAnimated()
         }
     }
 
@@ -134,13 +132,13 @@ class UserListFragment : Fragment(), MovieClickListener {
         if (state is LoadState.Error) {
             binding.apply {
                 warning.visibility = View.GONE
-                errorText.visibility = View.VISIBLE
-                errorButton.visibility = View.VISIBLE
+                errorText.showAnimated()
+                errorButton.showAnimated()
             }
         } else {
             binding.apply {
-                errorText.visibility = View.GONE
-                errorButton.visibility = View.GONE
+                errorText.hideAnimated()
+                errorButton.hideAnimated()
             }
         }
     }

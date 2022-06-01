@@ -12,7 +12,7 @@ data class TvView (
     val inProduction: Boolean,
     val languages: List<String>,
     val lastAirDate: String,
-    val lastEpisode: Episode,
+    val lastEpisode: Episode?,
     val name: String,
     val networks: List<MovieNetwork>,
     val episodes: Int,

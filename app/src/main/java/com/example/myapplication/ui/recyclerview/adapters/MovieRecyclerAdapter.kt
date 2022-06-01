@@ -9,11 +9,11 @@ import com.example.myapplication.BuildConfig
 import com.example.myapplication.R
 import com.example.myapplication.databinding.*
 import com.example.myapplication.models.pojo.*
-import com.example.myapplication.ui.recyclerview.listeners.AllSpecificListener
+import com.example.myapplication.ui.recyclerview.listeners.AllSpecificListenerAndTv
 import com.example.myapplication.utils.setImage
 
 class MovieRecyclerAdapter(
-    private val listener: AllSpecificListener
+    private val listener: AllSpecificListenerAndTv
     ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
 
     var mMoviesList: MutableList<BaseItem> = arrayListOf()

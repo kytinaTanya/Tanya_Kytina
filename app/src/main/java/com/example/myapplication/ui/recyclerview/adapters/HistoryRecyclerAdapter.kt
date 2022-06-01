@@ -7,14 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.databinding.ItemMovieHistoryBinding
+import com.example.myapplication.models.pojo.BaseItem
 import com.example.myapplication.models.pojo.Episode
 import com.example.myapplication.models.pojo.Film
-import com.example.myapplication.models.pojo.BaseItem
 import com.example.myapplication.models.pojo.TV
-import com.example.myapplication.ui.recyclerview.listeners.MovieAndEpisodeListener
+import com.example.myapplication.ui.recyclerview.listeners.MovieAndTvAndEpisodeListener
 import com.example.myapplication.utils.setImage
 
-class HistoryRecyclerAdapter(val listener: MovieAndEpisodeListener) : Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
+class HistoryRecyclerAdapter(val listener: MovieAndTvAndEpisodeListener) : Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
 
     private val filmList: MutableList<BaseItem> = arrayListOf()
 

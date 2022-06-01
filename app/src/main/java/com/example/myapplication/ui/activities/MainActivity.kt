@@ -64,16 +64,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val MEDIA_ID = "id"
-        const val ITEM_TYPE = "type"
-        const val SEASON = "season"
-        const val EPISODE = "episode"
-        const val MOVIE_TYPE = 1
-        const val TV_TYPE = 2
-        const val PERSON_TYPE = 3
-        const val SEASON_TYPE = 4
-        const val EPISODE_TYPE = 5
-        const val COLLECTION_TYPE = 6
+        const val MEDIA_ID = "mediaId"
+        const val SEASON = "seasonId"
+        const val EPISODE = "episodeId"
 
         fun setProfileImage(url: String) {
             REF_DATABASE_ROOT.child("users").child(UID).child("profileUrl").setValue("https://$url").addOnCompleteListener {
