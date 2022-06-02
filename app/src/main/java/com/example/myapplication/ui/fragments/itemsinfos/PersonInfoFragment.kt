@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -78,7 +79,7 @@ class PersonInfoFragment : Fragment(), PhotoClickListener {
             addItemDecoration(RegularDividerItemDecoration(8))
         }
 
-        binding.photosList.setConfigVerticalWithInnerAndOuterDivs(photosAdapter, requireContext(), 32, 16)
+        binding.photosList.setConfigHorizontalWithInnerAndOuterDivs(photosAdapter, requireContext(), 16, 32)
     }
 
     private fun setObserver() {
@@ -107,6 +108,16 @@ class PersonInfoFragment : Fragment(), PhotoClickListener {
 
     private fun setData(data: PersonView) {
         binding.apply {
+            toolbar.title = data.name
+            toolbar.setNavigationOnClickListener {
+                view?.findNavController()?.popBackStack()
+            }
+            loadingToolbar.setNavigationOnClickListener {
+                view?.findNavController()?.popBackStack()
+            }
+            errorToolbar.setNavigationOnClickListener {
+                view?.findNavController()?.popBackStack()
+            }
             val url = BuildConfig.BASE_PROFILE_URL + data.profilePath
             mainImage.setImage(url)
             mainImage.setOnClickListener { onOpenPicture(url) }
@@ -114,7 +125,14 @@ class PersonInfoFragment : Fragment(), PhotoClickListener {
             personName.text = data.name
             personAge.text = Utils.formatDate(data.birthday)
             alsoKnowAsAdapter.addStrings(data.alsoKnowsAs)
-            personBiography.text = data.biography
+            if (data.biography != "") {
+                personBiography.text = data.biography
+            } else {
+                personBiography.visibility = View.GONE
+                biographyTitle.visibility = View.GONE
+            }
+            photosList.isVisible = data.profilesPhoto.isNotEmpty()
+            photosTitle.isVisible = data.profilesPhoto.isNotEmpty()
             photosAdapter.setImages(data.profilesPhoto)
         }
     }

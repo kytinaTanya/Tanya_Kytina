@@ -351,6 +351,16 @@ interface TmdbService {
         @Query("session_id") sessionId: String
     ): JsonElement
 
+    @GET("tv/{tv_id}/season/{season_number}/episode/{episode_number}/account_states")
+    suspend fun getEpisodeAccountStates(
+        @Path("tv_id") tvId: Long,
+        @Path("season_number") season: Int,
+        @Path("episode_number") episode: Int,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
+        @Query("session_id") sessionId: String
+    ): JsonElement
+
     @GET("tv/{tv_id}/account_states")
     suspend fun getTvAccountStates(
         @Path("tv_id") id: Long,

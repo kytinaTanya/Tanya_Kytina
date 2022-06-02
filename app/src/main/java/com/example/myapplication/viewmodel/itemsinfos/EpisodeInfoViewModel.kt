@@ -27,11 +27,11 @@ class EpisodeInfoViewModel @Inject constructor(
     val ratedState: LiveData<RatedState>
         get() = _ratedState
 
-    fun loadInfo(tvId: Long, seasonNum: Int, episodeNum: Int) {
+    fun loadInfo(tvId: Long, seasonNum: Int, episodeNum: Int, sessionId: String) {
         _episodeInfo.value = EpisodeInfoState.Loading
         viewModelScope.launch {
             _episodeInfo.value =
-                when (val result = episodeInfoRepository.execute(tvId, seasonNum, episodeNum)) {
+                when (val result = episodeInfoRepository.execute(tvId, seasonNum, episodeNum, sessionId)) {
                     EpisodeInfoRepository.Result.Error -> EpisodeInfoState.Error
                     is EpisodeInfoRepository.Result.Success -> EpisodeInfoState.Success(result.data)
                 }

@@ -50,9 +50,9 @@ class MovieInfoRepositoryImpl(val service: TmdbService) : MovieInfoRepository {
                     trailers = getMovieVideos(id),
                     recommendations = getRecommendationMovies(id),
                     similar = getSimilarMovies(id),
-                    favorite = states.favorite,
+                    favorite = states.favorite!!,
                     myRating = states.rating.rating,
-                    watchlist = states.watchlist
+                    watchlist = states.watchlist!!
                 )
             )
         } catch (e: HttpException) {

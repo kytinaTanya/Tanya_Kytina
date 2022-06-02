@@ -1,5 +1,6 @@
 package com.example.myapplication.models.pojo
 
+import com.example.myapplication.models.marks.RatingValue
 import com.google.gson.annotations.SerializedName
 
 sealed class BaseItem()
@@ -121,34 +122,7 @@ sealed class BaseItem()
 
         @SerializedName("vote_count")
         val average: Int
-    ) : BaseItem() {
-        constructor() : this(
-            false,
-            null,
-            0,
-            emptyList<MovieGenres>(),
-            "",
-            0L,
-            "",
-            "",
-            "",
-            "",
-            0.0,
-            "",
-            emptyList<ProductionCompanies>(),
-            emptyList<ProductionCounties>(),
-            "",
-            0,
-            null,
-            emptyList<SpokenLanguages>(),
-            "",
-            "",
-            "",
-            false,
-            0.0,
-            0
-        )
-    }
+    ) : BaseItem()
 
 /* Реализации классов
 * для получения
@@ -273,40 +247,7 @@ sealed class BaseItem()
 
         @SerializedName("vote_count")
         val average: Int
-    ): BaseItem() {
-        constructor() : this(
-            "",
-            emptyList<TvProducer>(),
-            emptyList<Int>(),
-            "",
-            emptyList<MovieGenres>(),
-            "",
-            0L,
-            false,
-            emptyList<String>(),
-            "",
-            Episode(),
-            "",
-            emptyList<MovieNetwork>(),
-            0,
-            0,
-            emptyList<String>(),
-            "",
-            "",
-            "",
-            0.0,
-            "",
-            emptyList<ProductionCompanies>(),
-            emptyList<ProductionCounties>(),
-            emptyList<Season>(),
-            emptyList<SpokenLanguages>(),
-            "",
-            "",
-            "",
-            0.0,
-            0
-        )
-    }
+    ): BaseItem()
 
 /* Реализации классов
 * для получения
@@ -337,18 +278,7 @@ sealed class BaseItem()
 
         @SerializedName("season_number")
         val number: Int
-    ): BaseItem() {
-        constructor(): this(
-            "",
-            0,
-            0,
-            "",
-            "",
-            "",
-            0L,
-            0
-        )
-    }
+    ): BaseItem()
 
 
 
@@ -416,16 +346,7 @@ data class Person(
 
         @SerializedName("popularity")
         val popularity: Number
-    ) : BaseItem() {
-        constructor() : this(
-            0,
-            "Non",
-            "Non",
-            false,
-            "Non",
-            0
-        )
-    }
+    ) : BaseItem()
 
     data class PersonDetails(
         @SerializedName("birthday")
@@ -470,24 +391,7 @@ data class Person(
         @SerializedName("homepage")
         val homepage: String
 
-    ): BaseItem() {
-        constructor() : this(
-            "",
-            "",
-            "",
-            0,
-            "Non",
-            emptyList<String>(),
-            0,
-            "",
-            0,
-            "",
-            "",
-            false,
-            "",
-            ""
-        )
-    }
+    ): BaseItem()
 
 data class Cast(
     @SerializedName("id")
@@ -602,28 +506,14 @@ sealed class BaseItemDetails : BaseItem() {
         val stillPath: String,
 
         @SerializedName("vote_average")
-        val rating: Double,
+        val voteAverage: Double,
 
         @SerializedName("vote_count")
-        val votes: Int
+        val votes: Int,
 
-    ) : BaseItemDetails() {
-        constructor() : this(
-            "",
-            emptyList<Crew>(),
-            0,
-            emptyList<GuestStar>(),
-            "",
-            "",
-            0L,
-            0L,
-            "",
-            0,
-            "",
-            0.0,
-            0
-        )
-    }
+        var userRating: RatingValue = RatingValue()
+
+    ) : BaseItemDetails()
 
     data class SeasonDetails(
         @SerializedName("air_date")
@@ -649,18 +539,7 @@ sealed class BaseItemDetails : BaseItem() {
 
         @SerializedName("season_number")
         val number: Int
-    ): BaseItemDetails() {
-        constructor(): this(
-            "",
-            emptyList(),
-            0,
-            "",
-            "",
-            "0L",
-            0L,
-            0
-        )
-    }
+    ): BaseItemDetails()
 
     data class MovieCollection(
         @SerializedName("id")

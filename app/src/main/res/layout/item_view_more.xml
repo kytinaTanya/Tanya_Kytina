@@ -3,7 +3,8 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:theme="@style/Theme.MovieDatabase.NoActionBar"
-    android:background="@color/color_view_more_item">
+    android:background="@color/color_view_more_item"
+    android:id="@+id/main_layout">
 
     <TextView
         android:id="@+id/title"

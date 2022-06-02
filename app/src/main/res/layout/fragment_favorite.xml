@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.FavoriteFragment"
-    android:background="@color/very_dark_blue">
+    android:background="@color/very_dark_blue"
+    android:id="@+id/main_parent">
 
     <ProgressBar
         android:id="@+id/loading"

@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.itemsinfos.FilmInfoFragment">
+    tools:context=".ui.fragments.itemsinfos.FilmInfoFragment"
+    android:id="@+id/main_parent">
 
     <LinearLayout
         android:id="@+id/loading"
@@ -13,12 +14,14 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/loading_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="?attr/homeAsUpIndicator"
             android:background="@color/very_dark_blue"/>
 
         <ProgressBar
+            android:id="@+id/loading_progressbar"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"/>
@@ -30,6 +33,7 @@
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/error_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="?attr/homeAsUpIndicator"
@@ -67,6 +71,7 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:contentScrim="@color/very_dark_blue"
@@ -94,11 +99,13 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_for_scroll_children"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" >
 
@@ -194,8 +201,7 @@
                     app:layout_constraintEnd_toStartOf="@id/watchlist_btn"
                     app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:visibility="gone"/>
+                    android:layout_marginEnd="8dp"/>
 
                 <ImageButton
                     android:id="@+id/watchlist_btn"
@@ -205,8 +211,7 @@
                     app:layout_constraintEnd_toStartOf="@id/star_btn"
                     app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:visibility="gone"/>
+                    android:layout_marginEnd="8dp"/>
 
                 <ImageButton
                     android:id="@+id/star_btn"
@@ -215,8 +220,7 @@
                     android:background="@drawable/ic_star"
                     app:layout_constraintEnd_toStartOf="@id/right_line"
                     app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
-                    android:layout_marginTop="16dp"
-                    android:visibility="gone"/>
+                    android:layout_marginTop="16dp"/>
 
                 <RatingBar
                     android:id="@+id/rating_bar"
@@ -318,6 +322,7 @@
                         android:ellipsize="end"/>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/collection_image_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="12dp"
@@ -356,18 +361,6 @@
                     style="@style/ItemInfoTitle"/>
 
                 <TextView
-                    android:id="@+id/created_by"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintEnd_toStartOf="@+id/right_line"
-                    app:layout_constraintStart_toStartOf="@+id/left_line"
-                    app:layout_constraintTop_toBottomOf="@+id/company_title"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constrainedWidth="true"
-                    android:textColor="@color/light_gray"/>
-
-                <TextView
                     android:id="@+id/countries"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -375,7 +368,7 @@
                     android:layout_marginTop="8dp"
                     app:layout_constraintEnd_toStartOf="@+id/right_line"
                     app:layout_constraintStart_toStartOf="@+id/left_line"
-                    app:layout_constraintTop_toBottomOf="@+id/created_by"
+                    app:layout_constraintTop_toBottomOf="@+id/company_title"
                     app:layout_constraintHorizontal_bias="0.0"
                     android:textColor="@color/light_gray"/>
 
@@ -552,5 +545,21 @@
         </androidx.core.widget.NestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <FrameLayout
+        android:id="@+id/rating_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dark_blue_30"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            />
+
+    </FrameLayout>
 
 </FrameLayout>

@@ -6,7 +6,8 @@
     android:background="@color/very_dark_blue"
     android:elevation="5dp"
     android:paddingVertical="6dp"
-    android:paddingHorizontal="12dp">
+    android:paddingHorizontal="12dp"
+    android:id="@+id/title_container">
 
     <TextView
         android:id="@+id/title"

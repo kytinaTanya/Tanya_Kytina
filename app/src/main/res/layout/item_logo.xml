@@ -5,7 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="0dp"
     android:elevation="3dp"
-    app:cardBackgroundColor="@color/light_blue">
+    app:cardBackgroundColor="@color/light_blue"
+    android:id="@+id/logo_container">
     <TextView
         android:id="@+id/logo"
         android:layout_width="match_parent"

@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/very_dark_blue"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/main_parent">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -16,6 +17,7 @@
         android:background="@color/very_dark_blue"/>
 
     <FrameLayout
+        android:id="@+id/content_parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

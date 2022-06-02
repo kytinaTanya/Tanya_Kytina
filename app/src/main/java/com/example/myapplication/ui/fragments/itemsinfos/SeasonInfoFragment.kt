@@ -98,6 +98,16 @@ class SeasonInfoFragment : Fragment(), EpisodeClickListener, PhotoClickListener 
 
     private fun setData(data: BaseItemDetails.SeasonDetails) {
         binding.apply {
+            toolbar.title = data.name
+            toolbar.setNavigationOnClickListener {
+                view?.findNavController()?.popBackStack()
+            }
+            loadingToolbar.setNavigationOnClickListener {
+                view?.findNavController()?.popBackStack()
+            }
+            errorToolbar.setNavigationOnClickListener {
+                view?.findNavController()?.popBackStack()
+            }
             val url = BuildConfig.BASE_BACKDROP_URL + data.posterPath
             mainImage.setImage(url)
             mainImage.setOnClickListener { onOpenPicture(url) }

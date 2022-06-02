@@ -58,8 +58,8 @@ fun View.hideAnimated() {
 
 class Utils {
     companion object {
-        fun setIfIsNotEmpty(text: String, view: TextView) {
-            if (text == "") {
+        fun setIfIsNotEmpty(text: String?, view: TextView) {
+            if (text == "" || text == null) {
                 view.visibility = View.GONE
             } else {
                 view.text = text
@@ -93,6 +93,7 @@ fun RecyclerView.setConfigHorizontalLinearWithDiv(
     context: Context,
     div: Int,
 ) {
+    mAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
     this.apply {
         layoutManager = LinearLayoutManager(context,
             LinearLayoutManager.HORIZONTAL,
@@ -108,6 +109,7 @@ fun RecyclerView.setConfigHorizontalWithInnerAndOuterDivs(
     innerDiv: Int,
     outerDiv: Int
 ) {
+    mAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
     this.apply {
         layoutManager = LinearLayoutManager(context,
             LinearLayoutManager.HORIZONTAL,
@@ -121,6 +123,7 @@ fun RecyclerView.setConfigVerticalLinear(
     mAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>,
     context: Context,
 ) {
+    mAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
     this.apply {
         layoutManager = LinearLayoutManager(context)
         adapter = mAdapter
@@ -133,6 +136,7 @@ fun RecyclerView.setConfigVerticalWithInnerAndOuterDivs(
     innerDiv: Int,
     outerDiv: Int
 ) {
+    mAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
     this.apply {
         layoutManager = LinearLayoutManager(context)
         adapter = mAdapter

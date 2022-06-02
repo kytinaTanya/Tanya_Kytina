@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.itemsinfos.FilmInfoFragment">
+    tools:context=".ui.fragments.itemsinfos.FilmInfoFragment"
+    android:id="@+id/main_parent">
 
     <LinearLayout
         android:id="@+id/loading"
@@ -13,12 +14,14 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/loading_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="?attr/homeAsUpIndicator"
             android:background="@color/very_dark_blue"/>
 
         <ProgressBar
+            android:id="@+id/loading_progressbar"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"/>
@@ -31,6 +34,7 @@
         android:visibility="gone">
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/error_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="?attr/homeAsUpIndicator"
@@ -68,6 +72,7 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:contentScrim="@color/very_dark_blue"
@@ -95,11 +100,13 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/parent_for_scroll_children"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" >
 
@@ -125,7 +132,7 @@
                     app:layout_constraintGuide_end="16dp" />
 
                 <TextView
-                    android:id="@+id/movieTitle"
+                    android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -147,8 +154,8 @@
                     android:textSize="18sp"
                     app:layout_constraintEnd_toStartOf="@+id/right_line"
                     app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="@+id/movieTitle"
-                    app:layout_constraintTop_toBottomOf="@+id/movieTitle"
+                    app:layout_constraintStart_toStartOf="@+id/tv_title"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title"
                     tools:text="Name"
                     android:textColor="@color/light_gray"/>
 
@@ -165,7 +172,7 @@
                     android:layout_marginTop="8dp"/>
 
                 <TextView
-                    android:id="@+id/yearOfMovie"
+                    android:id="@+id/first_upcoming_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -181,8 +188,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="@+id/yearOfMovie"
-                    app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
+                    app:layout_constraintStart_toStartOf="@+id/first_upcoming_date"
+                    app:layout_constraintTop_toBottomOf="@+id/first_upcoming_date"
                     android:layout_marginTop="16dp"
                     tools:text="10.0"
                     android:textColor="@color/light_gray"/>
@@ -193,10 +200,9 @@
                     android:layout_height="30dp"
                     android:background="@drawable/ic_favorite"
                     app:layout_constraintEnd_toStartOf="@id/watchlist_btn"
-                    app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
+                    app:layout_constraintTop_toBottomOf="@+id/first_upcoming_date"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:visibility="gone"/>
+                    android:layout_marginEnd="8dp"/>
 
                 <ImageButton
                     android:id="@+id/watchlist_btn"
@@ -204,10 +210,9 @@
                     android:layout_height="30dp"
                     android:background="@drawable/ic_turned_in"
                     app:layout_constraintEnd_toStartOf="@id/star_btn"
-                    app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
+                    app:layout_constraintTop_toBottomOf="@+id/first_upcoming_date"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:visibility="gone"/>
+                    android:layout_marginEnd="8dp"/>
 
                 <ImageButton
                     android:id="@+id/star_btn"
@@ -215,9 +220,8 @@
                     android:layout_height="30dp"
                     android:background="@drawable/ic_star"
                     app:layout_constraintEnd_toStartOf="@id/right_line"
-                    app:layout_constraintTop_toBottomOf="@+id/yearOfMovie"
-                    android:layout_marginTop="16dp"
-                    android:visibility="gone"/>
+                    app:layout_constraintTop_toBottomOf="@+id/first_upcoming_date"
+                    android:layout_marginTop="16dp"/>
 
                 <RatingBar
                     android:id="@+id/rating_bar"
@@ -259,7 +263,7 @@
                     android:textColor="@color/light_gray"/>
 
                 <TextView
-                    android:id="@+id/movieAnnotation"
+                    android:id="@+id/tv_annotation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constrainedWidth="true"
@@ -278,7 +282,7 @@
                     android:textAppearance="@style/ItemInfoTitle"
                     app:layout_constraintEnd_toStartOf="@+id/right_line"
                     app:layout_constraintStart_toStartOf="@+id/left_line"
-                    app:layout_constraintTop_toBottomOf="@+id/movieAnnotation"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_annotation"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintHorizontal_bias="0.0"
                     android:text="@string/in_main_roles_title"
@@ -298,7 +302,7 @@
                     android:visibility="gone"/>
 
                 <LinearLayout
-                    android:id="@+id/collection"
+                    android:id="@+id/last_episode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toStartOf="@+id/right_line"
@@ -319,6 +323,7 @@
                         android:ellipsize="end"/>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/last_episode_image_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="12dp"
@@ -327,13 +332,13 @@
                         <ImageView
                             android:layout_height="wrap_content"
                             android:layout_width="match_parent"
-                            android:id="@+id/collection_image"
+                            android:id="@+id/last_episode_image"
                             tools:background="@color/dark_blue"
                             android:scaleType="centerCrop"/>
                     </androidx.cardview.widget.CardView>
 
                     <TextView
-                        android:id="@+id/collection_title"
+                        android:id="@+id/last_episode_title"
                         android:layout_width="wrap_content"
                         android:layout_height="33dp"
                         android:layout_marginTop="5dp"
@@ -351,7 +356,7 @@
                     android:layout_marginTop="20dp"
                     app:layout_constraintEnd_toStartOf="@+id/right_line"
                     app:layout_constraintStart_toStartOf="@+id/left_line"
-                    app:layout_constraintTop_toBottomOf="@+id/collection"
+                    app:layout_constraintTop_toBottomOf="@+id/last_episode"
                     app:layout_constraintHorizontal_bias="0.0"
                     android:text="Производство"
                     style="@style/ItemInfoTitle"/>
@@ -397,7 +402,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/companies"
+                    app:layout_constraintTop_toBottomOf="@+id/number_of_seasons"
                     app:layout_constraintHorizontal_bias="0.0"
                     android:layout_marginTop="16dp"
                     tools:listitem="@layout/item_season"/>
@@ -409,7 +414,7 @@
                     tools:text="Бюджет: $1.000.000,00"
                     app:layout_constraintEnd_toStartOf="@+id/right_line"
                     app:layout_constraintStart_toStartOf="@+id/left_line"
-                    app:layout_constraintTop_toBottomOf="@+id/seasons"
+                    app:layout_constraintTop_toBottomOf="@+id/companies"
                     android:textSize="16sp"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -423,7 +428,7 @@
                     tools:text="Сборы: $1.000.000,00"
                     app:layout_constraintEnd_toStartOf="@+id/right_line"
                     app:layout_constraintStart_toStartOf="@+id/left_line"
-                    app:layout_constraintTop_toBottomOf="@+id/number_of_seasons"
+                    app:layout_constraintTop_toBottomOf="@+id/seasons"
                     android:textSize="16sp"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -563,5 +568,21 @@
         </androidx.core.widget.NestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <FrameLayout
+        android:id="@+id/rating_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dark_blue_30"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            />
+
+    </FrameLayout>
 
 </FrameLayout>

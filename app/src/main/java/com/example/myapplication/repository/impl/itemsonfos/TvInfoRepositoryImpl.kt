@@ -56,9 +56,9 @@ class TvInfoRepositoryImpl(private val service: TmdbService) : TvInfoRepository 
                     videos = getTvVideos(id),
                     recommendations = getRecommendationTvs(id),
                     similar = getSimilarTvs(id),
-                    favorite = states.favorite,
+                    favorite = states.favorite!!,
                     myRating = states.rating.rating,
-                    watchlist = states.watchlist
+                    watchlist = states.watchlist!!
                 )
             )
         } catch (e: HttpException) {

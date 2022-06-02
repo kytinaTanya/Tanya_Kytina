@@ -10,6 +10,7 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.*
 import com.example.myapplication.models.pojo.*
 import com.example.myapplication.ui.recyclerview.listeners.AllSpecificListenerAndTv
+import com.example.myapplication.utils.Utils
 import com.example.myapplication.utils.setImage
 
 class MovieRecyclerAdapter(
@@ -97,7 +98,7 @@ class MovieRecyclerAdapter(
             if(season.number == 0) {
                 binding.numEpisodes.visibility = View.GONE
             } else {
-                binding.numEpisodes.text = "Сезон ${season.number} \nКоличество эпизодов ${season.episodes}\nДата выхода " + season?.airDate ?: "неизвестна"
+                binding.numEpisodes.text = "Сезон ${season.number} \n${season.episodes} эпизодов\nДата выхода: " + Utils.formatDate(season.airDate) ?: "неизвестна"
             }
         }
     }

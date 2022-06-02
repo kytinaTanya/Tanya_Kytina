@@ -5,9 +5,11 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.itemsinfos.FilmInfoFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/main_parent">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:navigationIcon="?attr/homeAsUpIndicator"
@@ -56,6 +58,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/scroll_children_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
@@ -83,10 +86,11 @@
             <ImageView
                 android:id="@+id/main_image"
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="220dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:scaleType="fitStart"/>
 
             <TextView
                 android:id="@+id/episode_title"
@@ -129,7 +133,7 @@
                 android:textColor="@color/light_gray"/>
 
             <TextView
-                android:id="@+id/rating"
+                android:id="@+id/all_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
@@ -139,6 +143,27 @@
                 tools:text="10.0"
                 android:textColor="@color/light_gray"/>
 
+            <ImageButton
+                android:id="@+id/star_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_star"
+                app:layout_constraintBottom_toBottomOf="@+id/all_rating"
+                app:layout_constraintEnd_toStartOf="@id/right_line"
+                app:layout_constraintTop_toTopOf="@id/all_rating" />
+
+            <RatingBar
+                android:id="@+id/rating_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                app:layout_constraintEnd_toStartOf="@+id/right_line"
+                app:layout_constraintStart_toStartOf="@+id/left_line"
+                app:layout_constraintTop_toBottomOf="@+id/all_rating"
+                app:layout_constrainedWidth="true"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"/>
+
             <TextView
                 android:id="@+id/annotation_title"
                 android:layout_width="wrap_content"
@@ -146,7 +171,7 @@
                 android:textAppearance="@style/ItemInfoTitle"
                 app:layout_constraintEnd_toStartOf="@+id/right_line"
                 app:layout_constraintStart_toStartOf="@+id/left_line"
-                app:layout_constraintTop_toBottomOf="@+id/rating"
+                app:layout_constraintTop_toBottomOf="@+id/rating_bar"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintHorizontal_bias="0.0"
                 android:text="@string/annotation_title"
@@ -168,5 +193,21 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <FrameLayout
+        android:id="@+id/rating_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dark_blue_30"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            />
+
+    </FrameLayout>
 
 </FrameLayout>

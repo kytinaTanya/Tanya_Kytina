@@ -1,13 +1,12 @@
 package com.example.myapplication.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.myapplication.R
+import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.example.myapplication.databinding.FragmentPhotoBinding
-import com.example.myapplication.firebase.USER
 import com.example.myapplication.utils.setImage
 
 class PhotoFragment : Fragment() {
@@ -34,6 +33,9 @@ class PhotoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.photo.setImage(photo)
+        binding.toolbar.setNavigationOnClickListener {
+            view.findNavController().popBackStack()
+        }
     }
 
     override fun onDestroyView() {

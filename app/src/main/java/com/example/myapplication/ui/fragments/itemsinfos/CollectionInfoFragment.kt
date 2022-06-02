@@ -95,12 +95,27 @@ class CollectionInfoFragment : Fragment(), MovieClickListener, PhotoClickListene
 
     private fun setData(data: BaseItemDetails.MovieCollection) {
         binding.apply {
+            toolbar.title = data.name
+            toolbar.setNavigationOnClickListener {
+                view?.findNavController()?.popBackStack()
+            }
+            loadingToolbar.setNavigationOnClickListener {
+                view?.findNavController()?.popBackStack()
+            }
+            errorToolbar.setNavigationOnClickListener {
+                view?.findNavController()?.popBackStack()
+            }
             val url = BuildConfig.BASE_BACKDROP_URL + data.backdrop
             mainImage.setImage(url)
             mainImage.setOnClickListener{ onOpenPicture(url) }
 
             collectionTitle.text = data.name
-            collectionAnnotation.text = data.overview
+            if (data.overview != "") {
+                collectionAnnotation.text = data.overview
+            } else {
+                collectionAnnotation.visibility = View.GONE
+                annotationTitle.visibility = View.GONE
+            }
             collectionListAdapter.addMovies(data.parts)
         }
     }

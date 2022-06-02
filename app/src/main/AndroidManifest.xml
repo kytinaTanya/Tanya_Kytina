@@ -15,13 +15,16 @@
         android:theme="@style/LaunchTheme">
         <activity
             android:name=".ui.activities.SingInActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activities.SingUpActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ui.activities.MainActivity"
             android:windowSoftInputMode="adjustPan"
-            android:exported="true">
+            android:exported="true"
+           >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

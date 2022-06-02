@@ -1,10 +1,7 @@
 package com.example.myapplication.models.marks
 
-import com.google.gson.annotations.SerializedName
-
-import android.text.TextUtils
 import com.google.gson.*
-
+import com.google.gson.annotations.SerializedName
 import java.lang.reflect.Type
 
 data class AccountStates(
@@ -12,12 +9,12 @@ data class AccountStates(
     val id: Long = 0,
 
     @SerializedName("favorite")
-    val favorite: Boolean = false,
+    val favorite: Boolean? = false,
 
     var rating: RatingValue = RatingValue(),
 
     @SerializedName("watchlist")
-    val watchlist: Boolean = false
+    val watchlist: Boolean? = false
 ) {
     class AccountStatesDeserializer : JsonDeserializer<AccountStates?> {
         @Throws(JsonParseException::class)

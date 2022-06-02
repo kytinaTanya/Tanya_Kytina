@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.SearchFragment"
-    android:background="@color/very_dark_blue">
+    android:background="@color/very_dark_blue"
+    android:id="@+id/main_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@id/loaded"

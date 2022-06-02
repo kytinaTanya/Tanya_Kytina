@@ -5,7 +5,8 @@
     android:layout_width="100dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:elevation="2dp"
-    app:cardCornerRadius="12dp">
+    app:cardCornerRadius="12dp"
+    android:id="@+id/posterImageContainer">
     <ImageView
         android:layout_height="match_parent"
         android:layout_width="match_parent"

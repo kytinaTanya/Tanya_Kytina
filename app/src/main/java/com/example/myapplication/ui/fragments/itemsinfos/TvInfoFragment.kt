@@ -1,11 +1,11 @@
 package com.example.myapplication.ui.fragments.itemsinfos
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -34,7 +34,6 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class TvInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListener {
@@ -47,8 +46,6 @@ class TvInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListener 
     private var isFavorite: Boolean = false
     private var isInWatchlist: Boolean = false
     private var rating: Float = 0.0F
-    private var currentRating = rating
-    private val format = DecimalFormat("#,###.##")
     private var tvId: Long = 0L
 
     //Адаптеры для всех recyclerView
@@ -105,11 +102,18 @@ class TvInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListener 
                 binding.toolbar.setNavigationOnClickListener {
                     view?.findNavController()?.popBackStack()
                 }
-                setIfIsNotEmpty(tv.name, binding.movieTitle)
-                setIfIsNotEmpty(formatDate(tv.firstAirDate), binding.yearOfMovie)
-                setIfIsNotEmpty(tv.overview, binding.movieAnnotation)
+                binding.loadingToolbar.setNavigationOnClickListener {
+                    view?.findNavController()?.popBackStack()
+                }
+                binding.errorToolbar.setNavigationOnClickListener {
+                    view?.findNavController()?.popBackStack()
+                }
+                setIfIsNotEmpty(tv.name, binding.tvTitle)
+                setIfIsNotEmpty(formatDate(tv.firstAirDate), binding.firstUpcomingDate)
+                binding.annotationTitle.isVisible = tv.overview.isNotEmpty()
+                setIfIsNotEmpty(tv.overview, binding.tvAnnotation)
                 setIfIsNotEmpty(tv.tagline, binding.tagline)
-                setIfIsNotEmpty(formatRating(rating), binding.movieRating)
+                setIfIsNotEmpty("Общая оценка: ${tv.rating}", binding.movieRating)
                 setIfIsNotEmpty("Количество сезонов: ${tv.numOfSeasons}", binding.numberOfSeasons)
                 setIfIsNotEmpty("Количество серий: ${tv.episodes}", binding.numberOfEpisodes)
                 if (tv.genres.isEmpty()) {
@@ -119,22 +123,18 @@ class TvInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListener 
                 }
 
                 if (tv.lastEpisode == null) {
-                    binding.collection.visibility = View.GONE
+                    binding.lastEpisode.visibility = View.GONE
                 } else {
                     if (tv.lastEpisode.stillPath == "null" || tv.lastEpisode.name == "") {
-                        binding.collection.visibility = View.GONE
+                        binding.lastEpisode.visibility = View.GONE
                     } else {
-                        initCollectionWidget(
-                            "Последний эпизод",
-                            "${BuildConfig.BASE_STILL_URL}${tv.lastEpisode.stillPath}",
-                            tv.lastEpisode.name)
-                        binding.collection.setOnClickListener {
-                            Log.d("LAST EPISODE",
-                                "${tv.lastEpisode.showId} ${tv.lastEpisode.seasonNum} ${tv.lastEpisode.episodeNum}")
+                        binding.isCollection.text = "Последний эпизод"
+                        binding.lastEpisodeImage.setImage("${BuildConfig.BASE_STILL_URL}${tv.lastEpisode.stillPath}")
+                        binding.lastEpisodeTitle.text = tv.lastEpisode.name
+                        binding.lastEpisode.setOnClickListener {
                             onOpenEpisode(tv.lastEpisode.showId,
                                 tv.lastEpisode.seasonNum,
                                 tv.lastEpisode.episodeNum)
-
                         }
                     }
                 }
@@ -158,19 +158,9 @@ class TvInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListener 
                 } else {
                     seasonAdapter.appendMovies(tv.seasons)
                 }
-                if (binding.createdBy.visibility == View.GONE &&
-                    binding.countries.visibility == View.GONE &&
-                    binding.companies.visibility == View.GONE
-                ) {
-                    binding.companyTitle.visibility = View.GONE
-                }
-                binding.createdBy.visibility = View.GONE
                 isFavorite = tv.favorite
                 isInWatchlist = tv.watchlist
                 rating = tv.myRating
-                binding.starBtn.visibility = View.VISIBLE
-                binding.watchlistBtn.visibility = View.VISIBLE
-                binding.loveBtn.visibility = View.VISIBLE
                 setStates()
                 if (tv.videos.isNotEmpty()) {
                     binding.videoText.visibility = View.VISIBLE
@@ -216,14 +206,14 @@ class TvInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListener 
         viewModel.ratedState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 RatedState.Error -> {
-                    binding.loading.visibility = View.GONE
+                    binding.ratingProgress.hideAnimated()
                     showToast()
                 }
                 RatedState.Loading -> {
-                    binding.loading.visibility = View.VISIBLE
+                    binding.ratingProgress.showAnimated()
                 }
                 is RatedState.Success -> {
-                    binding.loading.visibility = View.GONE
+                    binding.ratingProgress.hideAnimated()
                     handleRatedState(state.result)
                 }
             }
@@ -300,13 +290,12 @@ class TvInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListener 
 
     private fun handleRatedState(result: PostResponseStatus) {
         if (result.status == 1 || result.status == 12 || result.status == 13) {
-            rating = currentRating
+            rating = binding.ratingBar.rating * 2F
         } else {
-            currentRating = rating
+            binding.ratingBar.rating = rating / 2F
             showToast()
         }
         binding.starBtn.setBackgroundResource(R.drawable.ic_baseline_star_marked)
-        binding.ratingBar.rating = rating / 2
     }
 
     private fun showToast() {
@@ -329,14 +318,13 @@ class TvInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListener 
                 binding.ratingBar.visibility = View.GONE
             } else {
                 binding.ratingBar.visibility = View.VISIBLE
-                binding.ratingBar.rating = rating / 2
+                binding.ratingBar.rating = rating / 2F
             }
         }
 
-        binding.ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+        binding.ratingBar.setOnRatingBarChangeListener { _, rating, fromUser ->
             if (fromUser) {
-                viewModel.rateTv(tvId, USER.sessionKey, rating * 2)
-                currentRating = rating * 2
+                viewModel.rateTv(tvId, USER.sessionKey, rating * 2F)
             }
         }
     }
@@ -371,7 +359,7 @@ class TvInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListener 
         binding.apply {
             posterRecyclerview.setConfigHorizontalWithInnerAndOuterDivs(posterAdapter,
                 requireContext(),
-                24,
+                8,
                 48)
             backdropRecyclerview.setConfigHorizontalWithInnerAndOuterDivs(backdropAdapter,
                 requireContext(),
@@ -410,14 +398,6 @@ class TvInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListener 
         }
     }
 
-    private fun formatRating(rating: Number?): String = rating?.let { "Оценка: $it" } ?: ""
-
-    private fun initCollectionWidget(type: String, image: String, name: String) {
-        binding.isCollection.text = type
-        binding.collectionImage.setImage(image)
-        binding.collectionTitle.text = name
-    }
-
     private fun createCreatedByList(createdBy: List<TvProducer>): String {
         var str = ""
         createdBy.forEach {
@@ -446,14 +426,12 @@ class TvInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListener 
 
     private fun setStates() {
         binding.apply {
-            if (isInWatchlist != null && isFavorite != null) {
-                watchlistBtn.setCurrentResource({ isInWatchlist },
-                    R.drawable.ic_bookmark_marked,
-                    R.drawable.ic_turned_in)
-                loveBtn.setCurrentResource({ isFavorite },
-                    R.drawable.ic_favorite_marked,
-                    R.drawable.ic_favorite)
-            }
+            watchlistBtn.setCurrentResource({ isInWatchlist },
+                R.drawable.ic_bookmark_marked,
+                R.drawable.ic_turned_in)
+            loveBtn.setCurrentResource({ isFavorite },
+                R.drawable.ic_favorite_marked,
+                R.drawable.ic_favorite)
             starBtn.setCurrentResource({ rating > 0.0 },
                 R.drawable.ic_baseline_star_marked,
                 R.drawable.ic_star)

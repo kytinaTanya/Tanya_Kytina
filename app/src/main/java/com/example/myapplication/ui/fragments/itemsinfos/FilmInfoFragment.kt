@@ -45,7 +45,6 @@ class FilmInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListene
     private var isFavorite: Boolean = false
     private var isInWatchlist: Boolean = false
     private var rating: Float = 0.0F
-    private var currentRating = rating
     private val format = DecimalFormat("#,###.##")
     private var movieId: Long = 0L
 
@@ -102,13 +101,19 @@ class FilmInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListene
                 binding.toolbar.setNavigationOnClickListener {
                     view?.findNavController()?.popBackStack()
                 }
+                binding.loadingToolbar.setNavigationOnClickListener {
+                    view?.findNavController()?.popBackStack()
+                }
+                binding.errorToolbar.setNavigationOnClickListener {
+                    view?.findNavController()?.popBackStack()
+                }
                 setIfIsNotEmpty(movie.title, binding.movieTitle)
                 setIfIsNotEmpty(movie.releaseDate, binding.yearOfMovie)
                 setIfIsNotEmpty(movie.overview, binding.movieAnnotation)
                 setIfIsNotEmpty(movie.tagline, binding.tagline)
                 setIfIsNotEmpty(formatRating(rating), binding.movieRating)
-                setIfIsNotEmpty(formatBudget(movie.budget, "$"), binding.budget)
-                setIfIsNotEmpty(formatBudget(movie.revenue, "$"), binding.revenue)
+                setIfIsNotEmpty(formatBudget(movie.budget, "Бюджет"), binding.budget)
+                setIfIsNotEmpty(formatBudget(movie.revenue, "Сборы"), binding.revenue)
                 if(movie.genres.isEmpty()) {
                     binding.genres.visibility = View.GONE
                 } else {
@@ -118,10 +123,9 @@ class FilmInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListene
                 if(movie.collection == null) {
                     binding.collection.visibility = View.GONE
                 } else {
-                    initCollectionWidget(
-                        "Коллекция",
-                        "${BuildConfig.BASE_BACKDROP_URL}${movie.collection.backdrop}",
-                        movie.collection.name)
+                    binding.isCollection.text = "Коллекция"
+                    binding.collectionImage.setImage(BuildConfig.BASE_BACKDROP_URL + movie.collection.backdrop)
+                    binding.collectionTitle.text = movie.collection.name
                     binding.collection.setOnClickListener {
                         onOpenCollection(movie.collection.id)
                     }
@@ -139,13 +143,6 @@ class FilmInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListene
                 } else {
                     binding.homepage.text = "Домашняя страница: ${movie.homepage}"
                 }
-
-                if(binding.createdBy.visibility == View.GONE &&
-                    binding.countries.visibility == View.GONE &&
-                    binding.companies.visibility == View.GONE) {
-                    binding.companyTitle.visibility = View.GONE
-                }
-                binding.createdBy.visibility = View.GONE
                 isFavorite = movie.favorite
                 isInWatchlist = movie.watchlist
                 rating = movie.myRating
@@ -197,14 +194,14 @@ class FilmInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListene
         viewModel.ratedState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 RatedState.Error -> {
-                    binding.loading.visibility = View.GONE
+                    binding.ratingProgress.hideAnimated()
                     showToast()
                 }
                 RatedState.Loading -> {
-                    binding.loading.visibility = View.VISIBLE
+                    binding.ratingProgress.showAnimated()
                 }
                 is RatedState.Success -> {
-                    binding.loading.visibility = View.GONE
+                    binding.ratingProgress.hideAnimated()
                     handleRatedState(state.result)
                 }
             }
@@ -258,13 +255,12 @@ class FilmInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListene
 
     private fun handleRatedState(result: PostResponseStatus) {
         if (result.status == 1 || result.status == 12 || result.status == 13) {
-            rating = currentRating
+            rating = binding.ratingBar.rating * 2
         } else {
-            currentRating = rating
+            binding.ratingBar.rating = rating / 2
             showToast()
         }
         binding.starBtn.setBackgroundResource(R.drawable.ic_baseline_star_marked)
-        binding.ratingBar.rating = rating / 2
     }
 
     private fun showToast() {
@@ -314,10 +310,9 @@ class FilmInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListene
             }
         }
 
-        binding.ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+        binding.ratingBar.setOnRatingBarChangeListener { _, rating, fromUser ->
             if (fromUser) {
                 viewModel.rateMovie(filmId!!, USER.sessionKey, rating * 2)
-                currentRating = rating * 2
             }
         }
     }
@@ -349,7 +344,7 @@ class FilmInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListene
         castAdapter = MovieRecyclerAdapter(this)
         initEpisodeRecyclerView()
         binding.apply {
-            posterRecyclerview.setConfigHorizontalWithInnerAndOuterDivs(posterAdapter, requireContext(), 24, 48)
+            posterRecyclerview.setConfigHorizontalWithInnerAndOuterDivs(posterAdapter, requireContext(), 8, 48)
             backdropRecyclerview.setConfigHorizontalWithInnerAndOuterDivs(backdropAdapter, requireContext(), 24, 48)
             videoRecyclerview.setConfigHorizontalWithInnerAndOuterDivs(videoAdapter, requireContext(), 24, 48)
             recommendationRecyclerview.setConfigHorizontalWithInnerAndOuterDivs(recommendationAdapter, requireContext(), 24, 48)
@@ -359,12 +354,6 @@ class FilmInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListene
     }
 
     private fun formatRating(rating: Number?): String = rating?.let { "Оценка: $it" } ?: ""
-
-    private fun initCollectionWidget(type: String, image: String, name: String) {
-        binding.isCollection.text = type
-        binding.collectionImage.setImage(image)
-        binding.collectionTitle.text = name
-    }
 
     private fun createCountriesList(countries: List<ProductionCounties>): String {
         var str = ""

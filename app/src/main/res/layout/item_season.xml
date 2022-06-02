@@ -6,14 +6,16 @@
     android:layout_width="250dp"
     android:layout_height="150dp"
     app:cardCornerRadius="12dp"
-    android:elevation="2dp">
+    android:elevation="2dp"
+    android:id="@+id/main_layout">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/very_dark_blue"
         android:layout_gravity="end"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/lin_layout">
 
         <ImageView
             android:id="@+id/poster"
@@ -22,6 +24,7 @@
             android:scaleType="centerCrop" />
 
         <LinearLayout
+            android:id="@+id/text_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -30,10 +33,8 @@
                 android:id="@+id/season_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:maxLines="1"/>
+                android:textStyle="bold"/>
             <TextView
                 android:id="@+id/num_episodes"
                 android:layout_width="wrap_content"
