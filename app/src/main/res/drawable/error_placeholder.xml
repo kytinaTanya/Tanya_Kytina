@@ -5,5 +5,5 @@
             <solid android:color="@color/light_gray"/>
         </shape>
     </item>
-    <item android:drawable="@drawable/image_error_placeholder" />
+    <item android:drawable="@drawable/poster_placeholder" />
 </layer-list>

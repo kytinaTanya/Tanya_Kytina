@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-        <shape>
-            <solid android:color="@color/light_gray"/>
-        </shape>
-    </item>
-    <item android:drawable="@drawable/poster_placeholder"/>
-</layer-list>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item android:duration="50" android:drawable="@drawable/gradient_1"/>
+    <item android:duration="50" android:drawable="@drawable/gradient_1_1"/>
+    <item android:duration="50" android:drawable="@drawable/gradient_2"/>
+    <item android:duration="50" android:drawable="@drawable/gradient_2_1"/>
+    <item android:duration="50" android:drawable="@drawable/gradient_3"/>
+    <item android:duration="50" android:drawable="@drawable/gradient_3_1"/>
+    <item android:duration="50" android:drawable="@drawable/gradient_4"/>
+    <item android:duration="50" android:drawable="@drawable/gradient_4_1"/>
+    <item android:duration="50" android:drawable="@drawable/gradient_5"/>
+    <item android:duration="50" android:drawable="@drawable/gradient_5_1"/>
+    <item android:duration="50" android:drawable="@drawable/gradient_6"/>
+    <item android:duration="50" android:drawable="@drawable/gradient_6_1"/>
+    <item android:duration="50" android:drawable="@drawable/gradient_7"/>
+    <item android:duration="50" android:drawable="@drawable/gradient_7_1"/>
+    <item android:duration="50" android:drawable="@drawable/gradient_8"/>
+    <item android:duration="50" android:drawable="@drawable/gradient_8_1"/>
+    <item android:duration="50" android:drawable="@drawable/gradient_9"/>
+    <item android:duration="50" android:drawable="@drawable/gradient_9_1"/>
+    <item android:duration="50" android:drawable="@drawable/gradient_10"/>
+    <item android:duration="50" android:drawable="@drawable/gradient_10_1"/>
+    <item android:duration="500" android:drawable="@drawable/gradient_11"/>
+</animation-list>

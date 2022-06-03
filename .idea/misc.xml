@@ -11,6 +11,30 @@
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/bottom_nav_items_color.xml" value="0.1615" />
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/custom_search.xml" value="0.1615" />
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/edit_text_style.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/error_placeholder.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_1.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_10.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_10_1.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_11.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_12.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_1_1.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_2.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_2_1.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_3.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_3_1.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_4.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_4_1.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_4_5.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_5.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_5_1.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_6.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_6_1.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_7.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_7_1.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_8.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_8_1.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_9.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/gradient_9_1.xml" value="0.1615" />
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/green_radio_button.xml" value="0.1615" />
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/ic_baseline_access_time.xml" value="0.1615" />
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/ic_baseline_account.xml" value="0.1615" />
@@ -29,6 +53,8 @@
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/ic_star.xml" value="0.1615" />
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/ic_turned_in.xml" value="0.1615" />
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/image_error_placeholder.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/loading_placeholder.xml" value="0.1615" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/loading_placeholder_with_background.xml" value="0.1615" />
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/no_background_edit_text.xml" value="0.1615" />
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/poster_item.xml" value="0.1615" />
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/drawable/poster_placeholder.xml" value="0.1615" />
@@ -84,6 +110,7 @@
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/layout/load_state_item.xml" value="0.2644927536231884" />
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/layout/splash_screen.xml" value="0.16032608695652173" />
         <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.18425925925925926" />
+        <entry key="..\:/Users/tatuna/AndroidStudioProjects/Senla/Tanya_Kytina/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1615" />
         <entry key="app/src/main/res/drawable/custom_search.xml" value="0.37447916666666664" />
         <entry key="app/src/main/res/drawable/ic_baseline_account.xml" value="0.37447916666666664" />
         <entry key="app/src/main/res/drawable/ic_baseline_search.xml" value="0.37447916666666664" />

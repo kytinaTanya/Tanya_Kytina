@@ -90,8 +90,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:scaleType="fitStart"
-                android:background="@color/light_gray"/>
+                android:scaleType="fitStart"/>
 
             <TextView
                 android:id="@+id/episode_title"

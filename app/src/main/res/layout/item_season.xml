@@ -21,8 +21,7 @@
             android:id="@+id/poster"
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:background="@color/light_gray"/>
+            android:scaleType="centerCrop"/>
 
         <LinearLayout
             android:id="@+id/text_container"

@@ -9,8 +9,7 @@
         android:id="@+id/video_player"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:background="@color/light_gray"/>
+        android:scaleType="centerCrop"/>
     <WebView
         android:id="@+id/web"
         android:layout_width="0dp"
