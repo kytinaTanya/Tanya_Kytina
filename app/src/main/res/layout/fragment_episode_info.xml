@@ -90,7 +90,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:scaleType="fitStart"/>
+                android:scaleType="fitStart"
+                android:background="@color/light_gray"/>
 
             <TextView
                 android:id="@+id/episode_title"
@@ -205,8 +206,7 @@
             android:id="@+id/progressbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            />
+            android:layout_gravity="center" />
 
     </FrameLayout>
 

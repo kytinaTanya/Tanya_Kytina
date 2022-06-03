@@ -45,12 +45,11 @@ android {
             buildConfigField "String", "BASE_LOGO_URL", "\"https://image.tmdb.org/t/p/w500\""
             buildConfigField "String", "V3_AUTH", "\"e19d111501403fed5ffe087a81ca958f\""
             buildConfigField "String", "V4_AUTH", "\"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlMTlkMTExNTAxNDAzZmVkNWZmZTA4N2E4MWNhOTU4ZiIsInN1YiI6IjYwYzg1MmQxMzY3OWExMDA3OGNiOTljNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DdRuCDjlGk0rEF9Wa1_jdrCdKCIe6kwnbovjq3b7d4g\""
-            buildConfigField "String", "IMAGE_API_KEY", "\"2346EMOU0d40fc1c887f5141a74064114f519a7e\""
+            buildConfigField "String", "IMAGE_API_KEY", "\"15FJMPSX3b32f504fb03df6fa646f96f1f100733\""
             buildConfigField "String", "API_IMAGE_BASE_URL", "\"https://api.imageshack.com/v2/\""
-            buildConfigField "String", "MY_ID", "\"10620415\""
             buildConfigField "String", "GENERAL_LANGUAGE", "\"ru-RU\""
             buildConfigField "String", "HEADER", "\"application/json;charset=utf-8\""
-            buildConfigField "String", "DEFAULT_ACCOUNT_IMAGE_URL", "\"https://library.kissclipart.com/20180918/rse/kissclipart-avatar-blue-icon-clipart-computer-icons-avatar-cli-a6b01992f1cd42fe.png\""
+            buildConfigField "String", "DEFAULT_ACCOUNT_IMAGE_URL", "\"https://cdn.icon-icons.com/icons2/1812/PNG/512/4213460-account-avatar-head-person-profile-user_115386.png\""
             buildConfigField "String", "BASE_MOVIE_VIDEOS_URL", "\"https://gowatch.p.rapidapi.com/lookup/title/\""
             debuggable true
         }
@@ -80,7 +79,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'com.google.firebase:firebase-auth-ktx:21.0.5'
-    implementation 'com.google.firebase:firebase-database-ktx:20.0.5'
+    implementation platform('com.google.firebase:firebase-bom:30.1.0')
+    implementation 'com.google.firebase:firebase-database-ktx'
     implementation 'androidx.paging:paging-common-ktx:3.1.1'
     implementation 'androidx.paging:paging-runtime-ktx:3.1.1'
     testImplementation 'junit:junit:4.13.2'
@@ -88,7 +88,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     //Retrofit and picasso
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.1'
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
@@ -103,7 +103,7 @@ dependencies {
 
     //Gson
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
-    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'com.google.code.gson:gson:2.8.5'
 
     //Mockito
     testImplementation 'org.mockito:mockito-core:2.24.5'

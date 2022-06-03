@@ -5,11 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.repository.repositories.AccountRepository
+import com.example.myapplication.states.PhotoUploadState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.InputStream
 import javax.inject.Inject
 
@@ -17,24 +15,18 @@ import javax.inject.Inject
 class AccountViewModel @Inject constructor(
     private val accountRepository: AccountRepository
 ) : ViewModel() {
-    private var _profileImageUrl: MutableLiveData<String> = MutableLiveData()
-    val profileImageUrl: LiveData<String>
+    private var _profileImageUrl: MutableLiveData<PhotoUploadState> = MutableLiveData()
+    val profileImageUrl: LiveData<PhotoUploadState>
         get() = _profileImageUrl
 
     fun uploadImage(inputStream: InputStream) {
-        val part: MultipartBody.Part = MultipartBody.Part.createFormData(
-            "pic", "myPic", inputStream.readBytes()
-                .toRequestBody(
-                    "image/*".toMediaTypeOrNull(),
-                    0
-                )
-        )
+        _profileImageUrl.value = PhotoUploadState.Loading
         viewModelScope.launch {
-            accountRepository.uploadImage(part, ::getUrl)
+            _profileImageUrl.value = when (val result = accountRepository.uploadImage(inputStream)) {
+                AccountRepository.Result.Error -> PhotoUploadState.Error
+                is AccountRepository.Result.Success -> PhotoUploadState.Success(result.url)
+            }
         }
-    }
 
-    private fun getUrl(url: String) {
-        _profileImageUrl.value = url
     }
 }

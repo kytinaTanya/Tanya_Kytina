@@ -1,5 +1,6 @@
 package com.example.myapplication.repository.impl.itemsonfos
 
+import com.example.myapplication.firebase.USER
 import com.example.myapplication.models.marks.AddToWatchlistMovie
 import com.example.myapplication.models.marks.MarkAsFavouriteMovie
 import com.example.myapplication.repository.repositories.itemsinfos.MarkItemRepository
@@ -17,8 +18,9 @@ class MarkItemRepositoryImpl(private val service: TmdbService) : MarkItemReposit
         sessionId: String,
     ): MarkItemRepository.Result {
         return try {
-            val response = service.markAsFavourite(sessionId = sessionId,
-                body = MarkAsFavouriteMovie(type, id, mark))
+            val response =
+                service.markAsFavourite(accountId = USER.tmdbAccountId, sessionId = sessionId,
+                    body = MarkAsFavouriteMovie(type, id, mark))
             val result = response.body()
             if (result != null) {
                 MarkItemRepository.Result.Success(result)
@@ -43,9 +45,10 @@ class MarkItemRepositoryImpl(private val service: TmdbService) : MarkItemReposit
         sessionId: String,
     ): MarkItemRepository.Result {
         return try {
-            val response = service.addToWatchlist(sessionId = sessionId,
-                body = AddToWatchlistMovie(type, id, add)
-            )
+            val response =
+                service.addToWatchlist(accountId = USER.tmdbAccountId, sessionId = sessionId,
+                    body = AddToWatchlistMovie(type, id, add)
+                )
             val result = response.body()
             if (result != null) {
                 MarkItemRepository.Result.Success(result)

@@ -38,6 +38,12 @@ interface TmdbService {
         }
     }
 
+    @GET("account")
+    suspend fun getAccountDetails(
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("session_id") sessionId: String
+    ): Response<AccountDetails>
+
     @GET("movie/{movie_id}")
     suspend fun getMovieDetails(
         @Path("movie_id") id: Long,
@@ -240,7 +246,7 @@ interface TmdbService {
 
     @GET("account/{account_id}/favorite/movies")
     suspend fun getFavouriteMovieList(
-        @Path("account_id") id: Int = BuildConfig.MY_ID.toInt(),
+        @Path("account_id") accountId: Int,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("session_id") sessionId: String,
         @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
@@ -250,7 +256,7 @@ interface TmdbService {
 
     @GET("account/{account_id}/favorite/tv")
     suspend fun getFavouriteTVList(
-        @Path("account_id") id: Int = BuildConfig.MY_ID.toInt(),
+        @Path("account_id") accountId: Int,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("session_id") sessionId: String,
         @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
@@ -260,7 +266,7 @@ interface TmdbService {
 
     @GET("account/{account_id}/watchlist/movies")
     suspend fun getMovieWatchlist(
-        @Path("account_id") id: Int = BuildConfig.MY_ID.toInt(),
+        @Path("account_id") accountId: Int,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("session_id") sessionId: String,
         @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
@@ -270,7 +276,7 @@ interface TmdbService {
 
     @GET("account/{account_id}/watchlist/tv")
     suspend fun getTVWatchlist(
-        @Path("account_id") id: Int = BuildConfig.MY_ID.toInt(),
+        @Path("account_id") accountId: Int,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("session_id") sessionId: String,
         @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
@@ -280,7 +286,7 @@ interface TmdbService {
 
     @GET("account/{account_id}/rated/movies")
     suspend fun ratedMovies(
-       @Path("account_id") id: Int = BuildConfig.MY_ID.toInt(),
+       @Path("account_id") accountId: Int,
        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
        @Query("session_id") sessionId: String,
@@ -290,7 +296,7 @@ interface TmdbService {
 
     @GET("account/{account_id}/rated/tv")
     suspend fun ratedTvs(
-        @Path("account_id") id: Int = BuildConfig.MY_ID.toInt(),
+        @Path("account_id") accountId: Int,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
         @Query("session_id") sessionId: String,
@@ -300,7 +306,7 @@ interface TmdbService {
 
     @GET("account/{account_id}/rated/tv/episodes")
     suspend fun ratedEpisodes(
-        @Path("account_id") id: Int = BuildConfig.MY_ID.toInt(),
+        @Path("account_id") accountId: Int,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE,
         @Query("session_id") sessionId: String,
@@ -328,7 +334,7 @@ interface TmdbService {
 
     @POST("account/{account_id}/favorite")
     suspend fun markAsFavourite(
-        @Path("account_id") id: Int = BuildConfig.MY_ID.toInt(),
+        @Path("account_id") accountId: Int,
         @Header("Content-Type") contextType: String = BuildConfig.HEADER,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("session_id") sessionId: String,
@@ -337,7 +343,7 @@ interface TmdbService {
 
     @POST("account/{account_id}/watchlist")
     suspend fun addToWatchlist(
-        @Path("account_id") id: Int = BuildConfig.MY_ID.toInt(),
+        @Path("account_id") accountId: Int,
         @Header("Content-Type") contextType: String = BuildConfig.HEADER,
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("session_id") sessionId: String,
@@ -395,14 +401,6 @@ interface TmdbService {
         @Body body: RatingValue
     ): Response<PostResponseStatus>
 
-    @DELETE("tv/{tv_id}/rating")
-    suspend fun deleteTvRating(
-        @Path("tv_id") id: Long,
-        @Header("Content-Type") contextType: String = BuildConfig.HEADER,
-        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Query("session_id") sessionId: String
-    ): Response<PostResponseStatus>
-
     @POST("tv/{tv_id}/season/{season_number}/episode/{episode_number}/rating")
     suspend fun rateEpisode(
         @Path("tv_id") tvId: Long,
@@ -412,15 +410,5 @@ interface TmdbService {
         @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
         @Query("session_id") sessionId: String,
         @Body body: RatingValue
-    ): Response<PostResponseStatus>
-
-    @DELETE("tv/{tv_id}/season/{season_number}/episode/{episode_number}/rating")
-    suspend fun deleteEpisodeRating(
-        @Path("tv_id") tvId: Long,
-        @Path("season_number") season: Int,
-        @Path("episode_number") episode: Int,
-        @Header("Content-Type") contextType: String = BuildConfig.HEADER,
-        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
-        @Query("session_id") sessionId: String
     ): Response<PostResponseStatus>
 }

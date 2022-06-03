@@ -16,7 +16,7 @@
             android:layout_height="150dp"
             android:layout_width="250dp"
             android:id="@+id/backdropImage"
-            tools:background="@color/dark_blue"
+            tools:background="@color/light_gray"
             android:scaleType="centerCrop"/>
     </androidx.cardview.widget.CardView>
 

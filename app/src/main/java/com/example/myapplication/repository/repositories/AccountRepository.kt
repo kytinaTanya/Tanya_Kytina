@@ -1,7 +1,12 @@
 package com.example.myapplication.repository.repositories
 
-import okhttp3.MultipartBody
+import java.io.InputStream
 
 interface AccountRepository {
-    suspend fun uploadImage(file: MultipartBody.Part, onSuccess: (String) -> Unit)
+    suspend fun uploadImage(inputStream: InputStream) : Result
+
+    sealed class Result {
+        data class Success(val url : String) : Result()
+        object Error : Result()
+    }
 }

@@ -5,7 +5,7 @@ import com.example.myapplication.models.images.ImageRequest
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Multipart
@@ -37,5 +37,5 @@ interface ImageService {
     suspend fun uploadImage(
         @Part file: MultipartBody.Part,
         @Query("api_key") key: String = BuildConfig.IMAGE_API_KEY
-    ): Call<ImageRequest>
+    ): Response<ImageRequest>
 }

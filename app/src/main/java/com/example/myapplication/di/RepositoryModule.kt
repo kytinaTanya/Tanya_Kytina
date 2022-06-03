@@ -1,6 +1,7 @@
 package com.example.myapplication.di
 
 import com.example.myapplication.repository.impl.AccountRepositoryImpl
+import com.example.myapplication.repository.impl.AuthRepositoryImpl
 import com.example.myapplication.repository.impl.RepositoryImpl
 import com.example.myapplication.repository.impl.UserListsRepositoryImpl
 import com.example.myapplication.repository.impl.itemsonfos.*
@@ -38,7 +39,7 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideAuthRepository(service: TmdbService) : AuthRepository {
-        return RepositoryImpl(service)
+        return AuthRepositoryImpl(service)
     }
 
     @Provides

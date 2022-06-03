@@ -1,8 +1,17 @@
 package com.example.myapplication.repository.repositories
 
-import com.example.myapplication.models.RequestToken
-
 interface AuthRepository {
-    suspend fun getRequestToken() : String
-    suspend fun createSessionId(requestToken: String) : String
+    suspend fun getRequestToken() : StringResult
+    suspend fun createSessionId(requestToken: String) : StringResult
+    suspend fun getAccountInfo(sessionId: String) : IntResult
+
+    sealed class StringResult {
+        data class Success(val str: String) : StringResult()
+        object Error : StringResult()
+    }
+
+    sealed class IntResult {
+        data class Success(val num: Int) : IntResult()
+        object Error : IntResult()
+    }
 }

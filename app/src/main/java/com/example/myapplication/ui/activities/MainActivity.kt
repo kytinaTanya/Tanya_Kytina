@@ -35,16 +35,12 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, SingInActivity::class.java))
             finish()
         }
+        initUser()
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         binding.navigationBar.setupWithNavController(navController)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        initUser()
     }
 
     private fun initUser() {
@@ -58,7 +54,6 @@ class MainActivity : AppCompatActivity() {
                     override fun onCancelled(error: DatabaseError) {
                         Log.d("INITUSER", "initialization is failed")
                     }
-
                 }
             )
     }
@@ -68,14 +63,22 @@ class MainActivity : AppCompatActivity() {
         const val SEASON = "seasonId"
         const val EPISODE = "episodeId"
 
-        fun setProfileImage(url: String) {
-            REF_DATABASE_ROOT.child("users").child(UID).child("profileUrl").setValue("https://$url").addOnCompleteListener {
-                if(it.isSuccessful) {
-                    Log.d("PROFILE_IMAGE", "Successful")
-                } else {
-                    Log.d("PROFILE_IMAGE", "${it.exception}")
+        fun setProfileImage(
+            uri: String,
+            onSuccess: (url: String) -> Unit,
+            onFaluire: () -> Unit
+        ) {
+            val url = if (uri.contains("https://")) uri else "https://$uri"
+            REF_DATABASE_ROOT.child("users").child(UID).child("profileUrl").setValue(url)
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        onSuccess(url)
+                        Log.d("PROFILE_IMAGE", "$url")
+                    } else {
+                        onFaluire()
+                        Log.e("PROFILE_IMAGE", "${it.exception}")
+                    }
                 }
-            }
         }
     }
 }

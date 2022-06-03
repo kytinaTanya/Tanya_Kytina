@@ -1,12 +1,9 @@
 package com.example.myapplication.repository.impl
 
-import android.util.Log
-import com.example.myapplication.models.RetrofitPostToken
 import com.example.myapplication.models.pojo.Film
 import com.example.myapplication.models.pojo.MoviesResponse
 import com.example.myapplication.models.pojo.Person
 import com.example.myapplication.models.pojo.TV
-import com.example.myapplication.repository.repositories.AuthRepository
 import com.example.myapplication.repository.repositories.Repository
 import com.example.myapplication.repository.services.TmdbService
 import java.net.ConnectException
@@ -14,8 +11,7 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.inject.Inject
 
-class RepositoryImpl @Inject constructor(private val service: TmdbService) : Repository,
-    AuthRepository {
+class RepositoryImpl @Inject constructor(private val service: TmdbService) : Repository {
 
     override suspend fun getListOfPopularMovies() : Repository.Result {
         return try {
@@ -131,36 +127,6 @@ class RepositoryImpl @Inject constructor(private val service: TmdbService) : Rep
             Repository.Result.Error
         } catch (e: SocketTimeoutException) {
             Repository.Result.Error
-        }
-    }
-
-    override suspend fun getRequestToken(): String {
-        val response = service.getRequestToken()
-
-        return if(response.isSuccessful) {
-            val req = response.body()?.requestToken ?: EMPTY_STRING
-            Log.d("REQUESTTOKEN", req)
-            req
-        } else {
-            EMPTY_STRING
-        }
-    }
-
-    override suspend fun createSessionId(requestToken: String): String {
-        if(requestToken == EMPTY_STRING) {
-            Log.d("TOKEN", "Not found")
-            return EMPTY_STRING
-        }
-
-        val body = RetrofitPostToken(requestToken)
-
-        val response = service.postSession(body = body)
-        Log.d("POSTRESPONSE", response.message())
-
-        return if(response.isSuccessful) {
-            response.body()?.sessionId ?: EMPTY_STRING
-        } else {
-            EMPTY_STRING
         }
     }
 

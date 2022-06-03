@@ -10,7 +10,8 @@
         android:id="@+id/posterOfList"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/poster_placeholder"/>
+        android:src="@drawable/poster_placeholder"
+        android:background="@color/light_gray"/>
 
     <TextView
         android:id="@+id/title"

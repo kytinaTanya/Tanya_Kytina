@@ -1,37 +1,43 @@
 package com.example.myapplication.repository.impl
 
-import android.util.Log
-import com.example.myapplication.models.images.ImageRequest
 import com.example.myapplication.repository.repositories.AccountRepository
 import com.example.myapplication.repository.services.ImageService
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import retrofit2.Call
-import retrofit2.Response
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.InputStream
+import java.net.ConnectException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
-class AccountRepositoryImpl(private val imageService: ImageService): AccountRepository {
+class AccountRepositoryImpl(private val imageService: ImageService) : AccountRepository {
 
-    override suspend fun uploadImage(file: MultipartBody.Part, onSuccess: (String) -> Unit){
-        imageService.uploadImage(file = file)
-            .enqueue(object: retrofit2.Callback<ImageRequest> {
-                override fun onResponse(
-                    call: Call<ImageRequest>,
-                    response: Response<ImageRequest>
-                ) {
-                    if(response.isSuccessful) {
-                        val responseBody = response.body()
-                        if(responseBody != null) {
-                            onSuccess(responseBody.result.images[0].link.replace("\\", ""))
-                            Log.d("Success", "Image id: ${responseBody.result.images[0].id}")
-                        } else {
-                            onSuccess("")
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<ImageRequest>, t: Throwable) {
-                    Log.d("Failed", "$t")
-                }
-
-            })
+    override suspend fun uploadImage(
+        inputStream: InputStream
+    ): AccountRepository.Result {
+        return try {
+            val part: MultipartBody.Part = MultipartBody.Part.createFormData(
+                "pic", "myPic", inputStream.readBytes()
+                    .toRequestBody(
+                        "image/*".toMediaTypeOrNull(),
+                        0
+                    )
+            )
+            val response = imageService.uploadImage(file = part)
+            val body = response.body()
+            if (response.isSuccessful && body != null) {
+                AccountRepository.Result.Success(
+                    body.result.images[0].link.replace("\\", "")
+                )
+            } else {
+                AccountRepository.Result.Error
+            }
+        } catch (e: ConnectException) {
+            AccountRepository.Result.Error
+        } catch (e: UnknownHostException) {
+            AccountRepository.Result.Error
+        } catch (e: SocketTimeoutException) {
+            AccountRepository.Result.Error
+        }
     }
 }

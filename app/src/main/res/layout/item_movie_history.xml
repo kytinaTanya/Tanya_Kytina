@@ -21,7 +21,8 @@
             android:layout_height="100dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/poster_placeholder" />
+            tools:src="@drawable/poster_placeholder"
+            android:background="@color/light_gray"/>
 
         <TextView
             android:id="@+id/name_item"

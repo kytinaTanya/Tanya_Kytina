@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             tools:src="@drawable/ic_baseline_movie"
-            tools:background="@color/dark_blue" />
+            tools:background="@color/light_gray" />
     </androidx.cardview.widget.CardView>
 
     <TextView

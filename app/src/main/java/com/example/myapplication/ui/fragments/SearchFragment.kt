@@ -30,7 +30,6 @@ class SearchFragment : Fragment(), MovieAndTvAndEpisodeListener {
     private lateinit var ratedTvsAdapter: HistoryRecyclerAdapter
     private lateinit var ratedEpisodesAdapter: HistoryRecyclerAdapter
     private lateinit var sessionKey: String
-    private var loaded: Int = 0
     private val viewModel: SearchViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
