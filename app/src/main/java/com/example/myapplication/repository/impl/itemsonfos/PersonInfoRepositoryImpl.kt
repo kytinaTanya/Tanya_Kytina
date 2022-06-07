@@ -1,7 +1,6 @@
 package com.example.myapplication.repository.impl.itemsonfos
 
-import com.example.myapplication.models.pojo.ImageUrlPath
-import com.example.myapplication.models.pojo.PersonDetails
+import com.example.myapplication.models.pojo.*
 import com.example.myapplication.models.pojo.view.PersonView
 import com.example.myapplication.repository.repositories.itemsinfos.PersonInfoRepository
 import com.example.myapplication.repository.services.TmdbService
@@ -15,6 +14,15 @@ class PersonInfoRepositoryImpl(private val service: TmdbService) : PersonInfoRep
         return try {
             val details = getPersonDetails(id)
             val profiles = getPersonsImages(id)
+            val tvCredits = getPersonTvCredits(id)
+            val movieCredits = getPersonMovieCredits(id)
+            val creditsList = mutableListOf<BaseItem>()
+            creditsList.apply {
+                addAll(tvCredits.crew)
+                addAll(tvCredits.cast)
+                addAll(movieCredits.cast)
+                addAll(movieCredits.crew)
+            }
             PersonInfoRepository.Result.Success(
                 PersonView(
                     biography = details.biography,
@@ -26,7 +34,8 @@ class PersonInfoRepositoryImpl(private val service: TmdbService) : PersonInfoRep
                     gender = details.gender,
                     placeOfBirth = details.placeOfBirth,
                     profilePath = details.profilePath,
-                    profilesPhoto = profiles
+                    profilesPhoto = profiles,
+                    knownFor = creditsList
                 )
             )
         } catch (e: HttpException) {
@@ -53,6 +62,24 @@ class PersonInfoRepositoryImpl(private val service: TmdbService) : PersonInfoRep
         val response = service.getPersonImages(id = id)
         return if (response.isSuccessful) {
             response.body()?.profiles ?: throw HttpException(response)
+        } else {
+            throw HttpException(response)
+        }
+    }
+
+    private suspend fun getPersonMovieCredits(id: Long): PersonCredits<Film> {
+        val response = service.getPersonMovieCredits(id = id)
+        return if (response.isSuccessful) {
+            response.body() ?: throw HttpException(response)
+        } else {
+            throw HttpException(response)
+        }
+    }
+
+    private suspend fun getPersonTvCredits(id: Long): PersonCredits<TV> {
+        val response = service.getPersonTvCredits(id = id)
+        return if (response.isSuccessful) {
+            response.body() ?: throw HttpException(response)
         } else {
             throw HttpException(response)
         }

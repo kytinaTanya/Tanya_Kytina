@@ -137,6 +137,20 @@ interface TmdbService {
         @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE
     ): Response<PersonDetails>
 
+    @GET("person/{person_id}/movie_credits")
+    suspend fun getPersonMovieCredits(
+        @Path("person_id") id: Long,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE
+    ): Response<PersonCredits<Film>>
+
+    @GET("person/{person_id}/tv_credits")
+    suspend fun getPersonTvCredits(
+        @Path("person_id") id: Long,
+        @Query("api_key") apiKey: String = BuildConfig.V3_AUTH,
+        @Query("language") language: String = BuildConfig.GENERAL_LANGUAGE
+    ): Response<PersonCredits<TV>>
+
     @GET("person/{person_id}/images")
     suspend fun getPersonImages(
         @Path("person_id") id: Long,

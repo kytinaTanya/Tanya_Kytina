@@ -15,7 +15,9 @@ import com.example.myapplication.states.PersonInfoState
 import com.example.myapplication.ui.activities.MainActivity.Companion.MEDIA_ID
 import com.example.myapplication.ui.recyclerview.RegularDividerItemDecoration
 import com.example.myapplication.ui.recyclerview.adapters.ImagesRecyclerAdapter
+import com.example.myapplication.ui.recyclerview.adapters.KnownForRecyclerAdapter
 import com.example.myapplication.ui.recyclerview.adapters.SimpleListAdapter
+import com.example.myapplication.ui.recyclerview.listeners.MovieAndTvClickListener
 import com.example.myapplication.ui.recyclerview.listeners.PhotoClickListener
 import com.example.myapplication.utils.*
 import com.example.myapplication.viewmodel.itemsinfos.PersonInfoViewModel
@@ -24,7 +26,7 @@ import com.google.android.flexbox.JustifyContent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PersonInfoFragment : Fragment(), PhotoClickListener {
+class PersonInfoFragment : Fragment(), MovieAndTvClickListener, PhotoClickListener {
 
     private var _binding: FragmentPersonInfoBinding? = null
     private val binding get() = _binding!!
@@ -35,6 +37,7 @@ class PersonInfoFragment : Fragment(), PhotoClickListener {
     //Адаптеры для всех recyclerView
     private lateinit var alsoKnowAsAdapter: SimpleListAdapter
     private lateinit var photosAdapter: ImagesRecyclerAdapter
+    private lateinit var knownForAdapter: KnownForRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,9 +70,20 @@ class PersonInfoFragment : Fragment(), PhotoClickListener {
         view?.findNavController()?.navigate(action)
     }
 
+    override fun onOpenMovie(id: Long) {
+        val action = PersonInfoFragmentDirections.actionPersonInfoFragmentToFilmInfoFragment(id)
+        view?.findNavController()?.navigate(action)
+    }
+
+    override fun onOpenTV(id: Long) {
+        val action = PersonInfoFragmentDirections.actionPersonInfoFragmentToTvInfoFragment(id)
+        view?.findNavController()?.navigate(action)
+    }
+
     private fun initRecyclerViews() {
         alsoKnowAsAdapter = SimpleListAdapter()
         photosAdapter = ImagesRecyclerAdapter(this)
+        knownForAdapter = KnownForRecyclerAdapter(this)
 
         val alsoKnownAsLayoutManager = FlexboxLayoutManager(requireContext())
         alsoKnownAsLayoutManager.justifyContent = JustifyContent.FLEX_START
@@ -78,6 +92,8 @@ class PersonInfoFragment : Fragment(), PhotoClickListener {
             adapter = alsoKnowAsAdapter
             addItemDecoration(RegularDividerItemDecoration(8))
         }
+
+        binding.knowsFor.setConfigHorizontalWithInnerAndOuterDivs(knownForAdapter, requireContext(), 16, 32)
 
         binding.photosList.setConfigHorizontalWithInnerAndOuterDivs(photosAdapter, requireContext(), 16, 32)
     }
@@ -124,6 +140,10 @@ class PersonInfoFragment : Fragment(), PhotoClickListener {
 
             personName.text = data.name
             personAge.text = Utils.formatDate(data.birthday)
+            if (data.knownFor.isEmpty()) {
+                binding.knowsFor.visibility = View.GONE
+                binding.knowsForTitle.visibility = View.GONE
+            }
             alsoKnowAsAdapter.addStrings(data.alsoKnowsAs)
             if (data.biography != "") {
                 personBiography.text = data.biography
@@ -131,6 +151,7 @@ class PersonInfoFragment : Fragment(), PhotoClickListener {
                 personBiography.visibility = View.GONE
                 biographyTitle.visibility = View.GONE
             }
+            knownForAdapter.appendMovies(data.knownFor)
             photosList.isVisible = data.profilesPhoto.isNotEmpty()
             photosTitle.isVisible = data.profilesPhoto.isNotEmpty()
             photosAdapter.setImages(data.profilesPhoto)
