@@ -118,7 +118,7 @@ sealed class BaseItem()
         val video: Boolean,
 
         @SerializedName("vote_average")
-        val rating: Double,
+        val voteAverage: Double,
 
         @SerializedName("vote_count")
         val average: Int

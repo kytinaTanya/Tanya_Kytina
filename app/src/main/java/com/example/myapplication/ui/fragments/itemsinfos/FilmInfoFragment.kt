@@ -111,7 +111,7 @@ class FilmInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListene
                 setIfIsNotEmpty(movie.releaseDate, binding.yearOfMovie)
                 setIfIsNotEmpty(movie.overview, binding.movieAnnotation)
                 setIfIsNotEmpty(movie.tagline, binding.tagline)
-                setIfIsNotEmpty(formatRating(rating), binding.movieRating)
+                setIfIsNotEmpty("Общая оценка: ${movie.rating}", binding.movieRating)
                 setIfIsNotEmpty(formatBudget(movie.budget, "Бюджет"), binding.budget)
                 setIfIsNotEmpty(formatBudget(movie.revenue, "Сборы"), binding.revenue)
                 if(movie.genres.isEmpty()) {

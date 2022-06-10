@@ -94,7 +94,7 @@ class SearchResultFragment : Fragment(), MovieAndTvClickListener, SearchViewMode
         binding.apply {
             searchList.visibility = View.GONE
             error.showAnimated()
-            messageText.text = message
+            errorText.text = message
         }
     }
 
@@ -135,7 +135,7 @@ class SearchResultFragment : Fragment(), MovieAndTvClickListener, SearchViewMode
         resultIsEmpty++
         if (resultIsEmpty == 2) {
             showErrorMessage(getString(R.string.result_error))
-            binding.retryBtn.visibility = View.GONE
+            binding.errorButton.visibility = View.GONE
         }
     }
 
@@ -147,7 +147,7 @@ class SearchResultFragment : Fragment(), MovieAndTvClickListener, SearchViewMode
 
     private fun initUI() {
         binding.apply {
-            retryBtn.setOnClickListener {
+            errorButton.setOnClickListener {
                 retry()
             }
             toolbar.title = searchRequest

@@ -41,7 +41,7 @@ class MovieInfoRepositoryImpl(val service: TmdbService) : MovieInfoRepository {
                     status = details.status,
                     tagline = details.tagline,
                     title = details.title,
-                    rating = details.rating,
+                    rating = details.voteAverage,
                     average = details.average,
                     backdrops = images.backdrops,
                     posters = images.posters,

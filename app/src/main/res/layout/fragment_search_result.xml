@@ -29,33 +29,30 @@
             android:layout_height="48dp"
             android:layout_gravity="center" />
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/error"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/messageText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="28sp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="156dp"
-                android:gravity="center"
-                android:textColor="@color/dark_blue" />
-
-            <Button
-                android:id="@+id/retryBtn"
+                android:id="@+id/error_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_gravity="center_horizontal"
-                android:text="Перезагрузить"/>
+                android:text="@string/server_error"
+                android:textSize="24sp"
+                android:paddingHorizontal="36dp"
+                android:layout_gravity="center"
+                android:textAlignment="center"/>
 
-        </LinearLayout>
+            <Button
+                android:id="@+id/error_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/repeat_button_title"
+                style="@style/NonBackgroundRoundedButton"
+                android:layout_gravity="center"
+                android:layout_marginTop="56dp"/>
+        </FrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
