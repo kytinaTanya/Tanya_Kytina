@@ -141,7 +141,7 @@ class EpisodeInfoFragment : Fragment(), PhotoClickListener {
 
             episodeTitle.text = data.name
             episodeNumber.text = "Номер эпизода: ${data.episodeNum}"
-            episodeDate.text = formatDate(data.airDate)
+            if (data.airDate != null) episodeDate.text = formatDate(data.airDate) else binding.episodeDate.visibility = View.GONE
             allRating.text = "Общая оценка: ${data.voteAverage}"
             if (data.overview != "") {
                 annotation.text = data.overview

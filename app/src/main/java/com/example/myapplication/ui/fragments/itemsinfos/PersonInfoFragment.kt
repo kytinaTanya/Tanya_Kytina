@@ -139,12 +139,12 @@ class PersonInfoFragment : Fragment(), MovieAndTvClickListener, PhotoClickListen
             mainImage.setOnClickListener { onOpenPicture(url) }
 
             personName.text = data.name
-            personAge.text = Utils.formatDate(data.birthday)
+            if (data.birthday == null) personAge.visibility = View.GONE else personAge.text = Utils.formatDate(data.birthday)
             if (data.knownFor.isEmpty()) {
                 binding.knowsFor.visibility = View.GONE
                 binding.knowsForTitle.visibility = View.GONE
             }
-            alsoKnowAsAdapter.addStrings(data.alsoKnowsAs)
+            if (data.alsoKnowsAs != null) alsoKnowAsAdapter.addStrings(data.alsoKnowsAs) else alsoKnownAs.visibility = View.GONE
             if (data.biography != "") {
                 personBiography.text = data.biography
             } else {
@@ -152,9 +152,9 @@ class PersonInfoFragment : Fragment(), MovieAndTvClickListener, PhotoClickListen
                 biographyTitle.visibility = View.GONE
             }
             knownForAdapter.appendMovies(data.knownFor)
-            photosList.isVisible = data.profilesPhoto.isNotEmpty()
-            photosTitle.isVisible = data.profilesPhoto.isNotEmpty()
-            photosAdapter.setImages(data.profilesPhoto)
+            photosList.isVisible = data.profilesPhoto?.isNotEmpty() ?: false
+            photosTitle.isVisible = data.profilesPhoto?.isNotEmpty() ?: false
+            if (data.profilesPhoto != null) photosAdapter.setImages(data.profilesPhoto)
         }
     }
 }

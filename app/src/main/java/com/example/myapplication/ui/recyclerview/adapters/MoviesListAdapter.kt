@@ -41,6 +41,7 @@ class MoviesListAdapter(private val listener: MovieClickListener) :
         val binding = ItemBackdropTitleFullWightBinding.inflate(LayoutInflater.from(parent.context),
             parent,
             false)
+        binding.root.setOnClickListener(this)
         return MoviesOfCollectionViewHolder(binding)
     }
 

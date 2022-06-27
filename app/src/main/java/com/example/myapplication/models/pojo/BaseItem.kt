@@ -350,7 +350,7 @@ data class Person(
 
     data class PersonDetails(
         @SerializedName("birthday")
-        val birthday: String,
+        val birthday: String?,
 
         @SerializedName("known_for_department")
         val knownFor: String,
@@ -473,22 +473,22 @@ data class TvProducer(
 sealed class BaseItemDetails : BaseItem() {
     data class EpisodeDetails(
         @SerializedName("air_date")
-        val airDate: String,
+        val airDate: String?,
 
         @SerializedName("crew")
-        val crew: List<Crew>,
+        val crew: List<Crew>?,
 
         @SerializedName("episode_number")
-        val episodeNum: Int,
+        val episodeNum: Int?,
 
         @SerializedName("guest_stars")
-        val guestStars: List<GuestStar>,
+        val guestStars: List<GuestStar>?,
 
         @SerializedName("name")
-        val name: String,
+        val name: String?,
 
         @SerializedName("overview")
-        val overview: String,
+        val overview: String?,
 
         @SerializedName("id")
         val id: Long,
@@ -497,19 +497,19 @@ sealed class BaseItemDetails : BaseItem() {
         var showId: Long = 0L,
 
         @SerializedName("production_code")
-        val productionCode: String,
+        val productionCode: String?,
 
         @SerializedName("season_number")
         val seasonNum: Int,
 
         @SerializedName("still_path")
-        val stillPath: String,
+        val stillPath: String?,
 
         @SerializedName("vote_average")
-        val voteAverage: Double,
+        val voteAverage: Double?,
 
         @SerializedName("vote_count")
-        val votes: Int,
+        val votes: Int?,
 
         var userRating: RatingValue = RatingValue()
 
@@ -517,22 +517,22 @@ sealed class BaseItemDetails : BaseItem() {
 
     data class SeasonDetails(
         @SerializedName("air_date")
-        val airDate: String,
+        val airDate: String?,
 
         @SerializedName("episodes")
-        var episodes: List<Episode>,
+        var episodes: List<Episode>?,
 
         @SerializedName("id")
         val id: Int,
 
         @SerializedName("name")
-        val name: String,
+        val name: String?,
 
         @SerializedName("overview")
-        val overview: String,
+        val overview: String?,
 
         @SerializedName("poster_path")
-        val posterPath: String,
+        val posterPath: String?,
 
         @SerializedName("show_id")
         var showId: Long = 0L,
@@ -546,16 +546,16 @@ sealed class BaseItemDetails : BaseItem() {
         val id: Int,
 
         @SerializedName("name")
-        val name: String,
+        val name: String?,
 
         @SerializedName("overview")
-        val overview: String,
+        val overview: String?,
 
         @SerializedName("backdrop_path")
-        val backdrop: String,
+        val backdrop: String?,
 
         @SerializedName("parts")
-        val parts: List<Film>
+        val parts: List<Film>?
     ): BaseItemDetails()
 }
 

@@ -114,8 +114,8 @@ class SeasonInfoFragment : Fragment(), EpisodeClickListener, PhotoClickListener 
 
             seasonTitle.text = data.name
             seasonNumber.text = "Номер сезона - ${data.number}"
-            seasonDate.text = Utils.formatDate(data.airDate)
-            episodeAdapter.appendMovies(data.episodes)
+            if (data.airDate != null) seasonDate.text = Utils.formatDate(data.airDate) else seasonDate.visibility = View.GONE
+            if (data.episodes != null) episodeAdapter.appendMovies(data.episodes!!)
         }
     }
 

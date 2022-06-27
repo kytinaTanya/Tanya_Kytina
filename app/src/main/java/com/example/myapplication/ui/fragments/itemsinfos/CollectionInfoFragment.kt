@@ -116,7 +116,7 @@ class CollectionInfoFragment : Fragment(), MovieClickListener, PhotoClickListene
                 collectionAnnotation.visibility = View.GONE
                 annotationTitle.visibility = View.GONE
             }
-            collectionListAdapter.addMovies(data.parts)
+            if (data.parts != null) collectionListAdapter.addMovies(data.parts)
         }
     }
 

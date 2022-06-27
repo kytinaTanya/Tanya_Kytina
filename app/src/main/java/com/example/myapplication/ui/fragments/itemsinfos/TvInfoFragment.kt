@@ -110,13 +110,13 @@ class TvInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListener 
                 }
                 setIfIsNotEmpty(tv.name, binding.tvTitle)
                 setIfIsNotEmpty(formatDate(tv.firstAirDate), binding.firstUpcomingDate)
-                binding.annotationTitle.isVisible = tv.overview.isNotEmpty()
+                binding.annotationTitle.isVisible = tv.overview?.isNotEmpty() ?: false
                 setIfIsNotEmpty(tv.overview, binding.tvAnnotation)
                 setIfIsNotEmpty(tv.tagline, binding.tagline)
                 setIfIsNotEmpty("Общая оценка: ${tv.rating}", binding.movieRating)
                 setIfIsNotEmpty("Количество сезонов: ${tv.numOfSeasons}", binding.numberOfSeasons)
                 setIfIsNotEmpty("Количество серий: ${tv.episodes}", binding.numberOfEpisodes)
-                if (tv.genres.isEmpty()) {
+                if (tv.genres == null || tv.genres.isEmpty()) {
                     binding.genres.visibility = View.GONE
                 } else {
                     genresAdapter.setGenres(tv.genres)
@@ -139,7 +139,7 @@ class TvInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListener 
                     }
                 }
 
-                if (tv.companies.isEmpty()) {
+                if (tv.companies == null || tv.companies.isEmpty()) {
                     binding.companies.visibility = View.GONE
                 } else {
                     companiesAdapter.appendMovies(tv.companies)
@@ -153,41 +153,41 @@ class TvInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListener 
                 }
 
                 setIfIsNotEmpty(createCreatedByList(tv.createdBy), binding.createdBy)
-                if (tv.seasons.isEmpty()) {
+                if (tv.seasons == null || tv.seasons!!.isEmpty()) {
                     binding.seasons.visibility = View.GONE
                 } else {
-                    seasonAdapter.appendMovies(tv.seasons)
+                    seasonAdapter.appendMovies(tv.seasons!!)
                 }
-                isFavorite = tv.favorite
-                isInWatchlist = tv.watchlist
-                rating = tv.myRating
+                isFavorite = tv.favorite ?: false
+                isInWatchlist = tv.watchlist ?: false
+                rating = tv.myRating ?: 0.0F
                 setStates()
-                if (tv.videos.isNotEmpty()) {
+                if (tv.videos != null && tv.videos.isNotEmpty()) {
                     binding.videoText.visibility = View.VISIBLE
                     binding.videoRecyclerview.visibility = View.VISIBLE
                     videoAdapter.setVideos(tv.videos)
                 }
-                if (tv.recommendations.isNotEmpty()) {
+                if (tv.recommendations != null && tv.recommendations.isNotEmpty()) {
                     binding.recommendationText.visibility = View.VISIBLE
                     binding.recommendationRecyclerview.visibility = View.VISIBLE
                     recommendationAdapter.setItems(tv.recommendations)
                 }
-                if (tv.similar.isNotEmpty()) {
+                if (tv.similar != null && tv.similar.isNotEmpty()) {
                     binding.similarText.visibility = View.VISIBLE
                     binding.similarRecyclerview.visibility = View.VISIBLE
                     similarAdapter.setItems(tv.similar)
                 }
-                if (tv.cast.isNotEmpty()) {
+                if (tv.cast != null &&  tv.cast.isNotEmpty()) {
                     binding.mainRolesTitle.visibility = View.VISIBLE
                     binding.mainRoles.visibility = View.VISIBLE
                     castAdapter.appendMovies(tv.cast)
                 }
-                if (tv.posters.isNotEmpty()) {
+                if (tv.posters != null && tv.posters.isNotEmpty()) {
                     binding.posterText.visibility = View.VISIBLE
                     binding.posterRecyclerview.visibility = View.VISIBLE
                     posterAdapter.setImages(tv.posters)
                 }
-                if (tv.backdrops.isNotEmpty()) {
+                if (tv.backdrops != null && tv.backdrops.isNotEmpty()) {
                     binding.backdropText.visibility = View.VISIBLE
                     binding.backdropRecyclerview.visibility = View.VISIBLE
                     backdropAdapter.setImages(tv.backdrops)
@@ -398,7 +398,8 @@ class TvInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListener 
         }
     }
 
-    private fun createCreatedByList(createdBy: List<TvProducer>): String {
+    private fun createCreatedByList(createdBy: List<TvProducer>?): String? {
+        if (createdBy == null) return null
         var str = ""
         createdBy.forEach {
             str += it.name + ", "
@@ -411,7 +412,8 @@ class TvInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListener 
         }
     }
 
-    private fun createCountriesList(countries: List<ProductionCounties>): String {
+    private fun createCountriesList(countries: List<ProductionCounties>?): String? {
+        if (countries == null) return null
         var str = ""
         countries.forEach {
             str += it.name + ", "

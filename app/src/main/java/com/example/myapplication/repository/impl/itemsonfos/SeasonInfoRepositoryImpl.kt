@@ -16,7 +16,7 @@ class SeasonInfoRepositoryImpl(private val service: TmdbService) : SeasonInfoRep
                 val responseBody = response.body()
                 if (responseBody != null) {
                     val episodes: MutableList<Episode> = arrayListOf()
-                    responseBody.episodes.forEach {
+                    responseBody.episodes?.forEach {
                         it.showId = tvId
                         episodes.add(it)
                     }

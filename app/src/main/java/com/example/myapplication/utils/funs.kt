@@ -66,7 +66,8 @@ class Utils {
             }
         }
 
-        fun formatDate(date: String) : String {
+        fun formatDate(date: String?) : String? {
+            if (date == null) return  null
             val year = date.substringBefore("-")
             val month = when (date.substringAfter("-").substringBefore("-").toInt()) {
                 1 -> "января"

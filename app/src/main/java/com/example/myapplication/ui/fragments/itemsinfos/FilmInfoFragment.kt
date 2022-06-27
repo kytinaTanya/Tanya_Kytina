@@ -114,7 +114,7 @@ class FilmInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListene
                 setIfIsNotEmpty("Общая оценка: ${movie.rating}", binding.movieRating)
                 setIfIsNotEmpty(formatBudget(movie.budget, "Бюджет"), binding.budget)
                 setIfIsNotEmpty(formatBudget(movie.revenue, "Сборы"), binding.revenue)
-                if(movie.genres.isEmpty()) {
+                if(movie.genres == null || movie.genres?.isEmpty()) {
                     binding.genres.visibility = View.GONE
                 } else {
                     genresAdapter.setGenres(movie.genres)
@@ -131,7 +131,7 @@ class FilmInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListene
                     }
                 }
 
-                if(movie.companies.isEmpty()) {
+                if(movie.companies == null || movie.companies.isEmpty()) {
                     binding.companies.visibility = View.GONE
                 } else {
                     companiesAdapter.appendMovies(movie.companies)
@@ -143,39 +143,39 @@ class FilmInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListene
                 } else {
                     binding.homepage.text = "Домашняя страница: ${movie.homepage}"
                 }
-                isFavorite = movie.favorite
-                isInWatchlist = movie.watchlist
-                rating = movie.myRating
+                isFavorite = movie.favorite ?: false
+                isInWatchlist = movie.watchlist ?: false
+                rating = movie.myRating ?: 0.0F
                 binding.starBtn.visibility = View.VISIBLE
                 binding.watchlistBtn.visibility = View.VISIBLE
                 binding.loveBtn.visibility = View.VISIBLE
                 setStates()
-                if (movie.trailers.isNotEmpty()) {
+                if (movie.trailers != null && movie.trailers.isNotEmpty()) {
                     binding.videoText.visibility = View.VISIBLE
                     binding.videoRecyclerview.visibility = View.VISIBLE
                     videoAdapter.setVideos(movie.trailers)
                 }
-                if (movie.recommendations.isNotEmpty()) {
+                if (movie.recommendations != null && movie.recommendations.isNotEmpty()) {
                     binding.recommendationText.visibility = View.VISIBLE
                     binding.recommendationRecyclerview.visibility = View.VISIBLE
                     recommendationAdapter.setItems(movie.recommendations)
                 }
-                if (movie.similar.isNotEmpty()) {
+                if (movie.similar != null && movie.similar.isNotEmpty()) {
                     binding.similarText.visibility = View.VISIBLE
                     binding.similarRecyclerview.visibility = View.VISIBLE
                     similarAdapter.setItems(movie.similar)
                 }
-                if (movie.cast.isNotEmpty()) {
+                if (movie.cast != null && movie.cast.isNotEmpty()) {
                     binding.mainRolesTitle.visibility = View.VISIBLE
                     binding.mainRoles.visibility = View.VISIBLE
                     castAdapter.appendMovies(movie.cast)
                 }
-                if (movie.posters.isNotEmpty()) {
+                if (movie.posters != null && movie.posters.isNotEmpty()) {
                     binding.posterText.visibility = View.VISIBLE
                     binding.posterRecyclerview.visibility = View.VISIBLE
                     posterAdapter.setImages(movie.posters)
                 }
-                if (movie.backdrops.isNotEmpty()) {
+                if (movie.backdrops != null && movie.backdrops.isNotEmpty()) {
                     binding.backdropText.visibility = View.VISIBLE
                     binding.backdropRecyclerview.visibility = View.VISIBLE
                     backdropAdapter.setImages(movie.backdrops)
@@ -355,8 +355,9 @@ class FilmInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListene
 
     private fun formatRating(rating: Number?): String = rating?.let { "Оценка: $it" } ?: ""
 
-    private fun createCountriesList(countries: List<ProductionCounties>): String {
+    private fun createCountriesList(countries: List<ProductionCounties>?): String? {
         var str = ""
+        if (countries == null) return null
         countries.forEach {
             str += it.name + ", "
         }
@@ -377,9 +378,9 @@ class FilmInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListene
         }
     }
 
-    private fun formatBudget(budget: Int, prefix: String): String {
-        return if(budget == 0) {
-            ""
+    private fun formatBudget(budget: Int?, prefix: String): String? {
+        return if(budget == 0 || budget == null) {
+            null
         } else {
             "$prefix: \$ ${formatCost(budget)}"
         }

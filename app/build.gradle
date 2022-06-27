@@ -28,6 +28,13 @@ android {
                         "room.expandProjection":"true"]
             }
         }
+
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("local.properties").newDataInputStream())
+
+        buildConfigField "String", "V3_AUTH", "\"${properties.getProperty("TMDB_API_KEY_V3")}\""
+        buildConfigField "String", "V4_AUTH", "\"${properties.getProperty("TMDB_API_KEY_V4")}\""
+        buildConfigField "String", "IMAGE_API_KEY", "\"${properties.getProperty("IMAGE_API_KEY")}\""
     }
 
     buildFeatures {
@@ -43,9 +50,6 @@ android {
             buildConfigField "String", "BASE_PROFILE_URL", "\"https://image.tmdb.org/t/p/h632\""
             buildConfigField "String", "BASE_STILL_URL", "\"https://image.tmdb.org/t/p/w780\""
             buildConfigField "String", "BASE_LOGO_URL", "\"https://image.tmdb.org/t/p/w500\""
-            buildConfigField "String", "V3_AUTH", "\"e19d111501403fed5ffe087a81ca958f\""
-            buildConfigField "String", "V4_AUTH", "\"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlMTlkMTExNTAxNDAzZmVkNWZmZTA4N2E4MWNhOTU4ZiIsInN1YiI6IjYwYzg1MmQxMzY3OWExMDA3OGNiOTljNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DdRuCDjlGk0rEF9Wa1_jdrCdKCIe6kwnbovjq3b7d4g\""
-            buildConfigField "String", "IMAGE_API_KEY", "\"15FJMPSX3b32f504fb03df6fa646f96f1f100733\""
             buildConfigField "String", "API_IMAGE_BASE_URL", "\"https://api.imageshack.com/v2/\""
             buildConfigField "String", "GENERAL_LANGUAGE", "\"ru-RU\""
             buildConfigField "String", "HEADER", "\"application/json;charset=utf-8\""
