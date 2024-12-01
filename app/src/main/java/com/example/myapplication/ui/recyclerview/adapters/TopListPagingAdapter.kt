@@ -58,6 +58,7 @@ class TopListPagingAdapter(private val listener: MovieAndTvAndPersonListener) :
                 is Film -> holder.bindMovie(item)
                 is TV -> holder.bindTv(item)
                 is Person -> holder.bindPerson(item)
+                else -> {}
             }
         }
     }
@@ -75,6 +76,7 @@ class TopListPagingAdapter(private val listener: MovieAndTvAndPersonListener) :
             is Film -> listener.onOpenMovie(movie.id)
             is TV -> listener.onOpenTV(movie.id)
             is Person -> listener.onOpenPerson(movie.id)
+            else -> {}
         }
     }
 }

@@ -41,6 +41,7 @@ class RecommendationRecyclerAdapter(val listener: MovieAndTvClickListener):
             when (recommendations[position]) {
                 is Film -> holder.bind(recommendations[position] as Film)
                 is TV -> holder.bind(recommendations[position] as TV)
+                else -> {}
             }
         }
     }
@@ -58,6 +59,7 @@ class RecommendationRecyclerAdapter(val listener: MovieAndTvClickListener):
         when(movie) {
             is Film -> listener.onOpenMovie(movie.id)
             is TV -> listener.onOpenTV(movie.id)
+            else -> {}
         }
     }
 }

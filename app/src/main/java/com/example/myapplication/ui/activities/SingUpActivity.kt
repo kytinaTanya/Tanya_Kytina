@@ -96,6 +96,8 @@ class SingUpActivity : AppCompatActivity() {
                             accountId)
                     }
                 }
+
+                IntAuthState.Loading -> {}
             }
         }
 

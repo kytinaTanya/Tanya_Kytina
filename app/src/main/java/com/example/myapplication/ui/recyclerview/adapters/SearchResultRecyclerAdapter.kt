@@ -87,6 +87,7 @@ class SearchResultRecyclerAdapter(val listener: MovieAndTvClickListener):
         when(movie) {
             is Film -> listener.onOpenMovie(movie.id)
             is TV -> listener.onOpenTV(movie.id)
+            else -> {}
         }
     }
 

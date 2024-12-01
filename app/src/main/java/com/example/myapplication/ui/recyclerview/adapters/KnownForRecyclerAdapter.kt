@@ -51,8 +51,9 @@ class KnownForRecyclerAdapter(private val listener: MovieAndTvClickListener) :
         val item = mMoviesList[position]
         holder.itemView.tag = item
         when (item) {
-            is TV -> (holder as KnownForViewHolder).bind(item as TV)
-            is Film -> (holder as KnownForViewHolder).bind(item as Film)
+            is TV -> (holder as KnownForViewHolder).bind(item)
+            is Film -> (holder as KnownForViewHolder).bind(item)
+            else -> {}
         }
     }
 

@@ -147,6 +147,7 @@ class FeedRecyclerAdapter(
             is TV -> listener.onOpenTV(movie.id)
             is Person -> listener.onOpenPerson(movie.id)
             is HeaderItem -> listener.onOpenMore(request)
+            else -> {}
         }
     }
 }

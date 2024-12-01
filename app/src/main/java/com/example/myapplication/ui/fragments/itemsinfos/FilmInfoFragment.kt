@@ -114,7 +114,7 @@ class FilmInfoFragment : Fragment(), AllSpecificListenerAndTv, PhotoClickListene
                 setIfIsNotEmpty("Общая оценка: ${movie.rating}", binding.movieRating)
                 setIfIsNotEmpty(formatBudget(movie.budget, "Бюджет"), binding.budget)
                 setIfIsNotEmpty(formatBudget(movie.revenue, "Сборы"), binding.revenue)
-                if(movie.genres == null || movie.genres?.isEmpty()) {
+                if(movie.genres.isNullOrEmpty()) {
                     binding.genres.visibility = View.GONE
                 } else {
                     genresAdapter.setGenres(movie.genres)

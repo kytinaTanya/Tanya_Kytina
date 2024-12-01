@@ -39,6 +39,7 @@ class CollectionRecyclerAdapter(val listener: MovieAndTvClickListener):
         when(getItem(position)) {
             is Film -> holder.bindFilm(getItem(position) as Film)
             is TV -> holder.bindTV(getItem(position) as TV)
+            else -> {}
         }
     }
 
@@ -53,6 +54,7 @@ class CollectionRecyclerAdapter(val listener: MovieAndTvClickListener):
         when(movie) {
             is Film -> listener.onOpenMovie(movie.id)
             is TV -> listener.onOpenTV(movie.id)
+            else -> {}
         }
     }
 }

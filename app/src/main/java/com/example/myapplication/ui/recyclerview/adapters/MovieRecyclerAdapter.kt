@@ -174,6 +174,7 @@ class MovieRecyclerAdapter(
                     is Person -> holder.bind(mMoviesList[position] as Person)
                     is Crew -> holder.bind(mMoviesList[position] as Crew)
                     is Cast -> holder.bind(mMoviesList[position] as Cast)
+                    else -> {}
                 }
             }
             is SeasonViewHolder -> holder.bind(mMoviesList[position] as Season)
@@ -213,6 +214,7 @@ class MovieRecyclerAdapter(
             is Cast -> listener.onOpenPerson(movie.id)
             is Season -> listener.onOpenSeason(movie.showId, movie.number)
             is Episode -> listener.onOpenEpisode(movie.showId, movie.seasonNum, movie.episodeNum)
+            else -> {}
         }
     }
 }

@@ -55,6 +55,7 @@ class HistoryRecyclerAdapter(val listener: MovieAndTvAndEpisodeListener) : Adapt
                 is Film -> holder.bind(filmList[position] as Film)
                 is TV -> holder.bind(filmList[position] as TV)
                 is Episode -> holder.bind(filmList[position] as Episode)
+                else -> {}
             }
         }
     }
@@ -73,6 +74,7 @@ class HistoryRecyclerAdapter(val listener: MovieAndTvAndEpisodeListener) : Adapt
             is Film -> listener.onOpenMovie(movie.id)
             is TV -> listener.onOpenTV(movie.id)
             is Episode -> listener.onOpenEpisode(movie.showId, movie.seasonNum, movie.episodeNum)
+            else -> {}
         }
     }
 }

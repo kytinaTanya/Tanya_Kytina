@@ -72,6 +72,9 @@ class SearchFragment : Fragment(), MovieAndTvAndEpisodeListener {
                     binding.ratedMoviesError.errorView.visibility = View.GONE
                     ratedMoviesAdapter.appendFilms(result.films)
                 }
+
+                is SearchScreenViewState.Success.EpisodeSuccess -> {}
+                is SearchScreenViewState.Success.TvSuccess -> {}
             }
         }
         viewModel.ratedTVs.observe(viewLifecycleOwner) { result ->
@@ -92,6 +95,9 @@ class SearchFragment : Fragment(), MovieAndTvAndEpisodeListener {
                     binding.ratedTvsError.errorView.visibility = View.GONE
                     ratedTvsAdapter.appendFilms(result.tvs)
                 }
+
+                is SearchScreenViewState.Success.EpisodeSuccess -> {}
+                is SearchScreenViewState.Success.FilmSuccess -> {}
             }
         }
         viewModel.ratedEpisodes.observe(viewLifecycleOwner) { result ->
@@ -112,6 +118,9 @@ class SearchFragment : Fragment(), MovieAndTvAndEpisodeListener {
                     binding.ratedEpisodesError.errorView.visibility = View.GONE
                     ratedEpisodesAdapter.appendFilms(result.episodes)
                 }
+
+                is SearchScreenViewState.Success.FilmSuccess -> {}
+                is SearchScreenViewState.Success.TvSuccess -> {}
             }
         }
     }

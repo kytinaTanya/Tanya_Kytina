@@ -28,3 +28,4 @@
     -keepclassmembers class com.yourcompany.models.** {
       *;
     }
+    -keep class com.example.myapplication.appl.TMDBApplication { *; }

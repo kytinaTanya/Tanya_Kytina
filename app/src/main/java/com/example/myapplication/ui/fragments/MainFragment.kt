@@ -78,6 +78,9 @@ class MainFragment : Fragment(), MoviePersonAndViewMoreAndTvClickListener {
                     binding.popularMoviesError.errorView.visibility = View.GONE
                     filmsInTrendAdapter.appendMovies(result.list)
                 }
+
+                is MainViewState.Success.PersonSuccess -> {}
+                is MainViewState.Success.TvSuccess -> {}
             }
         }
 
@@ -99,6 +102,9 @@ class MainFragment : Fragment(), MoviePersonAndViewMoreAndTvClickListener {
                     binding.nowPlayingMoviesError.errorView.visibility = View.GONE
                     filmsNowPlayingAdapter.appendMovies(result.list)
                 }
+
+                is MainViewState.Success.PersonSuccess -> {}
+                is MainViewState.Success.TvSuccess -> {}
             }
         }
 
@@ -120,6 +126,9 @@ class MainFragment : Fragment(), MoviePersonAndViewMoreAndTvClickListener {
                     binding.upcomingMoviesError.errorView.visibility = View.GONE
                     filmsUpcomingAdapter.appendMovies(result.list)
                 }
+
+                is MainViewState.Success.PersonSuccess -> {}
+                is MainViewState.Success.TvSuccess -> {}
             }
         }
 
@@ -141,6 +150,9 @@ class MainFragment : Fragment(), MoviePersonAndViewMoreAndTvClickListener {
                     binding.popularTvError.errorView.visibility = View.GONE
                     tvPopularAdapter.appendMovies(result.list)
                 }
+
+                is MainViewState.Success.FilmSuccess -> {}
+                is MainViewState.Success.PersonSuccess -> {}
             }
         }
 
@@ -162,6 +174,9 @@ class MainFragment : Fragment(), MoviePersonAndViewMoreAndTvClickListener {
                     binding.topRatedTvError.errorView.visibility = View.GONE
                     tvBestAdapter.appendMovies(result.list)
                 }
+
+                is MainViewState.Success.FilmSuccess -> {}
+                is MainViewState.Success.PersonSuccess -> {}
             }
         }
 
@@ -183,6 +198,9 @@ class MainFragment : Fragment(), MoviePersonAndViewMoreAndTvClickListener {
                     binding.nowOnAirTvError.errorView.visibility = View.GONE
                     tvNowOnAirAdapter.appendMovies(result.list)
                 }
+
+                is MainViewState.Success.FilmSuccess -> {}
+                is MainViewState.Success.PersonSuccess -> {}
             }
         }
 
@@ -204,6 +222,9 @@ class MainFragment : Fragment(), MoviePersonAndViewMoreAndTvClickListener {
                     binding.onAirTodayTvError.errorView.visibility = View.GONE
                     tvTodayOnAirAdapter.appendMovies(result.list)
                 }
+
+                is MainViewState.Success.FilmSuccess -> {}
+                is MainViewState.Success.PersonSuccess -> {}
             }
         }
 
@@ -225,6 +246,9 @@ class MainFragment : Fragment(), MoviePersonAndViewMoreAndTvClickListener {
                     binding.topRatedMoviesError.errorView.visibility = View.GONE
                     filmsBestAdapter.appendMovies(result.list)
                 }
+
+                is MainViewState.Success.PersonSuccess -> {}
+                is MainViewState.Success.TvSuccess -> {}
             }
         }
 
@@ -246,6 +270,9 @@ class MainFragment : Fragment(), MoviePersonAndViewMoreAndTvClickListener {
                     binding.popularPersonsError.errorView.visibility = View.GONE
                     personPopularAdapter.appendMovies(result.list)
                 }
+
+                is MainViewState.Success.FilmSuccess -> {}
+                is MainViewState.Success.TvSuccess -> {}
             }
         }
     }
